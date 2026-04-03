@@ -1,10 +1,18 @@
 services:
-  fastapi: #Nome do serviço para o backend
-    build: ./backend #Diz onde esse serviço vai operar
-    ports: 
-      - "8000:8000" #Mapeia [Porta da sua Máquina]:[Porta do Container]
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
     volumes:
-      - ./backend:/app #Mapeia o diretório do código para dentro do container
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - fastapi
+      - react
+
+  fastapi:
+    build: ./backend
+    volumes:
+      - ./backend:/app
     env_file:
       - ./.env
     depends_on:
@@ -14,19 +22,17 @@ services:
       sh -c "alembic upgrade head &&
              uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
 
-  react: #Nome do serviço para o frontend
-    build: ./frontend #Diz onde esse serviço vai operar
-    ports:
-      - "5173:5173" #Mapeia [Porta da sua Máquina]:[Porta do Container]
+  react:
+    build: ./frontend
     volumes:
-      - ./frontend:/app #Mapeia o diretório do código para dentro do container
-      - /app/node_modules # Evita que o node_modules do host sobrescreva o do container
+      - ./frontend:/app
+      - /app/node_modules
     environment:
-      - VITE_API_URL=http://fastapi:8000 #URL da API para o frontend
+      - VITE_API_URL=http://fastapi:8000
     depends_on:
       - fastapi
-    
-  db: #Nome do serviço para o banco de dados
+
+  db:
     image: postgres:15
     container_name: postgres_db
     restart: always
@@ -43,4 +49,4 @@ services:
       retries: 5
 
 volumes:
-  pgdata: #Volume para persistência dos dados do PostgreSQL
+  pgdata:
