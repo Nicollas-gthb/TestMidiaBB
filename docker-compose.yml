@@ -1,0 +1,46 @@
+services:
+  fastapi: #Nome do serviço para o backend
+    build: ./backend #Diz onde esse serviço vai operar
+    ports: 
+      - "8000:8000" #Mapeia [Porta da sua Máquina]:[Porta do Container]
+    volumes:
+      - ./backend:/app #Mapeia o diretório do código para dentro do container
+    env_file:
+      - ./.env
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+  react: #Nome do serviço para o frontend
+    build: ./frontend #Diz onde esse serviço vai operar
+    ports:
+      - "5173:5173" #Mapeia [Porta da sua Máquina]:[Porta do Container]
+    volumes:
+      - ./frontend:/app #Mapeia o diretório do código para dentro do container
+      - /app/node_modules # Evita que o node_modules do host sobrescreva o do container
+    environment:
+      - VITE_API_URL=http://fastapi:8000 #URL da API para o frontend
+    depends_on:
+      - fastapi
+    
+  db: #Nome do serviço para o banco de dados
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - 5433:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata: #Volume para persistência dos dados do PostgreSQL
