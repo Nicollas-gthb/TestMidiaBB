@@ -33,7 +33,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #e8e9ea;
-    --text-h: #f3f4f6;
+    --text-hover: #a9b1c0;
     --bg: #16171d;
     --table-border: #6d8bbc;
     --code-bg: #1f2028;
@@ -42,6 +42,7 @@
     --td-bg: #244271;
     --social-bg: rgba(47, 48, 58, 0.5);
     --action-bg: #075feb;
+    --hover-action-bg: #073783;
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   }

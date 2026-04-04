@@ -1,15 +1,21 @@
+import { useState } from "react"
+
 import "./Midia.css"
+import { AddMidia } from "../../components/midia/AddMidia"
 
 export default function Midia() {
+
+    const [addMidiaAberto, setAddMidiaAberto] = useState(false)
+
     return (
-        <div id="home-container">
+        <div id="midia-container">
 
             {/** TODO: converter o aside em um componente */}
-            <aside id="home-menu-container">
-                <header id="home-aside-header">
+            <aside id="midia-menu-container">
+                <header id="midia-aside-header">
                     <h1>Menu</h1>
                 </header>
-                <div id="home-aside-main">
+                <div id="midia-aside-main">
                     <button>Botão 1</button>
                     <button>Botão 2</button>
                     <button>Botão 3</button>
@@ -17,7 +23,7 @@ export default function Midia() {
             </aside>
 
 
-            <main id="home-main-container">
+            <main id="midia-main-container">
 
                 {/** TODO: converter o header em um componente */}
                 <header id="midia-menu-header">
@@ -30,7 +36,10 @@ export default function Midia() {
 
                         <h2>Gestão de midias</h2>
         
-                        <button className="action-button">Nova midia</button>
+                        <button 
+                            className="action-button"
+                            onClick={() => {setAddMidiaAberto(true)}}
+                        >Nova midia</button>
 
                     </div>
 
@@ -53,6 +62,12 @@ export default function Midia() {
                             </tbody>
                         </table>
                     </div>
+
+                    {addMidiaAberto && (
+                        <AddMidia 
+                            onClose={() => {setAddMidiaAberto(false)}}
+                        />
+                    )}
                 </div>
             </main>
         </div>
