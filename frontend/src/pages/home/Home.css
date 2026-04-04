@@ -1,0 +1,60 @@
+#home-container{
+    display: flex;
+    flex-direction: row;
+}
+
+#home-menu-container{
+    width: 15%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#home-main-container{
+    width: 85%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#home-aside-header{
+    background-color: var(--bg);
+    height: 10%;
+}
+#home-aside-main{
+    background-color: var(--bg);
+    height: 90%;
+}
+
+#home-menu-header{
+    background-color: rosybrown;
+    height: 10%;
+}
+#home-menu-main{
+    background-color: rgb(7, 23, 69);
+    height: 90%;
+}
+
+table{
+    background-color: var(--table-bg);
+    width: 90%;
+}
+
+th{
+    background-color: var(--th-bg);
+    padding: 12px 15px;
+    font-size: 0.9rem;
+}
+
+td{
+    background-color: var(--td-bg);
+    padding: 12px 15px;
+    width: 7%;
+}
+
+td:nth-child(2){
+    width: 25%;
+}
+td:nth-child(5){
+    width: 15%;
+}
