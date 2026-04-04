@@ -35,12 +35,13 @@
     --text: #e8e9ea;
     --text-h: #f3f4f6;
     --bg: #16171d;
-    --border: #2e303a;
+    --table-border: #6d8bbc;
     --code-bg: #1f2028;
     --th-bg: #0c51be;
     --table-bg: #5488dc;
     --td-bg: #244271;
     --social-bg: rgba(47, 48, 58, 0.5);
+    --action-bg: #075feb;
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   }

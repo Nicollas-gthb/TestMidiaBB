@@ -37,19 +37,31 @@
 
 table{
     background-color: var(--table-bg);
-    width: 90%;
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 15px;
 }
 
 th{
     background-color: var(--th-bg);
     padding: 12px 15px;
     font-size: 0.9rem;
+    border-bottom: 1px solid var(--table-border);
+}
+
+.left-table{
+    border-radius: 15px 0 0 0;
+}
+
+.right-table{
+    border-radius: 0 15px 0 0;
 }
 
 td{
     background-color: var(--td-bg);
     padding: 12px 15px;
     width: 7%;
+    border-bottom: 1px solid var(--table-border);
 }
 
 td:nth-child(2){

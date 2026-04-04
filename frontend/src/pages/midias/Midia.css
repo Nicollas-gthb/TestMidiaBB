@@ -1,5 +1,57 @@
+#midia-menu-container{
+    width: 15%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#midia-main-container{
+    width: 85%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#midia-aside-header{
+    background-color: var(--bg);
+    height: 10%;
+}
+#midia-aside-main{
+    background-color: var(--bg);
+    height: 90%;
+}
+
+#midia-menu-header{
+    background-color: rosybrown;
+    height: 10%;
+}
+#midia-menu-main{
+    background-color: rgb(7, 23, 69);
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 40px;
+}
+
 .table-container{
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.table-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; 
+    margin-top: 40px;
+}
+
+.action-button{
+    background-color: var(--action-bg);
+    border: none;
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 8px;
 }
