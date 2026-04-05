@@ -1,12 +1,15 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import "./AddMidia.css"
 import { Preview } from "./PreviewMidia"
 
 export const AddMidia = ({ onClose }) => {
 
-    const [toggle, setToggle] = useState(false)
     const [togglePage, setTogglePage] = useState(1)
+
+    // useEffect(() => {
+    //     setTogglePage(togglePage)
+    // }, [togglePage])
 
     const [nome, setNome] = useState("")
     const [data, setData] = useState("")
@@ -43,18 +46,34 @@ export const AddMidia = ({ onClose }) => {
         }
     }
 
+    const handleNextPage = (e) => {
+        e.preventDefault()
+        if(togglePage < 3){
+            setTogglePage(togglePage + 1)
+        }
+    }
+
+    const handlePreviousPage = (e) => {
+        e.preventDefault()
+        if(togglePage > 1){
+            setTogglePage(togglePage - 1)
+        }
+    }
+
+
     return (
         <div id="addmidia-container" onClick={handleOutsideClick}>
             <div id="addmidia-content">
                 <h2>Nova Mídia</h2>
 
-                {togglePage === 1 ? (
+                {togglePage == 1 ? (
                     <form className="addmidia-form">
 
                     
                         <fieldset className="addmidia-field">
                             <legend className="addmidia-legend">Nome</legend>
                             <input 
+                                id="addmidia-nome"
                                 className="addmidia-input" 
                                 type="text" 
                                 placeholder="Nome" 
@@ -88,23 +107,29 @@ export const AddMidia = ({ onClose }) => {
                                 onChange={handleFileChange}
                             />
                         </label>
+
+                        <fieldset className="addmidia-field">
+                            <legend className="addmidia-legend">URL</legend>
+                            <p id="addmidia-output-url">{preview}</p>
+                        </fieldset>
                         
                         <div className="addmidia-buttons">
                             <button
                                 id="addmidia-next"
                                 className="action-button"
                                 type="submit"
-                                onClick={() => {setTogglePage(togglePage + 1)}}
+                                onClick={handleNextPage}
                             >Avançar</button>
                         </div>
                     </form>
 
-                ) : togglePage === 2 ? (
+                ) : togglePage == 2 ? (
                     <form className="addmidia-form">
 
                         <fieldset className="addmidia-field">
                             <legend className="addmidia-legend">Duração</legend>
                             <input 
+                                id="addmidia-duracao"
                                 className="addmidia-input" 
                                 type="text" 
                                 placeholder="Duração (em segundos)" 
@@ -116,6 +141,7 @@ export const AddMidia = ({ onClose }) => {
                         <fieldset className="addmidia-field">
                             <legend className="addmidia-legend">TV Associada</legend>
                             <input 
+                                id="addmidia-tv"
                                 className="addmidia-input" 
                                 type="text" 
                                 placeholder="ID da TV Associada" 
@@ -124,7 +150,8 @@ export const AddMidia = ({ onClose }) => {
 
                         <fieldset className="addmidia-field">
                             <legend className="addmidia-legend">Validade</legend>
-                            <input 
+                            <input
+                                id="addmidia-validade" 
                                 className="addmidia-input" 
                                 type="date" 
                                 placeholder="Validade" 
@@ -138,18 +165,18 @@ export const AddMidia = ({ onClose }) => {
                                 id="addmidia-back"
                                 className="second-action-button"
                                 type="button"
-                                onClick={() => {setTogglePage(togglePage - 1)}}
+                                onClick={handlePreviousPage}
                             >Voltar</button>
                             <button
                                 id="addmidia-confirm"
                                 className="action-button"
                                 type="submit"
-                                onClick={() => {setTogglePage(togglePage + 1)}}
+                                onClick={handleNextPage}
                             >Adicionar</button>
                         </div>
                     </form>
 
-                ) : togglePage === 3 ? (<></>) : (<></>)}
+                ) : togglePage == 3 ? (<></>) : (<></>)}
             </div>
         </div>
     )
