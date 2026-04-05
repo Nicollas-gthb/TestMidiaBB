@@ -60,15 +60,27 @@ export const AddMidia = ({ onClose }) => {
         }
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        // Aqui adicionar a lógica para enviar os dados para o backend
+    }
 
     return (
         <div id="addmidia-container" onClick={handleOutsideClick}>
             <div id="addmidia-content">
+
+                <button 
+                    className="close-button"
+                    onClick={onClose}
+                >
+                    <i className="bi bi-x-circle"></i>
+                </button>
+
                 <h2>Nova Mídia</h2>
 
                 {togglePage == 1 ? (
                     <form className="addmidia-form">
-
+                        
                     
                         <fieldset className="addmidia-field">
                             <legend className="addmidia-legend">Nome</legend>
@@ -176,7 +188,43 @@ export const AddMidia = ({ onClose }) => {
                         </div>
                     </form>
 
-                ) : togglePage == 3 ? (<></>) : (<></>)}
+                ) : togglePage == 3 && file ? (
+                    <>
+                        <h2>Resumo</h2>
+
+                        <div id="addmidia-resumo">
+                            <p><strong>Nome:</strong> {nome}</p>
+                            <p><strong>Tipo de midia:</strong>{file ??
+                                file.type.startsWith("image/") ? "Imagem" :
+                                file.type.startsWith("video/") ? "Vídeo" :
+                                "Desconecido"
+                            }</p>
+                            <p><strong>Duração:</strong> {duracao} segundos</p>
+                            <p><strong>Validade:</strong> {data}</p>
+                            <p><strong>URL do arquivo:</strong> {preview}</p>
+
+
+                            <div className="addmidia-buttons">
+                                <button
+                                    id="addmidia-back"
+                                    className="second-action-button"
+                                    type="button"
+                                    onClick={handlePreviousPage}
+                                >Voltar</button>
+                                <button
+                                    id="addmidia-confirm"
+                                    className="action-button"
+                                    type="submit"
+                                    onClick={handleSubmit}
+                                >Confirmar</button>
+                            </div>
+                        </div>
+
+                        
+                    </>
+                ) : (
+                    <p>Erro ao carregar recurso</p>
+                )}
             </div>
         </div>
     )
