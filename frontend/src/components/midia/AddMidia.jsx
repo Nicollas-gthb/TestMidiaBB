@@ -70,10 +70,17 @@ export const AddMidia = ({ onClose }) => {
                             />
                         </fieldset>
 
+
+                        <button 
+                            className="second-action-button"
+                            type="button" 
+                            onClick={() => {setToggle(false)}}
+                        >Voltar</button>
+
                         <button 
                             className="action-button" 
                             type="submit"
-                            onClick={() => {setToggle(false)}}
+                            onClick={() => {}}
                         >Adicionar</button>
                     </form>
                 ) : (
@@ -120,7 +127,7 @@ export const AddMidia = ({ onClose }) => {
                         className="action-button" 
                         type="submit"
                         onClick={() => {setToggle(true)}}
-                    >Adicionar</button>
+                    >Avançar</button>
                 </form>
                 )}
 

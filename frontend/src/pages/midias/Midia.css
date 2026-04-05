@@ -29,7 +29,7 @@
 }
 
 #midia-menu-header{
-    background-color: rosybrown;
+    background-color: rgb(53, 75, 142);
     height: 10%;
 }
 #midia-menu-main{
@@ -63,4 +63,25 @@
     padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
+}
+
+.second-action-button{
+    background-color: transparent;
+    border: 3px solid var(--text);
+    color: var(--text);
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.action-button:hover{
+    background-color: var(--hover-action-bg);
+    color: var(--text-hover);
+}
+
+.second-action-button:hover{
+    background-color: var(--hover-action-bg);
+    border-color: var(--hover-action-bg);
+    color: var(--text-hover);
 }
