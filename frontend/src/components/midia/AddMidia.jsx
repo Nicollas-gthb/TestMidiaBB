@@ -6,6 +6,7 @@ import { Preview } from "./PreviewMidia"
 export const AddMidia = ({ onClose }) => {
 
     const [toggle, setToggle] = useState(false)
+    const [togglePage, setTogglePage] = useState(1)
 
     const [nome, setNome] = useState("")
     const [data, setData] = useState("")
@@ -47,7 +48,58 @@ export const AddMidia = ({ onClose }) => {
             <div id="addmidia-content">
                 <h2>Nova Mídia</h2>
 
-                {toggle ? (
+                {togglePage === 1 ? (
+                    <form className="addmidia-form">
+
+                    
+                        <fieldset className="addmidia-field">
+                            <legend className="addmidia-legend">Nome</legend>
+                            <input 
+                                className="addmidia-input" 
+                                type="text" 
+                                placeholder="Nome" 
+                                value={nome}
+                                onChange={(e) => setNome(e.target.value)}
+                            />
+                        </fieldset>
+
+                        <label htmlFor="addmidia-input-upload" id="addmidia-label-upload">
+                            
+                            {preview ? (
+                                <>
+                                    <button 
+                                        className="close-button"
+                                        onClick={handleRemoveFile}
+                                    >
+                                        <i className="bi bi-x-circle"></i>
+                                    </button>
+                                    <Preview preview={preview} file={file} />        
+                                </>
+                            ) : (
+                                <span id="addmidia-span-upload">Escolha o arquivo <br /> Arquivos suportados: PNG, JPEG, MP4 </span>
+                            )}
+                            
+                            <input 
+                                id="addmidia-input-upload"
+                                className="addmidia-input" 
+                                type="file" 
+                                accept="image/*,video/*"
+                                placeholder="Upload" 
+                                onChange={handleFileChange}
+                            />
+                        </label>
+                        
+                        <div className="addmidia-buttons">
+                            <button
+                                id="addmidia-next"
+                                className="action-button"
+                                type="submit"
+                                onClick={() => {setTogglePage(togglePage + 1)}}
+                            >Avançar</button>
+                        </div>
+                    </form>
+
+                ) : togglePage === 2 ? (
                     <form className="addmidia-form">
 
                         <fieldset className="addmidia-field">
@@ -86,71 +138,18 @@ export const AddMidia = ({ onClose }) => {
                                 id="addmidia-back"
                                 className="second-action-button"
                                 type="button"
-                                onClick={() => {setToggle(false)}}
+                                onClick={() => {setTogglePage(togglePage - 1)}}
                             >Voltar</button>
                             <button
                                 id="addmidia-confirm"
                                 className="action-button"
                                 type="submit"
-                                onClick={() => {}}
+                                onClick={() => {setTogglePage(togglePage + 1)}}
                             >Adicionar</button>
                         </div>
                     </form>
-                ) : (
-                    <form className="addmidia-form">
 
-                    
-                        <fieldset className="addmidia-field">
-                            <legend className="addmidia-legend">Nome</legend>
-                            <input 
-                                className="addmidia-input" 
-                                type="text" 
-                                placeholder="Nome" 
-                                value={nome}
-                                onChange={(e) => setNome(e.target.value)}
-                            />
-                        </fieldset>
-
-                        <label htmlFor="addmidia-input-upload" id="addmidia-label-upload">
-                            
-                            {preview ? (
-                                <>
-                                    <button 
-                                        className="close-button"
-                                        onClick={handleRemoveFile}
-                                    >
-                                        <i className="bi bi-x-circle"></i>
-                                    </button>
-                                    <Preview preview={preview} file={file} />
-
-                                    
-                                    
-                                </>
-                            ) : (
-                                <span id="addmidia-span-upload">Escolha o arquivo <br /> Arquivos suportados: PNG, JPEG, MP4 </span>
-                            )}
-                            
-                            <input 
-                                id="addmidia-input-upload"
-                                className="addmidia-input" 
-                                type="file" 
-                                accept="image/*,video/*"
-                                placeholder="Upload" 
-                                onChange={handleFileChange}
-                            />
-
-                        </label>
-                        
-                        <div className="addmidia-buttons">
-                            <button
-                                id="addmidia-next"
-                                className="action-button"
-                                type="submit"
-                                onClick={() => {setToggle(true)}}
-                            >Avançar</button>
-                        </div>
-                    </form>
-                )}
+                ) : togglePage === 3 ? (<></>) : (<></>)}
             </div>
         </div>
     )
