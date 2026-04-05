@@ -48,7 +48,7 @@
 #addmidia-content{
     background-color: var(--td-bg);
     width: 30%;
-    height: 80%;
+    height: 85%;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -60,7 +60,6 @@
     justify-content: center;
     align-items: center;
     text-align: left;
-    margin-top: 40px;
     padding: 40px;
     gap: 20px;
 }
@@ -146,4 +145,15 @@
 }
 #addmidia-confirm{
     width: 50%;
+}
+
+#addmidia-output-url{
+    font-size: 0.6rem;
+    color: var(--text);
+    margin-top: 0px;
+    width: 100%;
+}
+
+#addmidia-field-url{
+    height: auto;    
 }

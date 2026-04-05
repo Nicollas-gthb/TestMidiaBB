@@ -8,6 +8,9 @@ export const AddMidia = ({ onClose }) => {
     const [toggle, setToggle] = useState(false)
 
     const [nome, setNome] = useState("")
+    const [data, setData] = useState("")
+    const [duracao, setDuracao] = useState("")
+
 
     const [file, setFile] = useState(null)
     const [preview, setPreview] = useState(null)
@@ -21,11 +24,14 @@ export const AddMidia = ({ onClose }) => {
 
         setFile(selectedFile)
 
-        const previrewUrl = URL.createObjectURL(selectedFile)
-        setPreview(previrewUrl)
+        const previewUrl = URL.createObjectURL(selectedFile)
+        setPreview(previewUrl)
     }
 
     const handleRemoveFile = () => {
+        if (preview) {
+            URL.revokeObjectURL(preview)
+        }
         setFile(null)
         setPreview(null)
     }
@@ -43,12 +49,24 @@ export const AddMidia = ({ onClose }) => {
 
                 {toggle ? (
                     <form className="addmidia-form">
+
                         <fieldset className="addmidia-field">
-                            <legend className="addmidia-legend">TVs Associadas</legend>
+                            <legend className="addmidia-legend">Duração</legend>
                             <input 
                                 className="addmidia-input" 
                                 type="text" 
-                                placeholder="TVs Associadas" 
+                                placeholder="Duração (em segundos)" 
+                                value={duracao}
+                                onChange={(e) => setDuracao(e.target.value)}
+                            />
+                        </fieldset>
+
+                        <fieldset className="addmidia-field">
+                            <legend className="addmidia-legend">TV Associada</legend>
+                            <input 
+                                className="addmidia-input" 
+                                type="text" 
+                                placeholder="ID da TV Associada" 
                             />
                         </fieldset>
 
@@ -58,18 +76,10 @@ export const AddMidia = ({ onClose }) => {
                                 className="addmidia-input" 
                                 type="date" 
                                 placeholder="Validade" 
+                                value={data}
+                                onChange={(e) => setData(e.target.value)}
                             />
                         </fieldset>
-
-                        <fieldset className="addmidia-field">
-                            <legend className="addmidia-legend">URL</legend>
-                            <input 
-                                className="addmidia-input" 
-                                type="text" 
-                                placeholder="URL" 
-                            />
-                        </fieldset>
-
 
                         <div className="addmidia-buttons">
                             <button
@@ -96,6 +106,8 @@ export const AddMidia = ({ onClose }) => {
                                 className="addmidia-input" 
                                 type="text" 
                                 placeholder="Nome" 
+                                value={nome}
+                                onChange={(e) => setNome(e.target.value)}
                             />
                         </fieldset>
 
@@ -110,6 +122,9 @@ export const AddMidia = ({ onClose }) => {
                                         <i className="bi bi-x-circle"></i>
                                     </button>
                                     <Preview preview={preview} file={file} />
+
+                                    
+                                    
                                 </>
                             ) : (
                                 <span id="addmidia-span-upload">Escolha o arquivo <br /> Arquivos suportados: PNG, JPEG, MP4 </span>
