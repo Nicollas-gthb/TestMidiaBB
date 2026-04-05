@@ -71,67 +71,71 @@ export const AddMidia = ({ onClose }) => {
                         </fieldset>
 
 
-                        <button 
-                            className="second-action-button"
-                            type="button" 
-                            onClick={() => {setToggle(false)}}
-                        >Voltar</button>
-
-                        <button 
-                            className="action-button" 
-                            type="submit"
-                            onClick={() => {}}
-                        >Adicionar</button>
+                        <div className="addmidia-buttons">
+                            <button
+                                id="addmidia-back"
+                                className="second-action-button"
+                                type="button"
+                                onClick={() => {setToggle(false)}}
+                            >Voltar</button>
+                            <button
+                                id="addmidia-confirm"
+                                className="action-button"
+                                type="submit"
+                                onClick={() => {}}
+                            >Adicionar</button>
+                        </div>
                     </form>
                 ) : (
                     <form className="addmidia-form">
 
                     
-                    <fieldset className="addmidia-field">
-                        <legend className="addmidia-legend">Nome</legend>
-                        <input 
-                            className="addmidia-input" 
-                            type="text" 
-                            placeholder="Nome" 
-                        />
-                    </fieldset>
+                        <fieldset className="addmidia-field">
+                            <legend className="addmidia-legend">Nome</legend>
+                            <input 
+                                className="addmidia-input" 
+                                type="text" 
+                                placeholder="Nome" 
+                            />
+                        </fieldset>
 
-                    <label htmlFor="addmidia-input-upload" id="addmidia-label-upload">
-                        
-                        {preview ? (
-                            <>
-                                <button 
-                                    className="close-button"
-                                    onClick={handleRemoveFile}
-                                >
-                                    <i className="bi bi-x-circle"></i>
-                                </button>
-                                <Preview preview={preview} file={file} />
-                            </>
-                        ) : (
-                            <span id="addmidia-span-upload">Escolha o arquivo <br /> Arquivos suportados: PNG, JPEG, MP4 </span>
-                        )}
-                        
-                        <input 
-                            id="addmidia-input-upload"
-                            className="addmidia-input" 
-                            type="file" 
-                            accept="image/*,video/*"
-                            placeholder="Upload" 
-                            onChange={handleFileChange}
-                        />
+                        <label htmlFor="addmidia-input-upload" id="addmidia-label-upload">
+                            
+                            {preview ? (
+                                <>
+                                    <button 
+                                        className="close-button"
+                                        onClick={handleRemoveFile}
+                                    >
+                                        <i className="bi bi-x-circle"></i>
+                                    </button>
+                                    <Preview preview={preview} file={file} />
+                                </>
+                            ) : (
+                                <span id="addmidia-span-upload">Escolha o arquivo <br /> Arquivos suportados: PNG, JPEG, MP4 </span>
+                            )}
+                            
+                            <input 
+                                id="addmidia-input-upload"
+                                className="addmidia-input" 
+                                type="file" 
+                                accept="image/*,video/*"
+                                placeholder="Upload" 
+                                onChange={handleFileChange}
+                            />
 
-                    </label>
-                    
-                    <button 
-                        className="action-button" 
-                        type="submit"
-                        onClick={() => {setToggle(true)}}
-                    >Avançar</button>
-                </form>
+                        </label>
+                        
+                        <div className="addmidia-buttons">
+                            <button
+                                id="addmidia-next"
+                                className="action-button"
+                                type="submit"
+                                onClick={() => {setToggle(true)}}
+                            >Avançar</button>
+                        </div>
+                    </form>
                 )}
-
-                
             </div>
         </div>
     )
