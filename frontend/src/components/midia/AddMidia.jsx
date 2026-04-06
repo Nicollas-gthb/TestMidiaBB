@@ -9,7 +9,7 @@ export const AddMidia = ({ onClose }) => {
     // useEffect(() => {
     //     usar para buscar as tvs disponiveis
     // }, [])
-    
+
     const [togglePage, setTogglePage] = useState(1)
         
     const [nome, setNome] = useState("")
@@ -18,8 +18,38 @@ export const AddMidia = ({ onClose }) => {
 
     const [file, setFile] = useState(null)
     const [preview, setPreview] = useState(null)
+
+
+
+    const [tvsSelecionadas, setTvsSelecionadas] = useState([])
+
+    //simulando backend
+    const tvs = [
+        { id: 1, numero: 1, nome: "TV 1" },
+        { id: 2, numero: 2, nome: "TV 2" },
+        { id: 3, numero: 3, nome: "TV 3" },
+        { id: 4, numero: 4, nome: "TV 4" }
+    ]
     
-    
+    const todasTvsSelecionadas = tvsSelecionadas.length === tvs.length
+
+    const handleToggleTv = (id) => {
+        setTvsSelecionadas(prev => {
+            prev.includes(id) ?
+                prev.filter(tvId => tvId !== id) :
+                [...prev, id]
+            }
+        )
+    }
+
+    const handleToggleAllTvs = () => {
+        todasTvsSelecionadas ? 
+        setTvsSelecionadas([]) :
+        setTvsSelecionadas(tvs.map(tv => tv.id))
+    }
+
+
+
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0]
         if(!selectedFile) return
@@ -142,15 +172,28 @@ export const AddMidia = ({ onClose }) => {
                                     onChange={(e) => setDuracao(e.target.value)}
                                 />
                             </fieldset>
-                            <fieldset className="addmidia-field">
+
+                            <fieldset id="addmidia-field-tvs" className="addmidia-field">
                                 <legend className="addmidia-legend">TV Associada</legend>
-                                <input
-                                    id="addmidia-tv"
-                                    className="addmidia-input"
-                                    type="text"
-                                    placeholder="ID da TV Associada"
-                                />
+
+                                <button type="button" className="second-action-button" id="addmidia-selectAll" onClick={handleToggleAllTvs}>
+                                    {todasTvsSelecionadas ? "Desmarcar Todas" : "Marcar Todas"}
+                                </button>
+
+                                <div className="addmidia-tvs-list">
+                                    {tvs.map(tv => (
+                                        <label key={tv.id} className="addmidia-tv-item">
+                                            <input
+                                                type="checkbox"
+                                                checked={tvsSelecionadas.includes(tv.id)}
+                                                onChange={() => handleToggleTv(tv.id)}
+                                            />
+                                            TV {tv.numero} — {tv.nome}
+                                        </label>
+                                    ))}
+                                </div>
                             </fieldset>
+
                             <fieldset className="addmidia-field">
                                 <legend className="addmidia-legend">Validade</legend>
                                 <input

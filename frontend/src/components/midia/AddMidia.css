@@ -82,6 +82,11 @@
     padding: 0 10px;
 }
 
+#addmidia-field-tvs{
+    height: auto;
+    padding: 10px 10px;
+}
+
 .addmidia-legend{
     font-size: 0.9rem;
     color: var(--text);
@@ -168,4 +173,9 @@
     margin: 0 20px;
     border-radius: 10px;
     gap: 10px;
+}
+
+.addmidia-tvs-list{
+    display: flex;
+    flex-direction: column;
 }
