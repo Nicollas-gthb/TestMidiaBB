@@ -39,7 +39,10 @@ export default function Midia() {
                         <button 
                             className="action-button"
                             onClick={() => {setAddMidiaAberto(true)}}
-                        >Nova midia</button>
+                        >
+                            <i class="bi bi-arrow-bar-up"></i>
+                            Nova midia
+                        </button>
 
                     </div>
 

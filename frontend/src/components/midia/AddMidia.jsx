@@ -5,21 +5,19 @@ import { Preview } from "./PreviewMidia"
 
 export const AddMidia = ({ onClose }) => {
 
-    const [togglePage, setTogglePage] = useState(1)
-
+    
     // useEffect(() => {
-    //     setTogglePage(togglePage)
-    // }, [togglePage])
-
+    //     usar para buscar as tvs disponiveis
+    // }, [])
+    
+    const [togglePage, setTogglePage] = useState(1)
+        
     const [nome, setNome] = useState("")
     const [data, setData] = useState("")
     const [duracao, setDuracao] = useState("")
 
-
     const [file, setFile] = useState(null)
     const [preview, setPreview] = useState(null)
-    const [status, setStatus] = useState("")
-    const [uploadUrl, setUploadUrl] = useState(null)
     
     
     const handleFileChange = (e) => {
@@ -78,132 +76,92 @@ export const AddMidia = ({ onClose }) => {
 
                 <h2>Nova Mídia</h2>
 
-                {togglePage == 1 ? (
-                    <form className="addmidia-form">
-                        
+                <form className="addmidia-form" action="">
+                    {togglePage == 1 ? (
+                        <>
+                            <fieldset className="addmidia-field">
+                                <legend className="addmidia-legend">Nome</legend>
+                                <input
+                                    id="addmidia-nome"
+                                    className="addmidia-input"
+                                    type="text"
+                                    placeholder="Nome"
+                                    value={nome}
+                                    onChange={(e) => setNome(e.target.value)}
+                                />
+                            </fieldset>
+                            <label htmlFor="addmidia-input-upload" id="addmidia-label-upload">
                     
-                        <fieldset className="addmidia-field">
-                            <legend className="addmidia-legend">Nome</legend>
-                            <input 
-                                id="addmidia-nome"
-                                className="addmidia-input" 
-                                type="text" 
-                                placeholder="Nome" 
-                                value={nome}
-                                onChange={(e) => setNome(e.target.value)}
-                            />
-                        </fieldset>
-
-                        <label htmlFor="addmidia-input-upload" id="addmidia-label-upload">
-                            
-                            {preview ? (
-                                <>
-                                    <button 
-                                        className="close-button"
-                                        onClick={handleRemoveFile}
-                                    >
-                                        <i className="bi bi-x-circle"></i>
-                                    </button>
-                                    <Preview preview={preview} file={file} />        
-                                </>
-                            ) : (
-                                <span id="addmidia-span-upload">Escolha o arquivo <br /> Arquivos suportados: PNG, JPEG, MP4 </span>
-                            )}
-                            
-                            <input 
-                                id="addmidia-input-upload"
-                                className="addmidia-input" 
-                                type="file" 
-                                accept="image/*,video/*"
-                                placeholder="Upload" 
-                                onChange={handleFileChange}
-                            />
-                        </label>
-
-                        <fieldset className="addmidia-field">
-                            <legend className="addmidia-legend">URL</legend>
-                            <p id="addmidia-output-url">{preview}</p>
-                        </fieldset>
-                        
-                        <div className="addmidia-buttons">
-                            <button
-                                id="addmidia-next"
-                                className="action-button"
-                                type="submit"
-                                onClick={handleNextPage}
-                            >Avançar</button>
-                        </div>
-                    </form>
-
-                ) : togglePage == 2 ? (
-                    <form className="addmidia-form">
-
-                        <fieldset className="addmidia-field">
-                            <legend className="addmidia-legend">Duração</legend>
-                            <input 
-                                id="addmidia-duracao"
-                                className="addmidia-input" 
-                                type="text" 
-                                placeholder="Duração (em segundos)" 
-                                value={duracao}
-                                onChange={(e) => setDuracao(e.target.value)}
-                            />
-                        </fieldset>
-
-                        <fieldset className="addmidia-field">
-                            <legend className="addmidia-legend">TV Associada</legend>
-                            <input 
-                                id="addmidia-tv"
-                                className="addmidia-input" 
-                                type="text" 
-                                placeholder="ID da TV Associada" 
-                            />
-                        </fieldset>
-
-                        <fieldset className="addmidia-field">
-                            <legend className="addmidia-legend">Validade</legend>
-                            <input
-                                id="addmidia-validade" 
-                                className="addmidia-input" 
-                                type="date" 
-                                placeholder="Validade" 
-                                value={data}
-                                onChange={(e) => setData(e.target.value)}
-                            />
-                        </fieldset>
-
-                        <div className="addmidia-buttons">
-                            <button
-                                id="addmidia-back"
-                                className="second-action-button"
-                                type="button"
-                                onClick={handlePreviousPage}
-                            >Voltar</button>
-                            <button
-                                id="addmidia-confirm"
-                                className="action-button"
-                                type="submit"
-                                onClick={handleNextPage}
-                            >Adicionar</button>
-                        </div>
-                    </form>
-
-                ) : togglePage == 3 && file ? (
-                    <>
-                        <h2>Resumo</h2>
-
-                        <div id="addmidia-resumo">
-                            <p><strong>Nome:</strong> {nome}</p>
-                            <p><strong>Tipo de midia:</strong>{file ??
-                                file.type.startsWith("image/") ? "Imagem" :
-                                file.type.startsWith("video/") ? "Vídeo" :
-                                "Desconecido"
-                            }</p>
-                            <p><strong>Duração:</strong> {duracao} segundos</p>
-                            <p><strong>Validade:</strong> {data}</p>
-                            <p><strong>URL do arquivo:</strong> {preview}</p>
-
-
+                                {preview ? (
+                                    <>
+                                        <button
+                                            className="close-button"
+                                            onClick={handleRemoveFile}
+                                        >
+                                            <i className="bi bi-x-circle"></i>
+                                        </button>
+                                        <Preview preview={preview} file={file} />
+                                    </>
+                                ) : (
+                                    <span id="addmidia-span-upload">Escolha o arquivo <br /> Arquivos suportados: PNG, JPEG, MP4 </span>
+                                )}
+                    
+                                <input
+                                    id="addmidia-input-upload"
+                                    className="addmidia-input"
+                                    type="file"
+                                    accept="image/*,video/*"
+                                    placeholder="Upload"
+                                    onChange={handleFileChange}
+                                />
+                            </label>
+                            <fieldset className="addmidia-field">
+                                <legend className="addmidia-legend">URL</legend>
+                                <p id="addmidia-output-url">{preview}</p>
+                            </fieldset>
+                    
+                            <div className="addmidia-buttons">
+                                <button
+                                    id="addmidia-next"
+                                    className="action-button"
+                                    type="button"
+                                    onClick={handleNextPage}
+                                >Avançar</button>
+                            </div>
+                        </>
+                    ) : togglePage == 2 ? (
+                        <>
+                            <fieldset className="addmidia-field">
+                                <legend className="addmidia-legend">Duração</legend>
+                                <input
+                                    id="addmidia-duracao"
+                                    className="addmidia-input"
+                                    type="text"
+                                    placeholder="Duração (em segundos)"
+                                    value={duracao}
+                                    onChange={(e) => setDuracao(e.target.value)}
+                                />
+                            </fieldset>
+                            <fieldset className="addmidia-field">
+                                <legend className="addmidia-legend">TV Associada</legend>
+                                <input
+                                    id="addmidia-tv"
+                                    className="addmidia-input"
+                                    type="text"
+                                    placeholder="ID da TV Associada"
+                                />
+                            </fieldset>
+                            <fieldset className="addmidia-field">
+                                <legend className="addmidia-legend">Validade</legend>
+                                <input
+                                    id="addmidia-validade"
+                                    className="addmidia-input"
+                                    type="date"
+                                    placeholder="Validade"
+                                    value={data}
+                                    onChange={(e) => setData(e.target.value)}
+                                />
+                            </fieldset>
                             <div className="addmidia-buttons">
                                 <button
                                     id="addmidia-back"
@@ -214,17 +172,45 @@ export const AddMidia = ({ onClose }) => {
                                 <button
                                     id="addmidia-confirm"
                                     className="action-button"
-                                    type="submit"
-                                    onClick={handleSubmit}
-                                >Confirmar</button>
+                                    type="button"
+                                    onClick={handleNextPage}
+                                >Adicionar</button>
                             </div>
-                        </div>
-
-                        
-                    </>
-                ) : (
-                    <p>Erro ao carregar recurso</p>
-                )}
+                        </>
+                    ) : togglePage == 3 && file ? (
+                        <>
+                            <h2>Resumo</h2>
+                            <div id="addmidia-resumo">
+                                <p><strong>Nome:</strong> {nome}</p>
+                                <p><strong>Tipo de midia:</strong>{file ??
+                                    file.type.startsWith("image/") ? "Imagem" :
+                                    file.type.startsWith("video/") ? "Vídeo" :
+                                    "Desconecido"
+                                }</p>
+                                <p><strong>Duração:</strong> {duracao} segundos</p>
+                                <p><strong>Validade:</strong> {data}</p>
+                                <p><strong>URL do arquivo:</strong> {preview}</p>
+                                <div className="addmidia-buttons">
+                                    <button
+                                        id="addmidia-back"
+                                        className="second-action-button"
+                                        type="button"
+                                        onClick={handlePreviousPage}
+                                    >Voltar</button>
+                                    <button
+                                        id="addmidia-confirm"
+                                        className="action-button"
+                                        type="submit"
+                                        onClick={handleSubmit}
+                                    >Confirmar</button>
+                                </div>
+                            </div>
+                    
+                        </>
+                    ) : (
+                        <p>Erro ao carregar recurso</p>
+                    )}
+                </form>
             </div>
         </div>
     )
