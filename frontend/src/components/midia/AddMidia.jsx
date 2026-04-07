@@ -34,11 +34,10 @@ export const AddMidia = ({ onClose }) => {
     const todasTvsSelecionadas = tvsSelecionadas.length === tvs.length
 
     const handleToggleTv = (id) => {
-        setTvsSelecionadas(prev => {
-            prev.includes(id) ?
-                prev.filter(tvId => tvId !== id) :
-                [...prev, id]
-            }
+        setTvsSelecionadas(prev => 
+            prev.includes(id)
+            ? prev.filter(tvId => tvId !== id)
+            : [...prev, id]
         )
     }
 
@@ -106,10 +105,10 @@ export const AddMidia = ({ onClose }) => {
 
                 <h2>Nova Mídia</h2>
 
-                <form className="addmidia-form" action="">
+                <form id="addmidia-form-modal" className="addmidia-form" action="">
                     {togglePage == 1 ? (
                         <>
-                            <fieldset className="addmidia-field">
+                            <fieldset id="addmidia-field-nome" className="addmidia-field">
                                 <legend className="addmidia-legend">Nome</legend>
                                 <input
                                     id="addmidia-nome"
@@ -120,11 +119,13 @@ export const AddMidia = ({ onClose }) => {
                                     onChange={(e) => setNome(e.target.value)}
                                 />
                             </fieldset>
+
                             <label htmlFor="addmidia-input-upload" id="addmidia-label-upload">
                     
                                 {preview ? (
                                     <>
                                         <button
+                                            type="button"
                                             className="close-button"
                                             onClick={handleRemoveFile}
                                         >
@@ -145,12 +146,13 @@ export const AddMidia = ({ onClose }) => {
                                     onChange={handleFileChange}
                                 />
                             </label>
-                            <fieldset className="addmidia-field">
+
+                            <fieldset id="addmidia-field-url" className="addmidia-field">
                                 <legend className="addmidia-legend">URL</legend>
                                 <p id="addmidia-output-url">{preview}</p>
                             </fieldset>
                     
-                            <div className="addmidia-buttons">
+                            <div id="addmidia-buttons-1" className="addmidia-buttons">
                                 <button
                                     id="addmidia-next"
                                     className="action-button"
@@ -161,7 +163,7 @@ export const AddMidia = ({ onClose }) => {
                         </>
                     ) : togglePage == 2 ? (
                         <>
-                            <fieldset className="addmidia-field">
+                            <fieldset id="addmidia-field-duracao" className="addmidia-field">
                                 <legend className="addmidia-legend">Duração</legend>
                                 <input
                                     id="addmidia-duracao"
@@ -184,6 +186,7 @@ export const AddMidia = ({ onClose }) => {
                                     {tvs.map(tv => (
                                         <label key={tv.id} className="addmidia-tv-item">
                                             <input
+                                                id={`tv-${tv.id}`}
                                                 type="checkbox"
                                                 checked={tvsSelecionadas.includes(tv.id)}
                                                 onChange={() => handleToggleTv(tv.id)}
@@ -194,7 +197,7 @@ export const AddMidia = ({ onClose }) => {
                                 </div>
                             </fieldset>
 
-                            <fieldset className="addmidia-field">
+                            <fieldset id="addmidia-field-validade" className="addmidia-field">
                                 <legend className="addmidia-legend">Validade</legend>
                                 <input
                                     id="addmidia-validade"
@@ -205,7 +208,8 @@ export const AddMidia = ({ onClose }) => {
                                     onChange={(e) => setData(e.target.value)}
                                 />
                             </fieldset>
-                            <div className="addmidia-buttons">
+
+                            <div id="addmidia-buttons-2" className="addmidia-buttons">
                                 <button
                                     id="addmidia-back"
                                     className="second-action-button"
@@ -225,10 +229,15 @@ export const AddMidia = ({ onClose }) => {
                             <h2>Resumo</h2>
                             <div id="addmidia-resumo">
                                 <p><strong>Nome:</strong> {nome}</p>
-                                <p><strong>Tipo de midia:</strong>{file ??
-                                    file.type.startsWith("image/") ? "Imagem" :
-                                    file.type.startsWith("video/") ? "Vídeo" :
-                                    "Desconecido"
+                                <p><strong>Tipo de midia: </strong>{
+                                    file
+                                        ? file.type.startsWith("image/")
+                                            ? "Imagem"
+                                            : file.type.startsWith("video/")
+                                            ? "Vídeo"
+                                            : "Desconhecido"
+                                        : "Nenhuma mídia"
+                                    
                                 }</p>
                                 <p><strong>Duração:</strong> {duracao} segundos</p>
                                 <p><strong>Validade:</strong> {data}</p>

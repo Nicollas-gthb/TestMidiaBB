@@ -133,13 +133,12 @@
 }
 
 .addmidia-buttons{
-    width: 100%;
+    width: 95%;
     display: flex;
     justify-content: center;
 
     gap: 10px;
     padding: 10px;
-
 }
 
 #addmidia-back{
@@ -167,12 +166,11 @@
     background-color: var(--hover-action-bg);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     
     padding: 0 20px;
-    margin: 0 20px;
+    margin: 0 10px;
     border-radius: 10px;
-    gap: 10px;
 }
 
 .addmidia-tvs-list{
