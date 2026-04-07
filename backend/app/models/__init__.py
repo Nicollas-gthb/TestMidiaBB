@@ -1,3 +1,5 @@
+from app.core.database import Base
+
 from app.models.user import Usuario
 from app.models.tv import TV
 from app.models.midia import Midia
