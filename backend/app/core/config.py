@@ -6,5 +6,9 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     DB_HOST: str
     DB_PORT: str
+    SECRET_KEY: str
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_HOURS: int
+    REFRESH_TOKEN_EXPIRE_DAYS: int
 
 settings = Settings()

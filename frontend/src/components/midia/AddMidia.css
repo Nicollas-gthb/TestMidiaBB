@@ -179,3 +179,7 @@
     display: flex;
     flex-direction: column;
 }
+
+.addmidia-opcoes-tv{
+    margin-left: 10px;
+}

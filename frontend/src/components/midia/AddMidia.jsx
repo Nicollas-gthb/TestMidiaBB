@@ -105,7 +105,7 @@ export const AddMidia = ({ onClose }) => {
 
                 <h2>Nova Mídia</h2>
 
-                <form id="addmidia-form-modal" className="addmidia-form" action="">
+                <form id="addmidia-form-modal" className="addmidia-form" onSubmit={handleSubmit}>
                     {togglePage == 1 ? (
                         <>
                             <fieldset id="addmidia-field-nome" className="addmidia-field">
@@ -187,6 +187,7 @@ export const AddMidia = ({ onClose }) => {
                                         <label key={tv.id} className="addmidia-tv-item">
                                             <input
                                                 id={`tv-${tv.id}`}
+                                                className="addmidia-opcoes-tv"
                                                 type="checkbox"
                                                 checked={tvsSelecionadas.includes(tv.id)}
                                                 onChange={() => handleToggleTv(tv.id)}
