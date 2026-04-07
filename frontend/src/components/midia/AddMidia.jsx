@@ -242,6 +242,11 @@ export const AddMidia = ({ onClose }) => {
                                 <p><strong>Duração:</strong> {duracao} segundos</p>
                                 <p><strong>Validade:</strong> {data}</p>
                                 <p><strong>URL do arquivo:</strong> {preview}</p>
+                                <p><strong>TVs:</strong> {
+                                    tvs
+                                    .filter(tv => tvsSelecionadas.includes(tv.id))
+                                    .map(tv => tv.nome).join(", ")
+                                }</p>
                                 <div className="addmidia-buttons">
                                     <button
                                         id="addmidia-back"
