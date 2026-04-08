@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.seed import seed
+from app.routes import auth, tvs
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -22,3 +23,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+app.include_router(auth.router)
+app.include_router(tvs.router)
