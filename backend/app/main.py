@@ -1,7 +1,15 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+from app.seed import seed
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    seed()
+    yield
+app = FastAPI(lifespan=lifespan)
+
 
 @app.get("/")
 async def init():

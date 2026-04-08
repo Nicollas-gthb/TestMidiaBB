@@ -5,7 +5,7 @@ from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
-from app.models.model import Usuario
+from app.models.user import Usuario
 from app.core.database import get_session
 from app.core.config import settings
 
