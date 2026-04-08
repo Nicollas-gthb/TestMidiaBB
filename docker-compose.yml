@@ -13,6 +13,7 @@ services:
     build: ./backend
     volumes:
       - ./backend:/app
+      - midias_files:/app/midias
     env_file:
       - ./.env
     depends_on:
@@ -50,3 +51,4 @@ services:
 
 volumes:
   pgdata:
+  midias_files:
