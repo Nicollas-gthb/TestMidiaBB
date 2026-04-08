@@ -12,7 +12,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-@app.get("/")
+@app.get("/api/")
 async def init():
     return {"message": "Hello World"}
 
