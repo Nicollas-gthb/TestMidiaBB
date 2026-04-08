@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from typing import List
 from datetime import date
 import shutil, uuid, os
@@ -17,6 +17,10 @@ router = APIRouter(prefix="/api/midias", tags=["Mídias"])
 UPLOAD_DIR = "/app/midias"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+@router.get("/", response_model=list[MidiaResponse])
+def listar_midias(session: Session = Depends(get_session)):
+    return session.query(Midia).filter(Midia.ativo == True).options(joinedload(Midia.tvs)).all()
+
 @router.post("/upload", response_model=MidiaResponse)
 def upload_midia(
     nome: str = Form(...),
@@ -25,7 +29,6 @@ def upload_midia(
     validade: date = Form(None),
     arquivo: UploadFile = File(...),
     session: Session = Depends(get_session),
-    usuario=Depends(get_usuario_atual)
 ):
     # Valida tipo
     tipo = None
@@ -75,7 +78,7 @@ def upload_midia(
     return midia
 
 @router.delete("/{midia_id}")
-def deletar_midia(midia_id: int, session: Session = Depends(get_session), usuario=Depends(get_usuario_atual)):
+def deletar_midia(midia_id: int, session: Session = Depends(get_session)):
     midia = session.query(Midia).filter(Midia.id == midia_id, Midia.ativo == True).first()
     if not midia:
         raise HTTPException(status_code=404, detail="Mídia não encontrada")

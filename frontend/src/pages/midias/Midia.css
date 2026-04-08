@@ -26,6 +26,10 @@
 #midia-aside-main{
     background-color: var(--bg);
     height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 #midia-menu-header{
@@ -39,6 +43,20 @@
     flex-direction: column;
     align-items: center;
     padding: 0 40px;
+}
+
+.menu-buttons{
+    width: 80%;
+    height: 35px;
+    background-color: var(--action-bg);
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.menu-buttons:hover{
+    background-color: var(--hover-action-bg);
 }
 
 .table-container{

@@ -9,11 +9,11 @@ from app.schemas.tv import TVCreate, TVResponse
 router = APIRouter(prefix="/api/tv", tags=["TVs"])
 
 @router.get("/", response_model=list[TVResponse])
-def listar_tvs(session: Session = Depends(get_session), usuario=Depends(get_usuario_atual)):
+def listar_tvs(session: Session = Depends(get_session)):
     return session.query(TV).filter(TV.ativo == True).all()
 
 @router.post("/", response_model=TVResponse)
-def criar_tv(tv: TVCreate, session: Session = Depends(get_session), usuario=Depends(get_usuario_admin)):
+def criar_tv(tv: TVCreate, session: Session = Depends(get_session)):
     existe = session.query(TV).filter(TV.numero == tv.numero).first()
     if existe:
         raise HTTPException(status_code=400, detail="Já existe uma TV com esse número")
@@ -25,7 +25,7 @@ def criar_tv(tv: TVCreate, session: Session = Depends(get_session), usuario=Depe
     return nova_tv
 
 @router.delete("/{tv_id}")
-def deletar_tv(tv_id: int, session: Session = Depends(get_session), usuario=Depends(get_usuario_admin)):
+def deletar_tv(tv_id: int, session: Session = Depends(get_session)):
     tv = session.query(TV).filter(TV.id == tv_id, TV.ativo == True).first()
     if not tv:
         raise HTTPException(status_code=404, detail="TV não encontrada")

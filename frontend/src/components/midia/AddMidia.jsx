@@ -2,13 +2,9 @@ import { useEffect, useState } from "react"
 
 import "./AddMidia.css"
 import { Preview } from "./PreviewMidia"
+import { api } from "../../api/axios"
 
-export const AddMidia = ({ onClose }) => {
-
-    
-    // useEffect(() => {
-    //     usar para buscar as tvs disponiveis
-    // }, [])
+export const AddMidia = ({ onClose, onSuccess }) => {
 
     const [togglePage, setTogglePage] = useState(1)
         
@@ -20,16 +16,13 @@ export const AddMidia = ({ onClose }) => {
     const [preview, setPreview] = useState(null)
 
 
-
     const [tvsSelecionadas, setTvsSelecionadas] = useState([])
 
-    //simulando backend
-    const tvs = [
-        { id: 1, numero: 1, nome: "TV 1" },
-        { id: 2, numero: 2, nome: "TV 2" },
-        { id: 3, numero: 3, nome: "TV 3" },
-        { id: 4, numero: 4, nome: "TV 4" }
-    ]
+    const [tvs, setTvs] = useState([])
+
+    useEffect(() => {
+        api.get("/tv/").then(res => setTvs(res.data))
+    }, [])
     
     const todasTvsSelecionadas = tvsSelecionadas.length === tvs.length
 
@@ -87,9 +80,23 @@ export const AddMidia = ({ onClose }) => {
         }
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        // Aqui adicionar a lógica para enviar os dados para o backend
+        
+        const formData = new FormData()
+        formData.append("nome", nome)
+        formData.append("arquivo", file)
+        formData.append("duracao_segundos", duracao)
+        formData.append("tv_ids", JSON.stringify(tvsSelecionadas))
+
+        if (data) formData.append("validade", data)
+
+        try {
+            await api.post("/midias/upload", formData)
+            onSuccess()
+        } catch (error) {
+            console.error("Erro ao fazer upload", error)
+        }
     }
 
     return (
