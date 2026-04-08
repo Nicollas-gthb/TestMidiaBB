@@ -50,7 +50,7 @@ def criar_refresh_token(id_usuario):
 
 
 #oauth2
-oauth2_schema = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_schema = OAuth2PasswordBearer(tokenUrl="/api/auth/login/swagger")
 
 #função para bloquear rotas, exigindo um token
 async def get_usuario_atual(

@@ -17,7 +17,7 @@ def login(
     usuario = session.query(Usuario).filter(
         Usuario.email == request.email,
         Usuario.ativo == True
-    )
+    ).first()
 
     if not usuario or not verificar_senha(request.senha, usuario.senha):
         raise HTTPException(status_code=401, status="Email ou senha invalidos")
@@ -25,3 +25,21 @@ def login(
     token = criar_access_token(usuario.id)
 
     return TokenResponse(access_token=token)
+
+from fastapi.security import OAuth2PasswordRequestForm
+
+@router.post("/login/swagger")
+def login_swagger(
+    form: OAuth2PasswordRequestForm = Depends(),
+    session: Session = Depends(get_session)
+):
+    usuario = session.query(Usuario).filter(
+        Usuario.email == form.username,
+        Usuario.ativo == True
+    ).first()
+
+    if not usuario or not verificar_senha(form.password, usuario.senha):
+        raise HTTPException(status_code=401, detail="Email ou senha inválidos")
+
+    token = criar_access_token(usuario.id)
+    return {"access_token": token, "token_type": "bearer"}
