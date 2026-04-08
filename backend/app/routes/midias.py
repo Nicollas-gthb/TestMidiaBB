@@ -57,6 +57,9 @@ def upload_midia(
     # Associa às TVs selecionadas
     import json
     ids = json.loads(tv_ids)
+    if not isinstance(ids, list):
+        ids = [ids]
+
     for tv_id in ids:
         tv = session.query(TV).filter(TV.id == tv_id, TV.ativo == True).first()
         if not tv:
