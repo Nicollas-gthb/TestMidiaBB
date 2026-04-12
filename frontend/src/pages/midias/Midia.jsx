@@ -114,7 +114,7 @@ export default function Midia() {
 
                                 {midias.length === 0 && (
                                     <tr>
-                                        <td colSpan={8} style={{ textAlign: "center" }}>
+                                        <td colSpan={9} style={{ textAlign: "center" }}>
                                             Nenhuma mídia cadastrada
                                         </td>
                                     </tr>

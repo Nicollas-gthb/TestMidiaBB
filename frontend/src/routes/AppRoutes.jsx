@@ -4,6 +4,7 @@ import { AuthContext } from "../contexts/AuthContext"
 import Home from "../pages/home/Home"
 import Midia from "../pages/midias/Midia"
 import Tv from "../pages/tvs/Tvs"
+import TvConfig from "../pages/tvs/TvConfig"
 
 export default function AppRoutes(){
 
@@ -22,6 +23,9 @@ export default function AppRoutes(){
                     <Tv />
                 } />
 
+                <Route path="/tv" element={
+                    <TvConfig />
+                } />
                 
             </Routes>
         </BrowserRouter>
