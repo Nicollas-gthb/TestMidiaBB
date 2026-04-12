@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 
 import "./Home.css"
 import { Aside } from "../../components/aside/Aside"
+import { Header } from "../../components/header/Header"
 
 export default function Home() {
 
@@ -14,10 +15,7 @@ export default function Home() {
 
             <main id="home-main-container">
 
-                {/** TODO: converter o header em um componente */}
-                <header id="home-menu-header">
-                    <h1>LOGO</h1>
-                </header>
+                <Header />
 
                 <div id="home-menu-main">
                 

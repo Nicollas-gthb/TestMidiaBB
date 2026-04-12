@@ -1,5 +1,6 @@
 import "./TvConfig.css"
 import { Aside } from "../../components/aside/Aside"
+import { Header } from "../../components/header/Header"
 
 export default function TvConfig() {
     return (
@@ -9,10 +10,7 @@ export default function TvConfig() {
 
             <main id="midia-main-container">
 
-                {/** TODO: converter o header em um componente */}
-                <header id="midia-menu-header">
-                    <h1>LOGO</h1>
-                </header>
+                <Header />
 
                 <div id="midia-menu-main">
 

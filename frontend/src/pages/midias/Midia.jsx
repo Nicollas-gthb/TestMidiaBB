@@ -4,6 +4,7 @@ import "./Midia.css"
 import { AddMidia } from "../../components/midia/AddMidia"
 import { api } from "../../api/axios"
 import { Aside } from "../../components/aside/Aside"
+import { Header } from "../../components/header/Header"
 
 export default function Midia() {
 
@@ -40,10 +41,7 @@ export default function Midia() {
 
             <main id="midia-main-container">
 
-                {/** TODO: converter o header em um componente */}
-                <header id="midia-menu-header">
-                    <h1>LOGO</h1>
-                </header>
+                <Header />
 
                 <div id="midia-menu-main">
 

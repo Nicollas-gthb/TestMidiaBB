@@ -19,11 +19,11 @@ export const Aside = () => {
     }
 
     return (
-        <aside id="home-menu-container">
-            <header id="home-aside-header">
+        <aside id="aside-menu-container">
+            <header id="aside-aside-header">
                 <h1>Menu</h1>
             </header>
-            <div id="home-aside-main">
+            <div id="aside-aside-main">
                 <button className="menu-buttons" onClick={handlePageMidia}>Midias</button>
                 <button className="menu-buttons" onClick={handlePageTv}>TVs</button>
                 <button className="menu-buttons" onClick={handlePageHome}>Home</button>

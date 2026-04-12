@@ -5,13 +5,6 @@
     z-index: 1;
 }
 
-#midia-menu-container{
-    width: 15%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
 #midia-main-container{
     width: 85%;
     height: 100vh;
@@ -19,23 +12,6 @@
     flex-direction: column;
 }
 
-#midia-aside-header{
-    background-color: var(--bg);
-    height: 10%;
-}
-#midia-aside-main{
-    background-color: var(--bg);
-    height: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-#midia-menu-header{
-    background-color: rgb(53, 75, 142);
-    height: 10%;
-}
 #midia-menu-main{
     background-color: rgb(7, 23, 69);
     height: 90%;
@@ -45,66 +21,3 @@
     padding: 0 40px;
 }
 
-.menu-buttons{
-    width: 80%;
-    height: 35px;
-    background-color: var(--action-bg);
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.menu-buttons:hover{
-    background-color: var(--hover-action-bg);
-}
-
-.table-container{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.table-title{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%; 
-    margin-top: 40px;
-}
-
-.action-button{
-    background-color: var(--action-bg);
-    border: none;
-    color: var(--text);
-    font-weight: bold;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.second-action-button{
-    background-color: transparent;
-    border: 3px solid var(--text);
-    color: var(--text);
-    font-weight: bold;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.action-button:hover{
-    background-color: var(--hover-action-bg);
-    color: var(--text-hover);
-}
-
-.second-action-button:hover{
-    background-color: var(--hover-action-bg);
-    border-color: var(--hover-action-bg);
-    color: var(--text-hover);
-}
-
-.bi-arrow-bar-up{
-    font-size: 20px;
-    margin-right: 8px;
-}
