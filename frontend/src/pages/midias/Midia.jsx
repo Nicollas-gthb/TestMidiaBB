@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import "./Midia.css"
 import { AddMidia } from "../../components/midia/AddMidia"
 import { api } from "../../api/axios"
+import { Aside } from "../../components/aside/Aside"
 
 export default function Midia() {
 
@@ -35,18 +36,7 @@ export default function Midia() {
     return (
         <div id="midia-container">
 
-            {/** TODO: converter o aside em um componente */}
-            <aside id="midia-menu-container">
-                <header id="midia-aside-header">
-                    <h1>Menu</h1>
-                </header>
-                <div id="midia-aside-main">
-                    <button className="menu-buttons">Botão 1</button>
-                    <button className="menu-buttons">Botão 2</button>
-                    <button className="menu-buttons">Botão 3</button>
-                </div>
-            </aside>
-
+            <Aside />
 
             <main id="midia-main-container">
 

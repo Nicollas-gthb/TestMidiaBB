@@ -1,0 +1,19 @@
+#home-menu-container{
+    width: 15%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#home-aside-header{
+    background-color: var(--bg);
+    height: 10%;
+}
+#home-aside-main{
+    background-color: var(--bg);
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}

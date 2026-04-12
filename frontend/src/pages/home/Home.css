@@ -5,12 +5,7 @@
     z-index: 1;
 }
 
-#home-menu-container{
-    width: 15%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
+
 
 #home-main-container{
     width: 85%;
@@ -19,18 +14,7 @@
     flex-direction: column;
 }
 
-#home-aside-header{
-    background-color: var(--bg);
-    height: 10%;
-}
-#home-aside-main{
-    background-color: var(--bg);
-    height: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
+
 
 #home-menu-header{
     background-color: rgb(53, 75, 142);
