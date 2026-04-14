@@ -4,6 +4,7 @@ import "./TvConfig.css"
 import { Aside } from "../../components/aside/Aside"
 import { Header } from "../../components/header/Header"
 import { api } from "../../api/axios"
+import { AddTV } from "../../components/tv/AddTv"
 
 export default function TvConfig() {
 
@@ -112,15 +113,15 @@ export default function TvConfig() {
                         </table>
                     </div>
 
-                    {/* {addTvAberto && (
-                        <AddTv 
+                    {addTvAberto && (
+                        <AddTV 
                             onClose={() => setAddTvAberto(false)}
                             onSuccess={() => {
                                 setAddTvAberto(false)
                                 carregarTvs()
                             }}
                         />
-                    )} */}
+                    )}
                 </div>
             </main>
         </div>
