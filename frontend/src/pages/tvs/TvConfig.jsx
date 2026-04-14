@@ -5,10 +5,12 @@ import { Aside } from "../../components/aside/Aside"
 import { Header } from "../../components/header/Header"
 import { api } from "../../api/axios"
 import { AddTV } from "../../components/tv/AddTv"
+import { DetailModal } from "../../components/detail/DetailModal"
 
 export default function TvConfig() {
 
     const [addTvAberto, setAddTvAberto] = useState(false)
+    const [detail, setDetail] = useState(null)
 
     const [tvs, setTvs] = useState([])
 
@@ -82,7 +84,14 @@ export default function TvConfig() {
                                         <td>{tv.nome}</td>
                                         <td>{tv.numero}</td>
                                         <td>
-                                            Ver 
+                                            <button 
+                                                id="tv-detail-button" 
+                                                className="action-button"
+                                                onClick={() => {setDetail(tv)}}
+                                            >
+                                                <i className="bi bi-eye"></i>
+                                                Ver mais
+                                            </button>
                                         </td>
                                         <td>{tv.ativo ? "Ativa" : "Inativa"}</td>
                                         <td>
@@ -120,6 +129,14 @@ export default function TvConfig() {
                                 setAddTvAberto(false)
                                 carregarTvs()
                             }}
+                        />
+                    )}
+
+                    {detail && (
+                        <DetailModal 
+                            onClose={() => {setDetail(null)}}
+                            tipo={"tv"}
+                            item={detail}
                         />
                     )}
                 </div>

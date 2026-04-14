@@ -21,3 +21,9 @@
     padding: 0 40px;
 }
 
+#midia-detail-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}

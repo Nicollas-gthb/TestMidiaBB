@@ -5,10 +5,13 @@ import { AddMidia } from "../../components/midia/AddMidia"
 import { api } from "../../api/axios"
 import { Aside } from "../../components/aside/Aside"
 import { Header } from "../../components/header/Header"
+import { DetailModal } from "../../components/detail/DetailModal"
 
 export default function Midia() {
 
     const [addMidiaAberto, setAddMidiaAberto] = useState(false)
+
+    const [detail, setDetail] = useState(null)
 
     const [midias, setMidias] = useState([])
 
@@ -80,7 +83,17 @@ export default function Midia() {
                                         <td>{midia.id}</td>
                                         <td>{midia.nome}</td>
                                         <td>{midia.tipo}</td>
-                                        <td>{midia.tvs.map(tv => `TV ${tv.numero}`).join(", ") || "—"}</td>
+                                        <td>
+                                            <button 
+                                                id="midia-detail-button" 
+                                                className="action-button"
+                                                onClick={() => {setDetail(midia)}}
+                                            >
+                                                <i className="bi bi-eye"></i>
+                                                Ver mais
+                                            </button>
+                                        </td>
+                                        {/* <td>{midia.tvs.map(tv => `TV ${tv.numero}`).join(", ") || "—"}</td> */}
                                         <td>{midia.ativo ? "Ativa" : "Inativa"}</td>
                                         <td>{midia.validade ?? "—"}</td>
                                         <td>{midia.duracao_segundos}s</td>
@@ -118,6 +131,14 @@ export default function Midia() {
                                 setAddMidiaAberto(false)
                                 carregarMidias()
                             }}
+                        />
+                    )}
+
+                    {detail && (
+                        <DetailModal 
+                            onClose={() => {setDetail(null)}}
+                            tipo={"midia"}
+                            item={detail}
                         />
                     )}
                 </div>
