@@ -18,11 +18,16 @@
 #detail-content{
     position: relative;
     background-color: var(--td-bg);
-    width: 30%;
+    width: 40%;
     height: auto;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
+}
+
+#detail-titulo{
+    text-align: center;
+    margin: 50px 0;
 }
 
 .bi-eye{
