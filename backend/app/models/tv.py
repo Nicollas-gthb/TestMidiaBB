@@ -13,3 +13,4 @@ class TV(Base):
     ativo = Column(Boolean, default=True)
 
     playlist = relationship("PlaylistItem", back_populates="tv")
+    midias = relationship("Midia", secondary="playlist_items", viewonly=True)

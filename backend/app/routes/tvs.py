@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app.core.database import get_session
 from app.core.security import get_usuario_atual, get_usuario_admin
@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/tv", tags=["TVs"])
 
 @router.get("/", response_model=list[TVResponse])
 def listar_tvs(session: Session = Depends(get_session)):
-    return session.query(TV).filter(TV.ativo == True).all()
+    return session.query(TV).filter(TV.ativo == True).options(joinedload(TV.midias)).all()
 
 @router.post("/", response_model=TVResponse)
 def criar_tv(tv: TVCreate, session: Session = Depends(get_session)):
