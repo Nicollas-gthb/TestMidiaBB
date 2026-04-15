@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
-from datetime import date, datetime
+from sqlalchemy import or_
+from datetime import date, datetime, timezone
 
 from app.core.database import get_session
 from app.models.tv import TV
@@ -17,7 +18,7 @@ def get_playlist(numero: int, session: Session = Depends(get_session)):
     if not tv:
         raise HTTPException(status_code=404, detail="TV não encontrada")
 
-    agora = datetime.now()
+    agora = datetime.now(timezone.utc)
 
     items = (
         session.query(PlaylistItem)
@@ -28,6 +29,15 @@ def get_playlist(numero: int, session: Session = Depends(get_session)):
             Midia.ativo == True,
 
             #Logica para não exibir a depender da data e horario
+            # or_(
+            # Midia.inicio_exibicao.is_(None),
+            # Midia.inicio_exibicao <= agora
+            # ),
+            # or_(
+            #     Midia.expiracao.is_(None),
+            #     Midia.expiracao >= agora
+            # )
+
             (Midia.inicio_exibicao == None) | (Midia.inicio_exibicao <= agora),
             (Midia.expiracao == None) | (Midia.expiracao >= agora)
         )

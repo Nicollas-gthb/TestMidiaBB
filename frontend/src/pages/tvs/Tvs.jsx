@@ -59,12 +59,14 @@ export default function Tv(){
         <div id="tvs-container">
             {tipo === "image" ? (
                 <img
+                    key={arquivo}
                     className="tvs-img" 
                     src={arquivo} 
                     alt="" 
                 />
             ) : (
                 <video 
+                    key={arquivo}
                     className="tvs-video"
                     src={arquivo}
                     autoPlay

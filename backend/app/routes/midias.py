@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session, joinedload
-from typing import List
-from datetime import date
+from typing import List, Optional
+from datetime import date, datetime, timezone
 import shutil, uuid, os
 
 from app.core.database import get_session
@@ -17,6 +17,16 @@ router = APIRouter(prefix="/api/midias", tags=["Mídias"])
 UPLOAD_DIR = "/app/midias"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+def parse_datetime(dt_str: str | None):
+    if not dt_str:
+        return None
+    
+    # Converte string para datetime
+    dt = datetime.fromisoformat(dt_str)
+    
+    # Força UTC
+    return dt.replace(tzinfo=timezone.utc)
+
 @router.get("/", response_model=list[MidiaResponse])
 def listar_midias(session: Session = Depends(get_session)):
     return session.query(Midia).filter(Midia.ativo == True).options(joinedload(Midia.tvs)).order_by(Midia.id).all()
@@ -26,9 +36,8 @@ def upload_midia(
     nome: str = Form(...),
     duracao_segundos: int = Form(...),
     tv_ids: str = Form(...),
-    validade: date = Form(None),
-    inicio_exibicao: date = Form(None),
-    expiracao: date = Form(None),
+    inicio_exibicao: str | None = Form(None),
+    expiracao: str | None = Form(None),
     arquivo: UploadFile = File(...),
     session: Session = Depends(get_session),
 ):
@@ -48,13 +57,22 @@ def upload_midia(
     with open(caminho, "wb") as buffer:
         shutil.copyfileobj(arquivo.file, buffer)
 
+
+    # inicio = parse_datetime(inicio_exibicao)
+    # expira = parse_datetime(expiracao)
+
+
+    inicio = datetime.fromisoformat(inicio_exibicao).replace(tzinfo=timezone.utc) if inicio_exibicao else None
+    expira = datetime.fromisoformat(expiracao).replace(tzinfo=timezone.utc) if expiracao else None
+    
     # Cria mídia no banco
     midia = Midia(
         nome=nome,
         tipo=tipo,
         arquivo=f"/midias/{nome_arquivo}",
         duracao_segundos=duracao_segundos,
-        validade=validade
+        inicio_exibicao=inicio,
+        expiracao=expira
     )
     session.add(midia)
     session.flush()

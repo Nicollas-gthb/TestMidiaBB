@@ -1,4 +1,5 @@
 import "./DetailModal.css"
+import { formatarDataHora } from "../../utils/formatters"
 
 export const DetailModal = ({ tipo, onClose, item }) => {
 
@@ -57,7 +58,8 @@ export const DetailModal = ({ tipo, onClose, item }) => {
                                     <th className="left-table">Nome</th>
                                     <th>Tipo</th>
                                     <th>Duração</th>
-                                    <th className="right-table">Validade</th>
+                                    <th>Inicio</th>
+                                    <th className="right-table">Fim</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,7 +68,8 @@ export const DetailModal = ({ tipo, onClose, item }) => {
                                         <td>{midia.nome}</td>
                                         <td>{midia.tipo}</td>
                                         <td>{midia.duracao_segundos}</td>
-                                        <td>{midia.validade ?? "-"}</td>
+                                        <td>{formatarDataHora(midia.inicio_exibicao)}</td>
+                                        <td>{formatarDataHora(midia.expiracao)}</td>
                                     </tr>
                                 ))}
                             </tbody>

@@ -3,15 +3,16 @@ import { useEffect, useState } from "react"
 import "./AddMidia.css"
 import { Preview } from "./PreviewMidia"
 import { api } from "../../api/axios"
+import { toUTC } from "../../utils/formatters"
 
 export const AddMidia = ({ onClose, onSuccess }) => {
 
     const [togglePage, setTogglePage] = useState(1)
         
     const [nome, setNome] = useState("")
-    const [data, setData] = useState("")
-    const [duracao, setDuracao] = useState("")
-
+    const [exibicao, setExibicao] = useState("") 
+    const [expiracao, setExpiracao] = useState("") 
+    const [duracao, setDuracao] = useState("3")
     const [file, setFile] = useState(null)
     const [preview, setPreview] = useState(null)
 
@@ -89,7 +90,9 @@ export const AddMidia = ({ onClose, onSuccess }) => {
         formData.append("duracao_segundos", duracao)
         formData.append("tv_ids", JSON.stringify(tvsSelecionadas))
 
-        if (data) formData.append("validade", data)
+        if (exibicao) formData.append("inicio_exibicao", toUTC(exibicao))
+        if (expiracao) formData.append("expiracao", toUTC(expiracao))
+
 
         try {
             await api.post("/midias/upload", formData)
@@ -205,15 +208,27 @@ export const AddMidia = ({ onClose, onSuccess }) => {
                                 </div>
                             </fieldset>
 
-                            <fieldset id="addmidia-field-validade" className="addmidia-field">
-                                <legend className="addmidia-legend">Validade</legend>
+                            <fieldset id="addmidia-field-exibicao" className="addmidia-field">
+                                <legend className="addmidia-legend">Inicio da exibição</legend>
                                 <input
-                                    id="addmidia-validade"
+                                    id="addmidia-exibicao"
                                     className="addmidia-input"
-                                    type="date"
-                                    placeholder="Validade"
-                                    value={data}
-                                    onChange={(e) => setData(e.target.value)}
+                                    type="datetime-local"
+                                    placeholder="Data e hora de inicio"
+                                    value={exibicao}
+                                    onChange={(e) => setExibicao(e.target.value)}
+                                />
+                            </fieldset>
+
+                            <fieldset id="addmidia-field-expiracao" className="addmidia-field">
+                                <legend className="addmidia-legend">Expiração</legend>
+                                <input
+                                    id="addmidia-expiracao"
+                                    className="addmidia-input"
+                                    type="datetime-local"
+                                    placeholder="Data e hora de fim"
+                                    value={expiracao}
+                                    onChange={(e) => setExpiracao(e.target.value)}
                                 />
                             </fieldset>
 
@@ -247,8 +262,9 @@ export const AddMidia = ({ onClose, onSuccess }) => {
                                         : "Nenhuma mídia"
                                     
                                 }</p>
-                                <p><strong>Duração:</strong> {duracao} segundos</p>
-                                <p><strong>Validade:</strong> {data}</p>
+                                <p><strong>Duração:</strong> {duracao || "(padrão) 5"} segundos</p>
+                                <p><strong>Inicio da exibição:</strong> {exibicao || "Imediato"}</p>
+                                <p><strong>Fim da exibição:</strong> {expiracao || "Sem expiração"}</p>
                                 <p><strong>URL do arquivo:</strong> {preview}</p>
                                 <p><strong>TVs:</strong> {
                                     tvs

@@ -6,6 +6,7 @@ import { api } from "../../api/axios"
 import { Aside } from "../../components/aside/Aside"
 import { Header } from "../../components/header/Header"
 import { DetailModal } from "../../components/detail/DetailModal"
+import { formatarDataHora } from "../../utils/formatters"
 
 export default function Midia() {
 
@@ -71,8 +72,9 @@ export default function Midia() {
                                     <th>TIPO</th>
                                     <th>TVS</th>
                                     <th>STATUS</th>
-                                    <th>VALIDADE</th>
-                                    <th>Duração</th>
+                                    <th>INICIO</th>
+                                    <th>FIM</th>
+                                    <th>DURAÇÃO</th>
                                     <th>URL</th>
                                     <th className="right-table">AÇÕES</th>
                                 </tr>
@@ -93,9 +95,9 @@ export default function Midia() {
                                                 Ver mais
                                             </button>
                                         </td>
-                                        {/* <td>{midia.tvs.map(tv => `TV ${tv.numero}`).join(", ") || "—"}</td> */}
                                         <td>{midia.ativo ? "Ativa" : "Inativa"}</td>
-                                        <td>{midia.validade ?? "—"}</td>
+                                        <td>{formatarDataHora(midia.inicio_exibicao)}</td>
+                                        <td>{formatarDataHora(midia.expiracao)}</td>
                                         <td>{midia.duracao_segundos}s</td>
                                         <td>
                                             <a href={midia.arquivo} target="_blank" rel="noreferrer">
@@ -115,7 +117,7 @@ export default function Midia() {
 
                                 {midias.length === 0 && (
                                     <tr>
-                                        <td colSpan={9} style={{ textAlign: "center" }}>
+                                        <td colSpan={15} style={{ textAlign: "center" }}>
                                             Nenhuma mídia cadastrada
                                         </td>
                                     </tr>

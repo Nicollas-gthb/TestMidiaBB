@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-from datetime import date
+from datetime import datetime
 
 class TVSimples(BaseModel):
     id: int
@@ -16,8 +16,8 @@ class MidiaResponse(BaseModel):
     tipo: str
     arquivo: str
     duracao_segundos: int
-    inicio_exibicao: Optional[date] = None
-    expiracao: Optional[date] = None
+    inicio_exibicao: datetime | None = None
+    expiracao: datetime | None = None
     ativo: bool
     tvs: list[TVSimples] = []
 
