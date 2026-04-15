@@ -1,32 +1,40 @@
+import { useContext } from "react"
+import { AuthContext } from "../contexts/AuthContext"
 import { Routes, BrowserRouter, Route, Navigate } from "react-router-dom"
 
-import { AuthContext } from "../contexts/AuthContext"
+import Login from "../pages/login/Login"
 import Home from "../pages/home/Home"
 import Midia from "../pages/midias/Midia"
-import Tv from "../pages/tvs/Tvs"
 import TvConfig from "../pages/tvs/TvConfig"
+import Tv from "../pages/tvs/Tvs"
 
-export default function AppRoutes(){
+export default function AppRoutes() {
+    const { token } = useContext(AuthContext)
 
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/login" element={
+                    token ? <Navigate to="/home" /> : <Login />
+                } />
+
                 <Route path="/home" element={
-                    <Home />
+                    token ? <Home /> : <Navigate to="/login" />
                 } />
 
                 <Route path="/midia" element={
-                    <Midia />
-                } />
-
-                <Route path="/tv/:numero" element={
-                    <Tv />
+                    token ? <Midia /> : <Navigate to="/login" />
                 } />
 
                 <Route path="/tv" element={
-                    <TvConfig />
+                    token ? <TvConfig /> : <Navigate to="/login" />
                 } />
-                
+
+                {/* Pública — telão não precisa de login */}
+                <Route path="/tv/:numero" element={<Tv />} />
+
+                {/* O * no final redireciona qualquer rota desconhecida para o login.  */}
+                <Route path="*" element={<Navigate to="/login" />} />
             </Routes>
         </BrowserRouter>
     )

@@ -1,0 +1,35 @@
+#component-logout{
+    height: 75px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#component-logout-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    width: 85%;
+    height: 70%;
+    border: none;
+    border-radius: 9px;
+    padding: 0px 10px;
+    gap: 10px;
+    cursor: pointer;
+}
+
+#component-logout-button:hover{
+    background-color: #F44336;
+}
+
+#component-logout-text{
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.bi-box-arrow-right{
+    font-size: 30px;
+}

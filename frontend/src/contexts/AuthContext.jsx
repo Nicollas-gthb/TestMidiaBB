@@ -13,10 +13,9 @@ export function AuthProvider({children}){
         const savedUser = localStorage.getItem("user")
         const savedToken = localStorage.getItem("token")
 
-        if(savedToken && savedUser){
+        if (savedToken && savedUser && savedUser !== "undefined") {
             setUser(JSON.parse(savedUser))
             setToken(savedToken)
-            //JSON.parse -> converte a string em um objeto para usar fora do localStorage
         }
 
         setLoading(false)

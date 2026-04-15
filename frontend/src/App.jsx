@@ -4,9 +4,8 @@ import './App.css'
 
 export default function App() {
   return (
-    <AppRoutes />
-    // <AuthProvider>
-    //   <AppRoutes />
-    // </AuthProvider>
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
   )
 }

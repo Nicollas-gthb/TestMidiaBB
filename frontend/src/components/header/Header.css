@@ -1,4 +1,10 @@
 #header-menu{
     background-color: var(--header-bg);
     height: 10%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0px 70px;
 }
