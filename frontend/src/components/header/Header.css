@@ -8,3 +8,10 @@
 
     padding: 0px 70px;
 }
+
+#component-header-right{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}

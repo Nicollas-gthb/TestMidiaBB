@@ -1,16 +1,4 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --th-bg: #aa3bff;
-  --table-bg: rgba(170, 59, 255, 0.1);
-  --td-bg: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
@@ -30,27 +18,47 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #e8e9ea;
-    --text-hover: #a9b1c0;
-    --bg: #16171d;
-    --table-border: #6d8bbc;
-    --code-bg: #1f2028;
-    --th-bg: #0c51be;
-    --table-bg: #5488dc;
-    --td-bg: #244271;
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --action-bg: #075feb;
-    --hover-action-bg: #073783;
-    --header-bg: #354b8e;
-    --close-btn: #F44336;
-    --login-bg: #020d5d;
-    --link-color: #CCEC00;
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
 
+:root[data-theme = "light"]{
+  --text: #1f2328;
+  --text-hover: #4b5563;
+  --bg: #c8e1fb;
+  --blue-bg: #d1e8ff;
+  --table-border: #6d8bbc;
+  --code-bg: #e8edf5;
+  --th-bg: #0c51be;
+  --table-bg: #dbe6fb;
+  --td-bg: #ffffff;
+  --social-bg: rgba(0, 0, 0, 0.05);
+  --action-bg: #075feb;
+  --hover-action-bg: #073783;
+  --header-bg: #a4c6fc;
+  --close-btn: #F44336;
+  --login-bg: #e9efff;
+  --link-color: #06B8F3;
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+}
+
+:root[data-theme = "dark"]{
+  --text: #e8e9ea;
+  --text-hover: #a9b1c0;
+  --bg: #16171d;
+  --blue-bg: #071745;
+  --table-border: #6d8bbc;
+  --code-bg: #1f2028;
+  --th-bg: #0c51be;
+  --table-bg: #5488dc;
+  --td-bg: #244271;
+  --social-bg: rgba(47, 48, 58, 0.5);
+  --action-bg: #075feb;
+  --hover-action-bg: #073783;
+  --header-bg: #354b8e;
+  --close-btn: #F44336;
+  --login-bg: #020d5d;
+  --link-color: #CCEC00;
+  --shadow:
+    rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
 }
 
 body {

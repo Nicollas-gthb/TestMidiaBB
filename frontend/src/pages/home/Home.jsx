@@ -18,7 +18,7 @@ export default function Home() {
                 <Header />
 
                 <div id="home-menu-main">
-                
+                    <h2>Home</h2>
                 </div>
             </main>
         </div>

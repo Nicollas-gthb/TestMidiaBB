@@ -1,0 +1,40 @@
+#theme-container{
+    height: 75px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#theme-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--theme-button);
+    background-color: var(--theme-button-background);
+    width: 90%;
+    height: 70%;
+    border: none;
+    border-radius: 9px;
+    
+    padding: 0px 5px;
+    gap: 10px;
+    cursor: pointer;
+}
+
+#theme-button:hover{
+    background-color: var(--table-td-background-hover);
+}
+
+#theme-text{
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.bi-sun-fill{
+    font-size: 25px;
+}
+
+.bi-moon-stars-fill{
+    font-size: 20px;
+}

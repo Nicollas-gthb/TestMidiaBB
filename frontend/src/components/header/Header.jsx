@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import "./Header.css";
 import { LogoutButton } from "../logout/LogoutButton";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ThemeToggle } from "../theme/ThemToggle";
 
 export const Header = () => {
 
@@ -23,7 +24,8 @@ export const Header = () => {
             </div>
 
             <nav id="component-header-right">
-                <LogoutButton onCLick={handleLogout}/>
+                <ThemeToggle />
+                <LogoutButton onClick={handleLogout}/>
             </nav>
         </header>
     )

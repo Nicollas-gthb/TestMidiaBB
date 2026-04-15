@@ -13,7 +13,7 @@
 }
 
 #home-menu-main{
-    background-color: rgb(7, 23, 69);
+    background-color: var(--blue-bg);
     height: 90%;
     display: flex;
     flex-direction: column;
@@ -30,6 +30,7 @@ table{
 
 th{
     background-color: var(--th-bg);
+    color: #ffffff;
     padding: 12px 15px;
     font-size: 0.9rem;
     border-bottom: 1px solid var(--table-border);
@@ -74,11 +75,14 @@ td:nth-child(5){
 .action-button{
     background-color: var(--action-bg);
     border: none;
-    color: var(--text);
+    color: #ffffff;
     font-weight: bold;
     padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .second-action-button{
@@ -93,13 +97,13 @@ td:nth-child(5){
 
 .action-button:hover{
     background-color: var(--hover-action-bg);
-    color: var(--text-hover);
+    color: #ffffff;
 }
 
 .second-action-button:hover{
     background-color: var(--hover-action-bg);
     border-color: var(--hover-action-bg);
-    color: var(--text-hover);
+    color: #ffffff;
 }
 
 .bi-arrow-bar-up{

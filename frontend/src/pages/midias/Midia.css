@@ -13,7 +13,7 @@
 }
 
 #midia-menu-main{
-    background-color: rgb(7, 23, 69);
+    background-color: var(--blue-bg);
     height: 90%;
     display: flex;
     flex-direction: column;
