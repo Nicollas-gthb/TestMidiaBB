@@ -27,6 +27,8 @@ def upload_midia(
     duracao_segundos: int = Form(...),
     tv_ids: str = Form(...),
     validade: date = Form(None),
+    inicio_exibicao: date = Form(None),
+    expiracao: date = Form(None),
     arquivo: UploadFile = File(...),
     session: Session = Depends(get_session),
 ):

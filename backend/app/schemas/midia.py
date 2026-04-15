@@ -16,7 +16,8 @@ class MidiaResponse(BaseModel):
     tipo: str
     arquivo: str
     duracao_segundos: int
-    validade: Optional[date] = None
+    inicio_exibicao: Optional[date] = None
+    expiracao: Optional[date] = None
     ativo: bool
     tvs: list[TVSimples] = []
 

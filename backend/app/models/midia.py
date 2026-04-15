@@ -11,7 +11,10 @@ class Midia(Base):
     nome = Column(String, nullable=False)
     tipo = Column(String, nullable=False)  # "image" || "video"
     arquivo = Column(String, nullable=False)  # caminho do arquivo salvo
-    validade = Column(Date, nullable=True)
+    
+    inicio_exibicao = Column(DateTime(timezone=True), nullable=True)
+    expiracao = Column(DateTime(timezone=True), nullable=True)
+
     duracao_segundos = Column(Integer, nullable=False)
     ativo = Column(Boolean, default=True)
     criado_em = Column(DateTime(timezone=True), server_default=func.now())
