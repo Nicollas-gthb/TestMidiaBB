@@ -102,7 +102,7 @@
     font-size: 20px;
     width: 100%;
     background-color: var(--action-bg);
-    color: var(--text);
+    color: #ffffff;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -111,8 +111,8 @@
 }
 
 .button-enviar:hover{
-    background-color: var(--login-bg);
-    color: var(--text);
+    background-color: var(--hover-action-bg);
+    color: #ffffff;
 }
 
 #login-box-imagem{

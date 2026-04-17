@@ -22,8 +22,10 @@
 :root[data-theme = "light"]{
   --text: #1f2328;
   --text-hover: #4b5563;
-  --bg: #c8e1fb;
-  --blue-bg: #d1e8ff;
+  --bg: #ffdd00;
+  --header-bg: #ffcc00;
+  /* --header-bg: #f6ff00; */
+  --blue-bg: #eceef0;
   --table-border: #6d8bbc;
   --code-bg: #e8edf5;
   --th-bg: #0c51be;
@@ -32,9 +34,8 @@
   --social-bg: rgba(0, 0, 0, 0.05);
   --action-bg: #075feb;
   --hover-action-bg: #073783;
-  --header-bg: #a4c6fc;
   --close-btn: #F44336;
-  --login-bg: #e9efff;
+  --login-bg: #f1d104;
   --link-color: #06B8F3;
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
@@ -44,6 +45,7 @@
   --text: #e8e9ea;
   --text-hover: #a9b1c0;
   --bg: #16171d;
+  --header-bg: #354b8e;
   --blue-bg: #071745;
   --table-border: #6d8bbc;
   --code-bg: #1f2028;
@@ -53,7 +55,6 @@
   --social-bg: rgba(47, 48, 58, 0.5);
   --action-bg: #075feb;
   --hover-action-bg: #073783;
-  --header-bg: #354b8e;
   --close-btn: #F44336;
   --login-bg: #020d5d;
   --link-color: #CCEC00;
