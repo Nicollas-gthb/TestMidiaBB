@@ -50,8 +50,8 @@
     font-size: 17px;
     width: 100%;
     margin: auto;
-    background-color: var(--background-color);
-    color: var(--text-color);
+    background-color: var(--td-bg);
+    color: var(--text);
     padding-left: 7px;
 }
 

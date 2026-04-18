@@ -1,0 +1,65 @@
+.register-fieldset{
+    border-radius: 10px;
+    border: 1px solid var(--text);
+    color: var(--text);
+    width: 30vw;
+    margin: 20px 0px;
+    padding: 10px;
+}
+
+.register-legend{
+    padding: 0px 7px 0px 7px;
+    margin-right: auto;
+}
+
+.register-input{
+    border: none;
+    font-size: 17px;
+    width: 100%;
+    margin: auto;
+    background-color: var(--td-bg);
+    color: var(--text);
+    padding-left: 7px;
+}
+
+.register-input:focus-visible{
+    border: none;
+    outline: none;
+}
+
+#register{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--td-bg);
+    height: 600px;
+    width: 80vw;
+    border-radius: 30px;
+
+    box-shadow: 5px 2px 2px rgba(0, 0, 0, 0.492);
+}
+
+#register-titulo{
+    color: var(--main-text);
+    font-size: 20px;
+}
+
+#register-box-formulario{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 75%;
+    margin: auto;
+}
+
+#register-box-imagem{
+    display: block;
+    background: #242424 url("../../assets/predios.jpg") no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 100%;
+    width: 75%;
+    border-radius: 30px 0px 0px 30px;
+}

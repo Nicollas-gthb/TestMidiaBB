@@ -45,6 +45,7 @@ export default function Login(){
 
             <main className="background">
                 <section id="login">
+                    
                     <div id="box-formulario">
 
                         <h1 id="login-titulo">Faca seu login para adicionar vagas</h1>
