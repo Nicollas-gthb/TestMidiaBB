@@ -1,11 +1,35 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link } from "react-router-dom"
+import { useState } from "react"
 
-import "./Register.css";
+import "./Register.css"
+import { api } from "../../api/axios"
 
 export default function Register() {
 
     const [loading, setLoading] = useState(false)
+
+    const [nome, setNome] = useState("")
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("")
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+
+        let payload = {
+            nome: nome,
+            email: email,
+            senha: senha
+        }
+
+        try{
+            const response = await api.post("/auth/register", payload)
+        }catch(error){
+            alert(error.response?.data?.detail || "Erro ao realizar cadastro")
+        }finally{
+            setLoading(false)
+        }
+    }
 
     return (
         <>
@@ -23,7 +47,7 @@ export default function Register() {
 
                         <h1 id="register-titulo">Faça seu cadastro</h1>
 
-                        <form  method="post" autoComplete="on">
+                        <form onSubmit={handleSubmit} method="post" autoComplete="on">
 
                             <fieldset className="register-fieldset">
                                 <legend className="register-legend">Nome</legend>
@@ -32,8 +56,8 @@ export default function Register() {
                                     id="input-nome" 
                                     type="text" 
                                     placeholder="Nome Completo" 
-                                    // value={nome}
-                                    // onChange={e => setNome(e.target.value)}
+                                    value={nome}
+                                    onChange={e => setNome(e.target.value)}
                                     required 
                                     maxLength="50"
                                 />
@@ -46,8 +70,8 @@ export default function Register() {
                                     id="input-email" 
                                     type="email" 
                                     placeholder="email@dominio.com" 
-                                    // value={email}
-                                    // onChange={e => setEmail(e.target.value)}
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
                                     required 
                                     maxLength="50"
                                 />
@@ -60,8 +84,8 @@ export default function Register() {
                                     id="input-senha" 
                                     type="password" 
                                     placeholder="Sua Senha"
-                                    // value={senha}
-                                    // onChange={e => setSenha(e.target.value)}
+                                    value={senha}
+                                    onChange={e => setSenha(e.target.value)}
                                     required 
                                     minLength="5" 
                                     maxLength="50"
