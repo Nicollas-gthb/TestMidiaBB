@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 
 import "./Register.css"
@@ -12,6 +12,8 @@ export default function Register() {
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
 
+    const navigate = useNavigate()
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -23,7 +25,9 @@ export default function Register() {
         }
 
         try{
-            const response = await api.post("/auth/register", payload)
+            const response = await api.post("/user/register", payload)
+            alert("Usuario cadastrado com sucesso !!")
+            navigate("/home")
         }catch(error){
             alert(error.response?.data?.detail || "Erro ao realizar cadastro")
         }finally{

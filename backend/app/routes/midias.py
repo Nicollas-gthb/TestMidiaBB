@@ -58,10 +58,6 @@ def upload_midia(
         shutil.copyfileobj(arquivo.file, buffer)
 
 
-    # inicio = parse_datetime(inicio_exibicao)
-    # expira = parse_datetime(expiracao)
-
-
     inicio = datetime.fromisoformat(inicio_exibicao).replace(tzinfo=timezone.utc) if inicio_exibicao else None
     expira = datetime.fromisoformat(expiracao).replace(tzinfo=timezone.utc) if expiracao else None
     
@@ -90,6 +86,7 @@ def upload_midia(
         ultimo = session.query(PlaylistItem).filter(
             PlaylistItem.tv_id == tv_id
         ).count()
+
         item = PlaylistItem(tv_id=tv_id, midia_id=midia.id, ordem=ultimo + 1)
         session.add(item)
 

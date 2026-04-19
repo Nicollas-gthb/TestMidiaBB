@@ -28,16 +28,6 @@ def get_playlist(numero: int, session: Session = Depends(get_session)):
             PlaylistItem.ativo == True,
             Midia.ativo == True,
 
-            #Logica para não exibir a depender da data e horario
-            # or_(
-            # Midia.inicio_exibicao.is_(None),
-            # Midia.inicio_exibicao <= agora
-            # ),
-            # or_(
-            #     Midia.expiracao.is_(None),
-            #     Midia.expiracao >= agora
-            # )
-
             (Midia.inicio_exibicao == None) | (Midia.inicio_exibicao <= agora),
             (Midia.expiracao == None) | (Midia.expiracao >= agora)
         )
