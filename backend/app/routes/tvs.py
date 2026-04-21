@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/tv", tags=["TVs"])
 
 @router.get("/", response_model=list[TVResponse])
 def listar_tvs(session: Session = Depends(get_session)):
-    return session.query(TV).filter(TV.ativo == True).options(joinedload(TV.midias)).order_by(TV.id).all()
+    return session.query(TV).options(joinedload(TV.midias)).order_by(TV.id).all()
 
 @router.post("/", response_model=TVResponse)
 def criar_tv(tv: TVCreate, session: Session = Depends(get_session)):

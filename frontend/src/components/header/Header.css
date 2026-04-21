@@ -1,6 +1,6 @@
 #header-menu{
     background-color: var(--header-bg);
-    height: 10%;
+    height: 10vh;
 
     display: flex;
     align-items: center;

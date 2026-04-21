@@ -29,7 +29,7 @@ def parse_datetime(dt_str: str | None):
 
 @router.get("/", response_model=list[MidiaResponse])
 def listar_midias(session: Session = Depends(get_session)):
-    return session.query(Midia).filter(Midia.ativo == True).options(joinedload(Midia.tvs)).order_by(Midia.id).all()
+    return session.query(Midia).options(joinedload(Midia.tvs)).order_by(Midia.id).all()
 
 @router.post("/upload", response_model=MidiaResponse)
 def upload_midia(
