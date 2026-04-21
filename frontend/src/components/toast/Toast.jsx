@@ -11,7 +11,7 @@ export const Toast = ({ id, mensagem, tipo, onRemove }) => {
     const { icone, label } = config[tipo] || config.info
 
     return (
-        <div className={`toast-${tipo}`} >
+        <div className={`toast toast-${tipo}`} >
             <i className={`bi ${icone}`}></i>
 
             <div className="toast-body">

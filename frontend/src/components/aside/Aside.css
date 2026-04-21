@@ -10,11 +10,11 @@
     overflow-y: auto;
 }
 
-#aside-aside-header{
+#aside-header{
     background-color: var(--bg);
     height: 10vh;
 }
-#aside-aside-main{
+#aside-main{
     background-color: var(--bg);
     height: 100%;
     display: flex;
@@ -35,4 +35,24 @@
 
 .menu-buttons:hover{
     background-color: var(--hover-action-bg);
+}
+
+#aside-teste{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+
+    border: dashed
+}
+
+.aside-teste-button{
+    width: 70%;
+
+    color: var(--text);
+    border: solid 1px var(--text);
+    background-color: transparent;
+
+    cursor: pointer;
 }
