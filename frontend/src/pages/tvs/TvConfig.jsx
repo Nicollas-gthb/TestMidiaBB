@@ -93,7 +93,11 @@ export default function TvConfig() {
                                                 Ver mais
                                             </button>
                                         </td>
-                                        <td>{tv.ativo ? "Ativa" : "Inativa"}</td>
+                                        <td>
+                                            <div className={tv.ativo ? "status-ativa" : "status-inativa"}>
+                                                {tv.ativo ? "Ativa" : "Inativa"}
+                                            </div>
+                                        </td>
                                         <td>
                                             <a href={`/tv/${tv.numero}`} target="_blank" rel="noreferrer">
                                                 Transmissão

@@ -95,7 +95,11 @@ export default function Midia() {
                                                 Ver mais
                                             </button>
                                         </td>
-                                        <td>{midia.ativo ? "Ativa" : "Inativa"}</td>
+                                        <td>
+                                            <div className={midia.ativo ? "status-ativa" : "status-inativa"}>
+                                                {midia.ativo ? "Ativa" : "Inativa"}
+                                            </div>
+                                        </td>
                                         <td>{formatarDataHora(midia.inicio_exibicao)}</td>
                                         <td>{formatarDataHora(midia.expiracao)}</td>
                                         <td>{midia.duracao_segundos}s</td>
