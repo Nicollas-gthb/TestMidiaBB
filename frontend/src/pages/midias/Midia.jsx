@@ -16,6 +16,17 @@ export default function Midia() {
 
     const [midias, setMidias] = useState([])
 
+    const calcularStatus = (midia) => {
+        if(!midia.ativo) return "removida"
+
+        const agora = new Date()
+
+        if(midia.inicio_exibicao && new Date(midia.inicio_exibicao) > agora) return "agendada"
+
+        if(midia.expiracao && new Date(midia.expiracao) < agora) return "expirada"
+
+        return "ativa"
+    }
     const carregarMidias = async () => {
         try{
             const response = await api.get("/midias/")
@@ -96,8 +107,8 @@ export default function Midia() {
                                             </button>
                                         </td>
                                         <td>
-                                            <div className={midia.ativo ? "status-ativa" : "status-inativa"}>
-                                                {midia.ativo ? "Ativa" : "Inativa"}
+                                            <div className={`status status-${calcularStatus(midia)}`}>
+                                                {calcularStatus(midia)}
                                             </div>
                                         </td>
                                         <td>{formatarDataHora(midia.inicio_exibicao)}</td>

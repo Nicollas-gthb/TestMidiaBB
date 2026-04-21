@@ -113,40 +113,18 @@ td:nth-child(5){
     margin-right: 8px;
 }
 
-.status-ativa{
+.status{
     font-size: 0.7em;
     font-weight: bold;
-    width: 50px;
-
     margin-right: auto;
     margin-left: auto;
-
-    background-color: var(--status-ativa-bg);
-    color: var(--status-ativa);
-
-    border: solid 2px var(--status-ativa);
-    border-radius: 13px;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-.status-inativa{
-    font-size: 0.7em;
-    font-weight: bold;
-    width: 50px;
-
-    margin-right: auto;
-    margin-left: auto;
-
-    background-color: var(--status-inativa-bg);
-    color: var(--status-inativa);
-
-    border: solid 2px var(--status-inativa);
-    border-radius: 13px;
-    
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+
+.status-ativa    {background: transparent; color: #16ee48; border: 3px solid #16ee48; border-radius: 12px;}
+.status-removida {background: transparent; color: #ff0019; border: 3px solid #ff0019; border-radius: 12px;}
+.status-expirada {background: transparent; color: #ffbf00; border: 3px solid #ffbf00; border-radius: 12px;}
+.status-agendada {background: transparent; color: #00ddff; border: 3px solid #00ddff; border-radius: 12px;}

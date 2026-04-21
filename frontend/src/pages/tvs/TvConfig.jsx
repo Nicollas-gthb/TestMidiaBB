@@ -94,8 +94,8 @@ export default function TvConfig() {
                                             </button>
                                         </td>
                                         <td>
-                                            <div className={tv.ativo ? "status-ativa" : "status-inativa"}>
-                                                {tv.ativo ? "Ativa" : "Inativa"}
+                                            <div className={tv.ativo ? "status-ativa" : "status-removida"}>
+                                                {tv.ativo ? "ativa" : "inativa"}
                                             </div>
                                         </td>
                                         <td>
