@@ -23,3 +23,11 @@ class MidiaResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class MidiaUpdate(BaseModel):
+    nome: str | None = None
+    duracao_segundos: int | None = None
+    inicio_exibicao: datetime | None = None
+    expiracao: datetime | None = None
+    ativo: bool | None = None
+    tv_ids: list[int] | None = None

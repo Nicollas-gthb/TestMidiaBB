@@ -10,7 +10,7 @@ from app.core.security import get_usuario_atual
 from app.models.midia import Midia
 from app.models.playlist_item import PlaylistItem
 from app.models.tv import TV
-from app.schemas.midia import MidiaResponse
+from app.schemas.midia import MidiaResponse, MidiaUpdate
 
 router = APIRouter(prefix="/api/midias", tags=["Mídias"])
 
@@ -104,3 +104,55 @@ def deletar_midia(midia_id: int, session: Session = Depends(get_session)):
     session.query(PlaylistItem).filter(PlaylistItem.midia_id == midia_id).update({"ativo": False})
     session.commit()
     return {"message": "Mídia desativada com sucesso"}
+
+@router.patch("/{midia_id}", response_model=MidiaResponse)
+def atualizar_midia(
+    midia_id: int, 
+    request: MidiaUpdate,
+    session: Session = Depends(get_session)
+):
+    midia = session.query(Midia).filter(Midia.id == midia_id).first()
+
+    if not midia:
+        raise HTTPException(status_code=404, detail="Midia não encontrada")
+    
+    if request.nome is not None:
+        midia.nome = request.nome
+    if request.duracao_segundos is not None:
+        midia.duracao_segundos = request.duracao_segundos
+    if request.inicio_exibicao is not None:
+        midia.inicio_exibicao = request.inicio_exibicao
+    if request.expiracao is not None:
+        midia.expiracao = request.expiracao
+    if request.ativo is not None:
+        midia.ativo = request.ativo
+
+    if request.tv_ids is not None:
+        session.query(PlaylistItem).filter(PlaylistItem.midia_id == midia.id).update({"ativo": False})
+
+        for tv_id in request.tv_ids:
+
+            item_existente = session.query(PlaylistItem).filter(
+                PlaylistItem.midia_id == midia_id,
+                PlaylistItem.tv_id == tv_id
+            ).first()
+
+            if item_existente:
+                item_existente.ativo = True
+            else:
+
+                ultimo = session.query(PlaylistItem).filter(
+                    PlaylistItem.tv_id == tv_id
+                ).count()
+
+                novo_item = PlaylistItem(
+                    tv_id=tv_id, 
+                    midia_id=midia_id, 
+                    ordem=ultimo + 1
+                )
+
+                session.add(novo_item)
+            
+    session.commit()
+    session.refresh(midia)
+    return midia
