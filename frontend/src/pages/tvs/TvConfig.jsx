@@ -6,11 +6,13 @@ import { Header } from "../../components/header/Header"
 import { api } from "../../api/axios"
 import { AddTV } from "../../components/tv/AddTv"
 import { DetailModal } from "../../components/detail/DetailModal"
+import { EditTv } from "../../components/tv/EditTv"
 
 export default function TvConfig() {
 
     const [addTvAberto, setAddTvAberto] = useState(false)
     const [detail, setDetail] = useState(null)
+    const [edit, setEdit] = useState(null)
 
     const [tvs, setTvs] = useState([])
 
@@ -103,7 +105,13 @@ export default function TvConfig() {
                                                 Transmissão
                                             </a>
                                         </td>
-                                        <td> {/** transformar botão de deletar em um componente */}
+                                        <td>
+                                            <button
+                                                className="second-action-button"
+                                                onClick={() => setEdit(tv)}
+                                            >
+                                                <i className="bi bi-pencil-square"></i>
+                                            </button>
                                             <button
                                                 className="second-action-button"
                                                 onClick={() => handleDeletar(tv.id)}
@@ -141,6 +149,17 @@ export default function TvConfig() {
                             onClose={() => {setDetail(null)}}
                             tipo={"tv"}
                             item={detail}
+                        />
+                    )}
+
+                    {edit !== null && (
+                        <EditTv 
+                            item={edit}
+                            onClose={() => {setEdit(null)}}
+                            onSuccess={() => {
+                                setEdit(null)
+                                carregarTvs()
+                            }}
                         />
                     )}
                 </div>
