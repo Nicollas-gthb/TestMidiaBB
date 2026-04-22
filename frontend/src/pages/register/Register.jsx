@@ -3,8 +3,11 @@ import { useState } from "react"
 
 import "./Register.css"
 import { api } from "../../api/axios"
+import { useToast } from "../../contexts/ToastContext"
 
 export default function Register() {
+
+    const { addToast } = useToast()
 
     const [loading, setLoading] = useState(false)
 
@@ -26,10 +29,11 @@ export default function Register() {
 
         try{
             const response = await api.post("/user/register", payload)
-            alert("Usuario cadastrado com sucesso !!")
+            addToast("Usuario cadastrado com sucesso !", "sucesso")
             navigate("/home")
         }catch(error){
-            alert(error.response?.data?.detail || "Erro ao realizar cadastro")
+            const mensagem = error.response?.data?.detail || "Erro ao realizar cadastro !"
+            addToast(mensagem, "erro")
         }finally{
             setLoading(false)
         }

@@ -4,9 +4,11 @@ import "./EditMidia.css"
 import { api } from "../../api/axios"
 import { toUTC } from "../../utils/formatters"
 import { Preview } from "./PreviewMidia"
+import { useToast } from "../../contexts/ToastContext"
 
 export const EditMidia = ({ item, onClose, onSuccess }) => {
 
+    const { addToast } = useToast()
     const [togglePage, setTogglePage] = useState(1)
 
     const [nome, setNome] = useState(item.nome)
@@ -104,9 +106,11 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
 
         try{
             await api.patch(`/midias/${item.id}`, payload)
+            addToast("Midia foi atualizada !", "sucesso")
             onSuccess()
         }catch(error){
-            const mensagem = error.response?.data?.detail || "Erro ao atualizar midia"
+            const mensagem = error.response?.data?.detail || "Erro ao atualizar midia !"
+            addToast(mensagem, "erro")
         }
     }
 

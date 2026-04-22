@@ -4,8 +4,11 @@ import "./AddMidia.css"
 import { Preview } from "./PreviewMidia"
 import { api } from "../../api/axios"
 import { toUTC } from "../../utils/formatters"
+import { useToast } from "../../contexts/ToastContext"
 
 export const AddMidia = ({ onClose, onSuccess }) => {
+
+    const { addToast } = useToast()
 
     const [togglePage, setTogglePage] = useState(1)
         
@@ -96,9 +99,11 @@ export const AddMidia = ({ onClose, onSuccess }) => {
 
         try {
             await api.post("/midias/upload", formData)
+            addToast("Upload realizado !", "sucesso")
             onSuccess()
         } catch (error) {
-            console.error("Erro ao fazer upload", error)
+            const mensagem = error.response?.data?.detail || "Erro ao fazer upload !"
+            addToast(mensagem, "erro")
         }
     }
 

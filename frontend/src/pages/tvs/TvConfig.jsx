@@ -7,8 +7,11 @@ import { api } from "../../api/axios"
 import { AddTV } from "../../components/tv/AddTv"
 import { DetailModal } from "../../components/detail/DetailModal"
 import { EditTv } from "../../components/tv/EditTv"
+import { useToast } from "../../contexts/ToastContext"
 
 export default function TvConfig() {
+
+    const { addToast } = useToast()
 
     const [addTvAberto, setAddTvAberto] = useState(false)
     const [detail, setDetail] = useState(null)
@@ -20,8 +23,10 @@ export default function TvConfig() {
         try{
             const response = await api.get("/tv/")
             setTvs(response.data)
+            addToast("TVs carregadas !", "sucesso")
         }catch(error){
-            console.error("Erro ao carregar as tvs", error)
+            const mensagem = error.response?.data.detail || "Erro ao carregar as tvs !"
+            addToast(mensagem, "erro")
         }
     }
 
@@ -32,9 +37,11 @@ export default function TvConfig() {
     const handleDeletar = async (id) => {
         try{
             await api.delete(`/tv/${id}`)
+            addToast("TV foi retirada", "sucesso")
             carregarTvs()
         }catch(error){
-            console.error("Erro ao deletar tv", error)
+            const mensagem = error.response?.data.detail || "Erro ao deletar as tvs !"
+            addToast(mensagem, "erro")
         }
     }
 

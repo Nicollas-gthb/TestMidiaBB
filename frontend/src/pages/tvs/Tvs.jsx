@@ -3,8 +3,12 @@ import { useParams } from "react-router-dom"
 
 import { api } from "../../api/axios"
 import "./Tvs.css"
+import { useToast } from "../../contexts/ToastContext"
 
 export default function Tv(){
+
+    const { addToast } = useToast()
+
     const { numero } = useParams()
     const [playlist, setPlaylist] = useState([])
     const [indexAtual, setIndexAtual] = useState(0)
@@ -15,8 +19,10 @@ export default function Tv(){
             const response = await api.get(`/tv/${numero}/playlist`)
             setPlaylist(response.data)
             setIndexAtual(0)
+            addToast("Playlist carregada !", "sucesso")
         }catch(error){
-            console.error("Erro ao carregar playlist", error)
+            const mensagem = error.response?.data.detail || "Erro ao carregar playlist !"
+            addToast(mensagem, "erro")
         }
     }
 

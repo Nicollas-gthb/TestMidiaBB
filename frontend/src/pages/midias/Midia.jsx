@@ -8,8 +8,11 @@ import { Header } from "../../components/header/Header"
 import { DetailModal } from "../../components/detail/DetailModal"
 import { formatarDataHora } from "../../utils/formatters"
 import { EditMidia } from "../../components/midia/EditMidia"
+import { useToast } from "../../contexts/ToastContext"
 
 export default function Midia() {
+
+    const { addToast } = useToast()
 
     const [addMidiaAberto, setAddMidiaAberto] = useState(false)
 
@@ -29,12 +32,15 @@ export default function Midia() {
 
         return "ativa"
     }
+
     const carregarMidias = async () => {
         try{
             const response = await api.get("/midias/")
             setMidias(response.data)
+            addToast("Mídias carregadas !", "sucesso")
         }catch(error){
-            console.error("Erro ao carregar mídias", error)
+            const mensagem = error.response?.data?.detail || "Erro ao carregar mídias !"
+            addToast(mensagem, "erro")
         }
     }
 
@@ -45,9 +51,11 @@ export default function Midia() {
     const handleDeletar = async (id) => {
         try{
             await api.delete(`/midias/${id}`)
+            addToast("Mídias deletadas !", "sucesso")
             carregarMidias()
         }catch(error){
-            console.error("Erro ao deletar mídia", error)
+            const mensagem = error.response?.data?.detail || "Erro ao deletar mídias !"
+            addToast(mensagem, "erro")
         }
     }
 

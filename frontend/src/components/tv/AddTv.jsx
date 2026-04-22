@@ -2,9 +2,11 @@ import { useState } from "react"
 
 import "./AddTv.css"
 import { api } from "../../api/axios"
+import { useToast } from "../../contexts/ToastContext"
 
 export const AddTV = ({ onClose, onSuccess }) => {
 
+    const { addToast } = useToast()
 
     const [nome, setNome] = useState("")
     const [numero, setNumero] = useState("")
@@ -25,9 +27,11 @@ export const AddTV = ({ onClose, onSuccess }) => {
 
         try{
             await api.post("/tv/", payload)
+            addToast("TV foi criada !", "sucesso")
             onSuccess()
         }catch(error){
-            console.error("Erro ao criar TV", error)
+            const mensagem = error.response?.data?.detail || "Erro ao fazer upload !"
+            addToast(mensagem, "erro")
         }
     }
 

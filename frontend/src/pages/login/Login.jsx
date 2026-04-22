@@ -1,12 +1,17 @@
 import { useState, useContext } from "react"
+
 import { Link } from "react-router-dom"
 import { api } from "../../api/axios"
 import { AuthContext } from "../../contexts/AuthContext"
-
 import "./Login.css"
+import { useToast } from "../../contexts/ToastContext"
+
 // import logo from "../../assets/bb_logo.svg"
 
 export default function Login(){
+
+    const { addToast } = useToast()
+
     //quando o use context é usado, ele volta na primeira tag <AuthContext.Provider> 
     // que encontrar, e procura no value o { login }
     const { login } = useContext(AuthContext)
@@ -29,8 +34,10 @@ export default function Login(){
         try{
             const response = await api.post("/auth/login", payload)
             login(response.data.access_token, response.data.user)
+            addToast("Login realizado !", "sucesso")
         }catch(error){
-            alert(error.response?.data?.detail || "Erro ao fazer login")
+            const mensagem = error.response?.data?.detail || "Erro ao fazer login !"
+            addToast(mensagem, "erro")
         }finally{
             setLoading(false)
         }

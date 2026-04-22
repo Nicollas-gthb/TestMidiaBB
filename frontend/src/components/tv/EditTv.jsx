@@ -1,9 +1,12 @@
 import { useState } from "react"
+
 import "./EditTv.css"
 import { api } from "../../api/axios"
+import { useToast } from "../../contexts/ToastContext"
 
 export const EditTv = ({ item, onClose, onSuccess }) => {
 
+    const { addToast } = useToast()
 
     const [ativo, setAtivo] = useState(item.ativo)
     const [nome, setNome] = useState(item.nome)
@@ -26,9 +29,11 @@ export const EditTv = ({ item, onClose, onSuccess }) => {
         
         try{
             await api.patch(`/tv/${item.id}`, payload)
+            addToast("TV foi atualizada !", "sucesso")
             onSuccess()
         }catch(error){
-            const mensagem = error.response?.data?.detail || "Erro ao atualizar TV"
+            const mensagem = error.response?.data?.detail || "Erro ao atualizar TV !"
+            addToast(mensagem, "erro")
         }
     }
 
