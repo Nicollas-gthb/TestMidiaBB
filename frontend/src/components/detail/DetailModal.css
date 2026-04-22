@@ -6,6 +6,8 @@
     width: 100vw;
     height: 100vh;
 
+    padding: 20px 0;
+
     background-color: rgba(0, 0, 0, 0.5);
 
     display: flex;
@@ -19,11 +21,11 @@
     position: relative;
     background-color: var(--td-bg);
     width: 40%;
-    height: auto;
+    max-height: 90vh;
+    overflow-y: auto;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-
 }
 
 #detail-titulo{

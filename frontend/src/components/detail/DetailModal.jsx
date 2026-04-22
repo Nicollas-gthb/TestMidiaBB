@@ -29,7 +29,7 @@ export const DetailModal = ({ tipo, onClose, item }) => {
 
                 <h2 id="detail-titulo">{titulo}</h2>
 
-                <div className="table-container">
+                <div id="detail-body" className="table-container">
                     {lista.length === 0 ? (
                         <p>Nenhum vínculo encontrado.</p>
                     ) : tipo === "midia" ? (
