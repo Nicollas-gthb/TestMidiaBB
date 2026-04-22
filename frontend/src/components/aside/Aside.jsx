@@ -28,9 +28,18 @@ export const Aside = () => {
                 <h1>Menu</h1>
             </header>
             <div id="aside-main">
-                <button className="menu-buttons" onClick={handlePageMidia}>Midias</button>
-                <button className="menu-buttons" onClick={handlePageTv}>TVs</button>
-                <button className="menu-buttons" onClick={handlePageHome}>Home</button>
+                <button className="menu-buttons" onClick={handlePageHome}>
+                    <i class="bi aside-bi bi-house"></i>
+                    Home
+                </button>
+                <button className="menu-buttons" onClick={handlePageMidia}>
+                    <i class="bi aside-bi bi-image"></i>
+                    Midias
+                </button>
+                <button className="menu-buttons" onClick={handlePageTv}>
+                    <i class="bi aside-bi bi-tv"></i>
+                    TVs
+                </button>
 
                 {/* <hr />
 
