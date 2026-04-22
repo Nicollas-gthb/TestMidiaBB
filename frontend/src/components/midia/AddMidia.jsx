@@ -193,7 +193,7 @@ export const AddMidia = ({ onClose, onSuccess }) => {
                                 </button>
 
                                 <div className="addmidia-tvs-list">
-                                    {tvs.map(tv => (
+                                    {tvs.map(tv => tv.ativo && (
                                         <label key={tv.id} className="addmidia-tv-item">
                                             <input
                                                 id={`tv-${tv.id}`}

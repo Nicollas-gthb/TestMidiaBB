@@ -1,5 +1,6 @@
 import { useState } from "react"
 import "./EditTv.css"
+import { api } from "../../api/axios"
 
 export const EditTv = ({ item, onClose, onSuccess }) => {
 
@@ -9,13 +10,26 @@ export const EditTv = ({ item, onClose, onSuccess }) => {
     const [numero, setNumero] = useState(item.numero)
 
     const handleOutsideClick = (e) => {
-        if (e.target.id === "addtv-container") {
+        if (e.target.id === "edittv-container") {
             onClose()
         }
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
+        const payload = {
+            nome,
+            numero,
+            ativo
+        }
+        
+        try{
+            await api.patch(`/tv/${item.id}`, payload)
+            onSuccess()
+        }catch(error){
+            const mensagem = error.response?.data?.detail || "Erro ao atualizar TV"
+        }
     }
 
     return (
@@ -69,7 +83,7 @@ export const EditTv = ({ item, onClose, onSuccess }) => {
                                 checked={ativo}
                                 onChange={(e) => setAtivo(e.target.checked)}
                             />
-                            Mídia ativa
+                            Tv ativa
                         </label>
                     </fieldset>
 

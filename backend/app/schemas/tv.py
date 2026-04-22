@@ -15,3 +15,8 @@ class TVResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class TVUpdate(BaseModel):
+    nome: str | None = None
+    numero: int | None = None
+    ativo: bool | None = None

@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session, joinedload
 from app.core.database import get_session
 from app.core.security import get_usuario_atual, get_usuario_admin
 from app.models.tv import TV
-from app.schemas.tv import TVCreate, TVResponse
+from app.schemas.tv import TVCreate, TVResponse, TVUpdate
 
 router = APIRouter(prefix="/api/tv", tags=["TVs"])
 
@@ -33,3 +33,25 @@ def deletar_tv(tv_id: int, session: Session = Depends(get_session)):
     tv.ativo = False
     session.commit()
     return {"message": f"TV {tv.numero} desativada com sucesso"}
+
+@router.patch("/{tv_id}", response_model=TVResponse)
+def atualizar_tv(
+    tv_id: int, 
+    request: TVUpdate,
+    session: Session = Depends(get_session),
+):
+    tv = session.query(TV).filter(TV.id == tv_id).first()
+
+    if not tv:
+        raise HTTPException(status_code=404, detail="TV não encontrada")
+    
+    if request.nome is not None:
+        tv.nome = request.nome
+    if request.numero is not None:
+        tv.numero = request.numero
+    if request.ativo is not None:
+        tv.ativo = request.ativo
+
+    session.commit()
+    session.refresh(tv)
+    return tv
