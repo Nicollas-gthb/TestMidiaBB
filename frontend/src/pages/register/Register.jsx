@@ -4,6 +4,7 @@ import { useState } from "react"
 import "./Register.css"
 import { api } from "../../api/axios"
 import { useToast } from "../../contexts/ToastContext"
+import logo from "../../assets/bb_logo.svg"
 
 export default function Register() {
 
@@ -14,6 +15,7 @@ export default function Register() {
     const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
+    const [confirmar, setConfirmar] = useState("")
 
     const navigate = useNavigate()
 
@@ -21,10 +23,16 @@ export default function Register() {
         e.preventDefault()
         setLoading(true)
 
-        let payload = {
-            nome: nome,
-            email: email,
-            senha: senha
+        if(senha != confirmar){
+            addToast("As senhas devem ser iguais", "aviso")
+            setLoading(false)
+            return
+        }
+
+        const payload = {
+            nome,
+            email,
+            senha
         }
 
         try{
@@ -42,8 +50,8 @@ export default function Register() {
     return (
         <>
             <header id="header-inicial">
-                {/* <img id="header-img" src={logo} alt="logo" />  */}
-                <h1>LOGO</h1>
+                <img id="header-img" src={logo} alt="logo" /> 
+                {/* <h1>LOGO</h1> */}
             </header>
 
             <main className="background">
@@ -94,6 +102,21 @@ export default function Register() {
                                     placeholder="Sua Senha"
                                     value={senha}
                                     onChange={e => setSenha(e.target.value)}
+                                    required 
+                                    minLength="5" 
+                                    maxLength="50"
+                                />
+                            </fieldset>
+
+                            <fieldset className="register-fieldset">
+                                <legend className="register-legend">Confirmar senha</legend>
+                                <input 
+                                    className="register-input" 
+                                    id="input-senha" 
+                                    type="password" 
+                                    placeholder="Sua Senha"
+                                    value={confirmar}
+                                    onChange={e => setConfirmar(e.target.value)}
                                     required 
                                     minLength="5" 
                                     maxLength="50"

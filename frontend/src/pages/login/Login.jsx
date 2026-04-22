@@ -5,8 +5,7 @@ import { api } from "../../api/axios"
 import { AuthContext } from "../../contexts/AuthContext"
 import "./Login.css"
 import { useToast } from "../../contexts/ToastContext"
-
-// import logo from "../../assets/bb_logo.svg"
+import logo from "../../assets/bb_logo.svg"
 
 export default function Login(){
 
@@ -46,8 +45,8 @@ export default function Login(){
     return (
         <>
             <header id="header-inicial">
-                {/* <img id="header-img" src={logo} alt="logo" />  */}
-                <h1>LOGO</h1>
+                <img id="header-img" src={logo} alt="logo" /> 
+                {/* <h1>LOGO</h1> */}
             </header>
 
             <main className="background">
