@@ -128,7 +128,11 @@ export default function Midia() {
                                         <td>{formatarDataHora(midia.expiracao)}</td>
                                         <td>{midia.duracao_segundos}s</td>
                                         <td>
-                                            <a href={midia.arquivo} className="login-link" target="_blank" rel="noreferrer">
+                                            <a 
+                                                href={midia.arquivo} 
+                                                className="table-link" 
+                                                target="_blank" 
+                                                rel="noreferrer">
                                                 Ver arquivo
                                             </a>
                                         </td>

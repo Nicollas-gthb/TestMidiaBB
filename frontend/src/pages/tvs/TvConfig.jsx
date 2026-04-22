@@ -111,7 +111,11 @@ export default function TvConfig() {
                                             </div>
                                         </td>
                                         <td>
-                                            <a href={`/tv/${tv.numero}`} className="login-link" target="_blank" rel="noreferrer">
+                                            <a 
+                                                href={`/tv/${tv.numero}`} 
+                                                className="table-link" 
+                                                target="_blank" 
+                                                rel="noreferrer">
                                                 Transmissão
                                             </a>
                                         </td>
