@@ -105,6 +105,26 @@ def deletar_midia(midia_id: int, session: Session = Depends(get_session)):
     session.commit()
     return {"message": "Mídia desativada com sucesso"}
 
+
+@router.delete("/{midia_id}/hard")
+def hard_delete_midia(
+    midia_id: int, 
+    session: Session = Depends(get_session)
+):
+    
+    midia = session.query(Midia).filter(Midia.id == midia_id).first()
+    if not midia:
+        raise HTTPException(status_code=404, detail="Mídia não encontrada")
+
+    session.query(PlaylistItem).filter(
+        PlaylistItem.midia_id == midia_id
+    ).delete()
+
+    session.delete(midia)
+    session.commit()
+
+    return {"message": "Mídia deletada permanentemente"}
+
 @router.patch("/{midia_id}", response_model=MidiaResponse)
 def atualizar_midia(
     midia_id: int, 

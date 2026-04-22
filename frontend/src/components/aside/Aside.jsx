@@ -32,7 +32,7 @@ export const Aside = () => {
                 <button className="menu-buttons" onClick={handlePageTv}>TVs</button>
                 <button className="menu-buttons" onClick={handlePageHome}>Home</button>
 
-                <hr />
+                {/* <hr />
 
                 <div id="aside-teste">
                     <h2>Teste dos toasts</h2>
@@ -58,7 +58,7 @@ export const Aside = () => {
                         onClick={() => addToast("Teste 4", "info")}
                     >Info</button>
 
-                </div>
+                </div> */}
             </div>
         </aside>
     )

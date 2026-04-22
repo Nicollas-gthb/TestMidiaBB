@@ -34,6 +34,22 @@ def deletar_tv(tv_id: int, session: Session = Depends(get_session)):
     session.commit()
     return {"message": f"TV {tv.numero} desativada com sucesso"}
 
+
+@router.delete("/{tv_id}/hard")
+def hard_delete_tv(
+    tv_id: int, 
+    session: Session = Depends(get_session)
+):
+    
+    tv = session.query(TV).filter(TV.id == tv_id).first()
+    if not tv:
+        raise HTTPException(status_code=404, detail="TV não encontrada")
+
+    session.delete(tv)
+    session.commit()
+
+    return {"message": "TV deletada permanentemente"}
+
 @router.patch("/{tv_id}", response_model=TVResponse)
 def atualizar_tv(
     tv_id: int, 

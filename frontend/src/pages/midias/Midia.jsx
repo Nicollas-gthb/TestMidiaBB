@@ -49,9 +49,12 @@ export default function Midia() {
     }, [])
 
     const handleDeletar = async (id) => {
+
+        // if (!window.confirm("Tem certeza? Esse é um hard delete, a ação não pode ser desfeita.")) return
+
         try{
             await api.delete(`/midias/${id}`)
-            addToast("Mídias deletadas !", "sucesso")
+            addToast("Mídias removidas !", "aviso")
             carregarMidias()
         }catch(error){
             const mensagem = error.response?.data?.detail || "Erro ao deletar mídias !"
@@ -125,7 +128,7 @@ export default function Midia() {
                                         <td>{formatarDataHora(midia.expiracao)}</td>
                                         <td>{midia.duracao_segundos}s</td>
                                         <td>
-                                            <a href={midia.arquivo} target="_blank" rel="noreferrer">
+                                            <a href={midia.arquivo} className="login-link" target="_blank" rel="noreferrer">
                                                 Ver arquivo
                                             </a>
                                         </td>

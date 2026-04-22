@@ -35,9 +35,12 @@ export default function TvConfig() {
     }, [])
 
     const handleDeletar = async (id) => {
+
+        // if (!window.confirm("Tem certeza? Esse é um hard delete, a ação não pode ser desfeita.")) return
+
         try{
             await api.delete(`/tv/${id}`)
-            addToast("TV foi retirada", "sucesso")
+            addToast("TV foi retirada", "aviso")
             carregarTvs()
         }catch(error){
             const mensagem = error.response?.data.detail || "Erro ao deletar as tvs !"
@@ -108,7 +111,7 @@ export default function TvConfig() {
                                             </div>
                                         </td>
                                         <td>
-                                            <a href={`/tv/${tv.numero}`} target="_blank" rel="noreferrer">
+                                            <a href={`/tv/${tv.numero}`} className="login-link" target="_blank" rel="noreferrer">
                                                 Transmissão
                                             </a>
                                         </td>
