@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
 import "./Aside.css"
 import { useToast } from "../../contexts/ToastContext"
@@ -9,6 +9,7 @@ export const Aside = () => {
     const { addToast } = useToast()
 
     const navigate = useNavigate()
+    const isActive = (path) => location.pathname === path
 
     const handlePageMidia = () => {
         navigate("/midia")
@@ -28,16 +29,25 @@ export const Aside = () => {
                 <h1>Menu</h1>
             </header>
             <div id="aside-main">
-                <button className="menu-buttons" onClick={handlePageHome}>
-                    <i class="bi aside-bi bi-house"></i>
+                <button
+                    className={`menu-buttons ${isActive("/home") ? "menu-active" : "menu-inactive"}`}
+                    onClick={() => navigate("/home")}
+                >
+                    <i className={`bi aside-bi bi-house`}></i>
                     Home
                 </button>
-                <button className="menu-buttons" onClick={handlePageMidia}>
-                    <i class="bi aside-bi bi-image"></i>
-                    Midias
+                <button
+                    className={`menu-buttons ${isActive("/midia") ? "menu-active" : "menu-inactive"}`}
+                    onClick={() => navigate("/midia")}
+                >
+                    <i className="bi aside-bi bi-image"></i>
+                    Mídias
                 </button>
-                <button className="menu-buttons" onClick={handlePageTv}>
-                    <i class="bi aside-bi bi-tv"></i>
+                <button
+                    className={`menu-buttons ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    onClick={() => navigate("/tv")}
+                >
+                    <i className="bi aside-bi bi-tv"></i>
                     TVs
                 </button>
 

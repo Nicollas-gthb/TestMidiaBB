@@ -26,22 +26,42 @@
 .menu-buttons{
     width: 65%;
     height: 42px;
-    background-color: var(--action-bg);
     border: none;
     border-radius: 10px;
     font-weight: bold;
     font-size: 15px;
     cursor: pointer;
-
     display: flex;
     align-items: center;
-    
     gap: 1.5em;
+    background-color: transparent;
+    color: var(--text);
+    transition: background-color 0.2s ease;
 }
 
 .menu-buttons:hover{
     background-color: var(--hover-action-bg);
 }
+
+
+.menu-active {
+    background-color: var(--action-bg);
+}
+
+.menu-active:hover {
+    background-color: var(--hover-action-bg);
+}
+
+
+.menu-inactive {
+    opacity: 0.5;
+}
+
+.menu-inactive:hover {
+    opacity: 1;
+    background-color: var(--action-bg);
+}
+
 
 #aside-teste{
     display: flex;

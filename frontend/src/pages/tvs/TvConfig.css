@@ -7,3 +7,24 @@
     margin-right: auto;
 }
 
+.status-tv-ativa{
+    background: transparent; 
+    color: #16ee48; 
+    border: 3px solid #16ee48; 
+    border-radius: 12px;
+    width: 60%;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0px auto;
+}
+
+.status-tv-removida{
+    background: transparent; 
+    color: #ff0019; 
+    border: 3px solid #ff0019; 
+    border-radius: 12px;
+    width: 60%;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0px auto;
+}
