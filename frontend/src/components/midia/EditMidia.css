@@ -1,0 +1,191 @@
+#editmidia-container{
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 2;
+}
+
+.close-button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 10%;
+    margin-left: auto;
+    border-radius: 0 10px 0 0;
+    padding: 5px 0;
+    transition: 0.5s;
+}
+
+.bi-x-circle{
+    font-size: 1.2rem;
+    color: var(--text);
+    cursor: pointer;
+
+    transition: color 0.3s ease-in-out;
+}
+
+.close-button:hover{
+    background-color: var(--close-btn);
+}
+
+.close-button:hover .bi-x-circle{
+    color: var(--bg);
+}
+
+#editmidia-content{
+    position: relative;
+    background-color: var(--td-bg);
+    width: 30%;
+    height: auto;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.addmidia-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    padding: 20px 40px;
+    gap: 20px;
+}
+
+.addmidia-input{
+    background-color: var(--td-bg);
+    border: none;
+    width: 100%;
+    height: 30px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.addmidia-field{
+    border-color: var(--text);
+    width: 100%;
+    border-radius: 10px;
+    height: 60px;
+    padding: 0 10px;
+}
+
+#editmidia-field-tvs{
+    height: auto;
+    padding: 10px 10px;
+}
+
+.addmidia-legend{
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+#editmidia-input-upload{
+    border: none;
+    width: 100%;
+    height: 30px;
+    font-size: 0.9rem;
+    outline: none;
+    display: none;
+}
+
+#editmidia-span-upload{
+    font-size: 0.9rem;
+    color: var(--text-hover);
+    text-align: center;
+
+    transition: color 0.3s ease-in-out;
+}
+
+#editmidia-label-upload{
+    position: relative;
+    background-color: transparent;
+    border: 2px dashed var(--text);
+    border-radius: 10px;
+    width: 100%;
+    height: 250px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+#editmidia-label-upload:hover{
+    background-color: var(--hover-action-bg);
+    color: var(--text);
+    border-color: var(--hover-action-bg);
+}
+
+.addmidia-buttons{
+    width: 95%;
+    display: flex;
+    justify-content: center;
+
+    gap: 10px;
+    padding: 10px;
+}
+
+#editmidia-back{
+    width: 50%;
+}
+#editmidia-next{
+    width: 50%;
+}
+#editmidia-confirm{
+    width: 50%;
+}
+
+#editmidia-output-url{
+    font-size: 0.6rem;
+    color: var(--text);
+    margin-top: 0px;
+    width: 100%;
+}
+
+#editmidia-field-url{
+    height: auto;    
+}
+
+#editmidia-resumo{
+    background-color: var(--hover-action-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    
+    padding: 0 20px;
+    margin: 0 10px;
+    border-radius: 10px;
+
+    font-size: 0.8rem;
+}
+
+.addmidia-tvs-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.addmidia-opcoes-tv{
+    margin-left: 10px;
+}
+
+#editmidia-selectAll{
+    border: 1px solid;
+    width: 100%;
+    margin-bottom: 15px;
+}

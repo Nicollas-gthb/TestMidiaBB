@@ -7,11 +7,13 @@ import { Aside } from "../../components/aside/Aside"
 import { Header } from "../../components/header/Header"
 import { DetailModal } from "../../components/detail/DetailModal"
 import { formatarDataHora } from "../../utils/formatters"
+import { EditMidia } from "../../components/midia/EditMidia"
 
 export default function Midia() {
 
     const [addMidiaAberto, setAddMidiaAberto] = useState(false)
 
+    const [edit, setEdit] = useState(null)
     const [detail, setDetail] = useState(null)
 
     const [midias, setMidias] = useState([])
@@ -122,6 +124,12 @@ export default function Midia() {
                                         <td>
                                             <button
                                                 className="second-action-button"
+                                                onClick={() => setEdit(midia)}
+                                            >
+                                                <i className="bi bi-pencil-square"></i>
+                                            </button>
+                                            <button
+                                                className="second-action-button"
                                                 onClick={() => handleDeletar(midia.id)}
                                             >
                                                 <i className="bi bi-trash"></i>
@@ -156,6 +164,17 @@ export default function Midia() {
                             onClose={() => {setDetail(null)}}
                             tipo={"midia"}
                             item={detail}
+                        />
+                    )}
+
+                    {edit !== null && (
+                        <EditMidia
+                            item={edit}
+                            onClose={() => {setEdit(null)}}
+                            onSuccess={() => {
+                                setEdit(null)
+                                carregarMidias()
+                            }} 
                         />
                     )}
                 </div>
