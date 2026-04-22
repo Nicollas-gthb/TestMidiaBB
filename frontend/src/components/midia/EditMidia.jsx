@@ -9,14 +9,27 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
 
     const [togglePage, setTogglePage] = useState(1)
 
-    const [nome, setNome] = useState("")
-    const [exibicao, setExibicao] = useState("") 
-    const [expiracao, setExpiracao] = useState("") 
-    const [duracao, setDuracao] = useState("3")
+    const [nome, setNome] = useState(item.nome)
+    const [duracao, setDuracao] = useState(item.duracao_segundos)
+    const [exibicao, setExibicao] = useState(
+        item.inicio_exibicao
+        ? new Date(item.inicio_exibicao).toISOString().slice(0, 16)
+        : ""
+    ) 
+    const [expiracao, setExpiracao] = useState(
+        item.expiracao
+        ? new Date(item.expiracao).toISOString().slice(0, 16)
+        : ""
+    ) 
+    const [ativo, setAtivo] = useState(item.ativo)
+    const [tvsSelecionadas, setTvsSelecionadas] = useState(
+        item.tvs.map(tv => tv.id)
+    )
+    
+
     const [file, setFile] = useState(null)
     const [preview, setPreview] = useState(null)
 
-    const [tvsSelecionadas, setTvsSelecionadas] = useState([])
     const [tvs, setTvs] = useState([])
 
     useEffect(() => {
@@ -77,8 +90,24 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
         }
     }
 
-    const handleSubmit = async (id) => {
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
+        const payload = {
+            nome,
+            duracao_segundos: parseInt(duracao),
+            ativo,
+            tv_ids: tvsSelecionadas,
+            inicio_exibicao: exibicao ? toUTC(exibicao) : null,
+            expiracao: expiracao ? toUTC(expiracao) : null,
+        }
+
+        try{
+            await api.patch(`/midias/${item.id}`, payload)
+            onSuccess()
+        }catch(error){
+            const mensagem = error.response?.data?.detail || "Erro ao atualizar midia"
+        }
     }
 
     return (
@@ -95,6 +124,7 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
                 </button>
 
                 <h2>Editar Mídia</h2>
+                <p>ID: {item.id}</p>
 
                 <form id="editmidia-form-modal" className="addmidia-form" onSubmit={handleSubmit}>
                     {togglePage == 1 ? (
@@ -111,49 +141,6 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
                                 />
                             </fieldset>
 
-                            <label htmlFor="addmidia-input-upload" id="editmidia-label-upload">
-                    
-                                {preview ? (
-                                    <>
-                                        <button
-                                            type="button"
-                                            className="close-button"
-                                            onClick={handleRemoveFile}
-                                        >
-                                            <i className="bi bi-x-circle"></i>
-                                        </button>
-                                        <Preview preview={preview} file={file} />
-                                    </>
-                                ) : (
-                                    <span id="editmidia-span-upload">Escolha o arquivo <br /> Arquivos suportados: PNG, JPEG, MP4 </span>
-                                )}
-                    
-                                <input
-                                    id="editmidia-input-upload"
-                                    className="addmidia-input"
-                                    type="file"
-                                    accept="image/*,video/*"
-                                    placeholder="Upload"
-                                    onChange={handleFileChange}
-                                />
-                            </label>
-
-                            <fieldset id="editmidia-field-url" className="addmidia-field">
-                                <legend className="addmidia-legend">URL</legend>
-                                <p id="editmidia-output-url">{preview}</p>
-                            </fieldset>
-                    
-                            <div id="editmidia-buttons-1" className="addmidia-buttons">
-                                <button
-                                    id="editmidia-next"
-                                    className="action-button"
-                                    type="button"
-                                    onClick={handleNextPage}
-                                >Avançar</button>
-                            </div>
-                        </>
-                    ) : togglePage == 2 ? (
-                        <>
                             <fieldset id="editmidia-field-duracao" className="addmidia-field">
                                 <legend className="addmidia-legend">Duração</legend>
                                 <input
@@ -164,29 +151,6 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
                                     value={duracao}
                                     onChange={(e) => setDuracao(e.target.value)}
                                 />
-                            </fieldset>
-
-                            <fieldset id="editmidia-field-tvs" className="addmidia-field">
-                                <legend className="addmidia-legend">TV Associada</legend>
-
-                                <button type="button" className="second-action-button" id="editmidia-selectAll" onClick={handleToggleAllTvs}>
-                                    {todasTvsSelecionadas ? "Desmarcar Todas" : "Marcar Todas"}
-                                </button>
-
-                                <div className="addmidia-tvs-list">
-                                    {tvs.map(tv => (
-                                        <label key={tv.id} className="addmidia-tv-item">
-                                            <input
-                                                id={`tv-${tv.id}`}
-                                                className="addmidia-opcoes-tv"
-                                                type="checkbox"
-                                                checked={tvsSelecionadas.includes(tv.id)}
-                                                onChange={() => handleToggleTv(tv.id)}
-                                            />
-                                            TV {tv.numero} — {tv.nome}
-                                        </label>
-                                    ))}
-                                </div>
                             </fieldset>
 
                             <fieldset id="editmidia-field-exibicao" className="addmidia-field">
@@ -213,6 +177,56 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
                                 />
                             </fieldset>
 
+                            
+                    
+                            <div id="editmidia-buttons-1" className="addmidia-buttons">
+                                <button
+                                    id="editmidia-next"
+                                    className="action-button"
+                                    type="button"
+                                    onClick={handleNextPage}
+                                >Avançar</button>
+                            </div>
+                        </>
+                    ) : togglePage == 2 ? (
+                        <>
+                            
+
+                            <fieldset id="editmidia-field-tvs" className="addmidia-field">
+                                <legend className="addmidia-legend">TV Associada</legend>
+
+                                <button type="button" className="second-action-button" id="editmidia-selectAll" onClick={handleToggleAllTvs}>
+                                    {todasTvsSelecionadas ? "Desmarcar Todas" : "Marcar Todas"}
+                                </button>
+
+                                <div className="addmidia-tvs-list">
+                                    {tvs.map(tv => (
+                                        <label key={tv.id} className="addmidia-tv-item">
+                                            <input
+                                                id={`tv-${tv.id}`}
+                                                className="addmidia-opcoes-tv"
+                                                type="checkbox"
+                                                checked={tvsSelecionadas.includes(tv.id)}
+                                                onChange={() => handleToggleTv(tv.id)}
+                                            />
+                                            TV {tv.numero} — {tv.nome}
+                                        </label>
+                                    ))}
+                                </div>
+                            </fieldset>
+
+                            <fieldset className="addmidia-field">
+                                <legend className="addmidia-legend">Status</legend>
+                                <label className="addmidia-tv-item">
+                                    <input
+                                        type="checkbox"
+                                        checked={ativo}
+                                        onChange={(e) => setAtivo(e.target.checked)}
+                                    />
+                                    Mídia ativa
+                                </label>
+                            </fieldset>
+
                             <div id="editmidia-buttons-2" className="addmidia-buttons">
                                 <button
                                     id="editmidia-back"
@@ -228,25 +242,14 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
                                 >Adicionar</button>
                             </div>
                         </>
-                    ) : togglePage == 3 && file ? (
+                    ) : togglePage == 3 ? (
                         <>
                             <h2>Resumo</h2>
                             <div id="editmidia-resumo">
                                 <p><strong>Nome:</strong> {nome}</p>
-                                <p><strong>Tipo de midia: </strong>{
-                                    file
-                                        ? file.type.startsWith("image/")
-                                            ? "Imagem"
-                                            : file.type.startsWith("video/")
-                                            ? "Vídeo"
-                                            : "Desconhecido"
-                                        : "Nenhuma mídia"
-                                    
-                                }</p>
                                 <p><strong>Duração:</strong> {duracao || "(padrão) 5"} segundos</p>
                                 <p><strong>Inicio da exibição:</strong> {exibicao || "Imediato"}</p>
                                 <p><strong>Fim da exibição:</strong> {expiracao || "Sem expiração"}</p>
-                                <p><strong>URL do arquivo:</strong> {preview}</p>
                                 <p><strong>TVs:</strong> {
                                     tvs
                                     .filter(tv => tvsSelecionadas.includes(tv.id))
