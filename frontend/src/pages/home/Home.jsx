@@ -81,7 +81,7 @@ export default function Home() {
                                     Tvs Ativas
                                 </p>
 
-                                <i class="bi card-bi bi-cast"></i>
+                                <i className="bi card-bi bi-cast"></i>
 
                             </div>
                             <p className="home-card-numbers">{totalTvsAtivas}</p>
@@ -94,7 +94,7 @@ export default function Home() {
                                     Midias Ativas
                                 </p>
 
-                                <i class="bi card-bi bi-images"></i>
+                                <i className="bi card-bi bi-images"></i>
 
                             </div>
                             <p className="home-card-numbers">{totalMidiasAtivas}</p>
@@ -106,7 +106,7 @@ export default function Home() {
                                 <p className="home-card-title">
                                     Midias Agendadas
                                 </p>
-                                <i class="bi card-bi bi-calendar-event"></i>
+                                <i className="bi card-bi bi-calendar-event"></i>
 
                             </div>
                             <p className="home-card-numbers">{totalMidiasAgendadas}</p>
@@ -118,7 +118,7 @@ export default function Home() {
                                 <p className="home-card-title">
                                     Midias Expiradas
                                 </p>
-                                <i class="bi card-bi bi-clock"></i>
+                                <i className="bi card-bi bi-clock"></i>
 
                             </div>
                             <p className="home-card-numbers">{totalMidiasExpiradas}</p>

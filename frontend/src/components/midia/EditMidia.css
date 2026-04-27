@@ -67,6 +67,7 @@
 
 .addmidia-input{
     background-color: var(--td-bg);
+    color: var(--text);
     border: none;
     width: 100%;
     height: 30px;

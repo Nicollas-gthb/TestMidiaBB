@@ -32,11 +32,15 @@ export default function Login(){
 
         try{
             const response = await api.post("/auth/login", payload)
+
             login(response.data.access_token, response.data.user)
+
             addToast("Login realizado !", "sucesso")
+
         }catch(error){
             const mensagem = error.response?.data?.detail || "Erro ao fazer login !"
             addToast(mensagem, "erro")
+            
         }finally{
             setLoading(false)
         }

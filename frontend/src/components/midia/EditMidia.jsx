@@ -3,6 +3,8 @@ import { useEffect, useState } from "react"
 import "./EditMidia.css"
 import { api } from "../../api/axios"
 import { toUTC } from "../../utils/formatters"
+import { formatarDataHora } from "../../utils/formatters"
+import { formatarParaInput } from "../../utils/formatters"
 import { Preview } from "./PreviewMidia"
 import { useToast } from "../../contexts/ToastContext"
 
@@ -15,12 +17,12 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
     const [duracao, setDuracao] = useState(item.duracao_segundos)
     const [exibicao, setExibicao] = useState(
         item.inicio_exibicao
-        ? new Date(item.inicio_exibicao).toISOString().slice(0, 16)
+        ? formatarParaInput(item.inicio_exibicao)
         : ""
     ) 
     const [expiracao, setExpiracao] = useState(
-        item.expiracao
-        ? new Date(item.expiracao).toISOString().slice(0, 16)
+        item.expiracao 
+        ? formatarParaInput(item.expiracao)
         : ""
     ) 
     const [ativo, setAtivo] = useState(item.ativo)
@@ -252,8 +254,8 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
                             <div id="editmidia-resumo">
                                 <p><strong>Nome:</strong> {nome}</p>
                                 <p><strong>Duração:</strong> {duracao || "(padrão) 5"} segundos</p>
-                                <p><strong>Inicio da exibição:</strong> {exibicao || "Imediato"}</p>
-                                <p><strong>Fim da exibição:</strong> {expiracao || "Sem expiração"}</p>
+                                <p><strong>Inicio da exibição:</strong> {formatarDataHora(exibicao) || "Imediato"}</p>
+                                <p><strong>Fim da exibição:</strong> {formatarDataHora(expiracao) || "Sem expiração"}</p>
                                 <p><strong>TVs:</strong> {
                                     tvs
                                     .filter(tv => tvsSelecionadas.includes(tv.id))
@@ -270,7 +272,6 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
                                         id="editmidia-confirm"
                                         className="action-button"
                                         type="submit"
-                                        onClick={handleSubmit}
                                     >Confirmar</button>
                                 </div>
                             </div>

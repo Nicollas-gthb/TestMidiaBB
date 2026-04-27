@@ -21,7 +21,8 @@
 
 :root[data-theme = "light"]{
   --text: #1f2328;
-  --text-hover: #4b5563;
+  --sub-text: #5b5b5b;
+  --text-hover: #deecff;
   --bg: #ffdd00;
   --header-bg: #ffcc00;
   /* --header-bg: #f6ff00; */
@@ -41,10 +42,12 @@
   --status-inativa-bg: #6666664b;
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-}
+  --calendar-icon-filter: invert(1);
+  }
 
 :root[data-theme = "dark"]{
   --text: #e8e9ea;
+  --sub-text: #aeaeae;
   --text-hover: #a9b1c0;
   --bg: #16171d;
   --header-bg: #354b8e;
@@ -64,7 +67,8 @@
   --status-inativa-bg: #33333392;
   --shadow:
     rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-}
+  --calendar-icon-filter: invert(0);
+  }
 
 body {
   margin: 0;

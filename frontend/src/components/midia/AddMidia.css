@@ -76,6 +76,7 @@
 
 .addmidia-field{
     border-color: var(--text);
+    color: var(--text);
     width: 100%;
     border-radius: 10px;
     height: 60px;
@@ -95,7 +96,7 @@
 #addmidia-input-upload{
     border: none;
     width: 100%;
-    height: 30px;
+    height: 40px;
     font-size: 0.9rem;
     outline: none;
     display: none;
@@ -103,7 +104,7 @@
 
 #addmidia-span-upload{
     font-size: 0.9rem;
-    color: var(--text-hover);
+    color: var(--text);
     text-align: center;
 
     transition: color 0.3s ease-in-out;
@@ -128,8 +129,12 @@
 
 #addmidia-label-upload:hover{
     background-color: var(--hover-action-bg);
-    color: var(--text);
+    color: var(--text-hover);
     border-color: var(--hover-action-bg);
+}
+
+#addmidia-label-upload:hover #addmidia-span-upload{
+    color: var(--text-hover);
 }
 
 .addmidia-buttons{
@@ -159,7 +164,8 @@
 }
 
 #addmidia-field-url{
-    height: auto;    
+    height: auto;
+    min-height: 60px;    
 }
 
 #addmidia-resumo{
@@ -189,3 +195,20 @@
     width: 100%;
     margin-bottom: 15px;
 }
+
+
+.addmidia-input{
+    color: var(--sub-text);
+    opacity: 1;
+}
+
+.addmidia-input::before{
+    color: var(--text)
+}
+
+/* Muda a cor do ícone do calendário */
+.addmidia-input::-webkit-calendar-picker-indicator {
+    filter: var(--calendar-icon-filter);
+    cursor: pointer;
+}
+
