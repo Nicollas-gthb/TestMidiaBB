@@ -40,6 +40,7 @@
   --link-color: #06B8F3;
   --status-inativa: #717171;
   --status-inativa-bg: #6666664b;
+  --resumo-bg: #e2e2f1;
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
   --calendar-icon-filter: invert(1);
@@ -65,6 +66,7 @@
   --link-color: #CCEC00;
   --status-inativa: #878787;
   --status-inativa-bg: #33333392;
+  --resumo-bg: #052457;
   --shadow:
     rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   --calendar-icon-filter: invert(0);

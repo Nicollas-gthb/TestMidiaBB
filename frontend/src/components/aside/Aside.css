@@ -13,7 +13,9 @@
 #aside-header{
     background-color: var(--bg);
     height: 10vh;
+    border-bottom: 1px solid var(--text);
 }
+
 #aside-main{
     background-color: var(--bg);
     height: 100vh;
@@ -21,6 +23,7 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    padding-top: 20px;
 }
 
 .menu-buttons{
@@ -52,15 +55,26 @@
 .menu-active:hover {
     background-color: var(--hover-action-bg);
 }
+.menu-active:hover .aside-bi{
+    color: white;
+}
 
+.menu-active .aside-bi{
+    color: white;
+}
 
 .menu-inactive {
-    opacity: 0.5;
+    opacity: 0.9;
 }
 
 .menu-inactive:hover {
     opacity: 1;
     background-color: var(--action-bg);
+    color: white;
+}
+
+.menu-inactive:hover .aside-bi{
+    opacity: 1;
     color: white;
 }
 
@@ -86,6 +100,7 @@
 }
 
 .aside-bi{
-    font-size: 17px;
+    color: var(--text);
+    font-size: 22px;
     margin-left: 5%;
 }

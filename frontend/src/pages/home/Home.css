@@ -173,5 +173,7 @@ td:nth-child(5){
 
 .home-card-info{
     font-size: 0.7em;
-    color: var(--text-hover);
+    font-weight: bold;
+    color: var(--text);
+    opacity: 0.6;
 }
