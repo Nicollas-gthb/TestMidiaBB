@@ -25,7 +25,7 @@
   --text-hover: #deecff;
   --bg: #ffdd00;
   --header-bg: #ffcc00;
-  /* --header-bg: #f6ff00; */
+  --aside-bg: #ffffff;
   --blue-bg: #eceef0;
   --table-border: #6d8bbc;
   --code-bg: #e8edf5;
@@ -52,6 +52,7 @@
   --text-hover: #a9b1c0;
   --bg: #16171d;
   --header-bg: #354b8e;
+  --aside-bg: #16171d;
   --blue-bg: #071745;
   --table-border: #6d8bbc;
   --code-bg: #1f2028;

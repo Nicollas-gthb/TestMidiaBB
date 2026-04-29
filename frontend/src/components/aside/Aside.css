@@ -2,12 +2,11 @@
     width: 15%;
     display: flex;
     flex-direction: column;
-
-    position: sticky;
+    
     left: 0;
     top: 0;
-    height: 100vh;
-    overflow-y: auto;
+
+    height: auto;
 }
 
 #aside-header{
@@ -17,8 +16,8 @@
 }
 
 #aside-main{
-    background-color: var(--bg);
-    height: 100vh;
+    background-color: var(--aside-bg);
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -84,9 +83,10 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    padding: 10px;
 
-    border: dashed
+    opacity: 0.5;
+
+    border: dotted
 }
 
 .aside-teste-button{
@@ -103,4 +103,10 @@
     color: var(--text);
     font-size: 22px;
     margin-left: 5%;
+}
+
+
+.processo{
+    opacity: 0.4;
+    margin: -2px 0px;
 }

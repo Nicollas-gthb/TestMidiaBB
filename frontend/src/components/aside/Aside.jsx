@@ -39,33 +39,61 @@ export const Aside = () => {
                     TVs
                 </button>
 
-                {/* <hr />
+                <hr />
 
-                <div id="aside-teste">
-                    <h2>Teste dos toasts</h2>
+                
+                    <p className=" processo">em processo</p>
 
-                    <button 
-                        id="toast-s" 
-                        className="aside-teste-button"
-                        onClick={() => addToast("Teste 1 mais longo", "sucesso")}
-                    >Sucesso</button>
-                    <button 
-                        id="toast-e" 
-                        className="aside-teste-button"
-                        onClick={() => addToast("Teste 2", "erro")}
-                    >Erro</button>
-                    <button 
-                        id="toast-a" 
-                        className="aside-teste-button"
-                        onClick={() => addToast("Teste 3", "aviso")}
-                    >Aviso</button>
-                    <button 
-                        id="toast-i" 
-                        className="aside-teste-button"
-                        onClick={() => addToast("Teste 4", "info")}
-                    >Info</button>
+                <button
+                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    
+                >
+                    <i className="bi aside-bi bi-wifi-off"></i>
+                    TVs Offline
+                </button>
+                
+                <button
+                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    
+                >
+                    <i className="bi aside-bi bi-card-heading"></i>
+                    Log de Atividades
+                </button>
+                
+                <button
+                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    
+                >
+                    <i className="bi aside-bi bi-file-earmark-bar-graph"></i>
+                    Relatórios
+                </button>
 
-                </div> */}
+                <button
+                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    
+                >
+                    <i className="bi aside-bi bi-person"></i>
+                    Usuários
+                </button>
+                
+                <button
+                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    
+                >
+                    {/* <i ="bi  bi-gear"></i> */}
+                    <i className="bi aside-bi bi-shield-lock"></i>
+                    Auths
+                </button>
+
+                <button
+                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    
+                >
+                    <i className="bi aside-bi bi-gear"></i>
+                    Configs
+                </button>
+
+                
             </div>
         </aside>
     )

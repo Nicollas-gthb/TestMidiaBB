@@ -1,9 +1,9 @@
 #home-container{
     display: flex;
     flex-direction: row;
-    min-height: 100vh;
+    height: auto;
 
-    overflow-y: auto;
+    /* overflow-y: auto; */
     z-index: 1;
 }
 
@@ -158,7 +158,7 @@ td:nth-child(5){
     display: flex;
     flex-direction: column;
     
-
+    height: auto;
     width: 20%;
 }
 
@@ -185,6 +185,7 @@ td:nth-child(5){
 #card-midia-agendada{
     min-width: 45%;
     min-height: 370px;
+    height: auto;
 
     display: flex;
     justify-content: space-between;
@@ -193,6 +194,7 @@ td:nth-child(5){
 #card-midia-expirando{
     min-width: 45%;
     min-height: 370px;
+    height: auto;
 
     display: flex;
     justify-content: space-between;
@@ -201,6 +203,7 @@ td:nth-child(5){
 #card-midia-historico{
     min-width: 50%;
     min-height: 370px;
+    height: auto;
 
     display: flex;
     justify-content: space-between;
@@ -208,7 +211,7 @@ td:nth-child(5){
 
 .home-card-foot{
     padding: 5px;
-    border: 1px solid var(--table-bg);
+    border: 3px solid var(--table-bg);
     border-radius: 10px;
     cursor: pointer;
 }
