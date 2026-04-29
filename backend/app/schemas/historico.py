@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-class HistoricoReponse(BaseModel):
+class HistoricoResponse(BaseModel):
     id: int
     entidade: str
     entidade_id: int

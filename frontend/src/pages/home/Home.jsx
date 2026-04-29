@@ -15,6 +15,8 @@ export default function Home() {
     const [tvs, setTvs] = useState([])
     const [midias, setMidias] = useState([])
     const { addToast } = useToast()
+
+    const [historico, setHistorico] = useState([])
     
     useEffect(() => {
         carregarTvs()
@@ -22,6 +24,10 @@ export default function Home() {
 
     useEffect(() => {
         carregarMidias()
+    }, [])
+
+    useEffect(() => {
+        carregarHistorico()
     }, [])
 
     const carregarTvs = async () => {
@@ -55,6 +61,17 @@ export default function Home() {
             addToast("Mídias carregadas !", "sucesso")
         }catch(error){
             const mensagem = error.response?.data?.detail || "Erro ao carregar mídias !"
+            addToast(mensagem, "erro")
+        }
+    }
+
+    const carregarHistorico = async () => {
+        try{
+            const response = await api.get("/historico/")
+            setHistorico(response.data)
+            addToast("Histórico carregado !", "sucesso")
+        }catch(error){
+            const mensagem = error?.response?.data?.detail || "Erro ao carregar histórico"
             addToast(mensagem, "erro")
         }
     }
@@ -192,7 +209,7 @@ export default function Home() {
                                 className="home-card-foot"
                                 onClick={() => navigate("/midia")}
                             >
-                                Ver Mais Detalhes
+                                Ver Todas
                             </div>
                         </div>
 
@@ -248,11 +265,36 @@ export default function Home() {
                         <div id="card-midia-expirando" className="home-cards">
                             <div className="home-card-head">
                                 <i className="bi card-bi bi-clock"></i>
-                                Mídias Expirando em Breve
+                                Histórico Recente
                             </div>
 
                             <div className="home-card-body">
-                                
+                                {historico.length === 0 ? (
+                                    <div className="home-card-vazio">
+                                        <p>Sem Histórico</p>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <table>
+                                            <tbody>
+                                                {historico.map(h => (
+                                                    <tr key={h.id}>
+                                                        <td>
+                                                            <span className="historico-icon"></span>
+                                                            <span className="historico-text">
+
+                                                                <p className="historico-main-text">{`${h.entidade} "${h.entidade_nome}" foi ${h.acao}`}</p>
+                                                                <p className="historico-sub-text">{`${h.usuario_nome}`}</p>
+                            
+                                                            </span>
+                                                        </td>
+                                                        <td>{formatarDataHora(h.criado_em)}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </>
+                                )}
                             </div>
 
                             <div className="home-card-foot">

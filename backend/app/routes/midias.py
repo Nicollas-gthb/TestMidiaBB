@@ -189,9 +189,9 @@ def atualizar_midia(
 
                 session.add(novo_item)
             
-    session.commit()
-
     salvar_registro(session, "midia", midia.id, midia.nome, "editada", usuario)
 
+
+    session.commit()
     session.refresh(midia)
     return midia

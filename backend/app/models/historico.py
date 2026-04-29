@@ -11,6 +11,7 @@ class Historico(Base):
     entidade_nome = Column(String, nullable=False) # nome no momento da ação
     acao = Column(String, nullable=False) # "adicionada" | "editada" | "removida"
     usuario_id = Column(Integer, nullable=False)
+    usuario_nome = Column(String, nullable=False)    # nome no momento da ação
 
     criado_em = Column(DateTime(timezone=True), server_default=func.now())
 
