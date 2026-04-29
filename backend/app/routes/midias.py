@@ -11,6 +11,7 @@ from app.models.midia import Midia
 from app.models.playlist_item import PlaylistItem
 from app.models.tv import TV
 from app.schemas.midia import MidiaResponse, MidiaUpdate
+from app.services.historico_service import salvar_registro
 
 router = APIRouter(prefix="/api/midias", tags=["Mídias"])
 
@@ -40,6 +41,7 @@ def upload_midia(
     expiracao: str | None = Form(None),
     arquivo: UploadFile = File(...),
     session: Session = Depends(get_session),
+    usuario = Depends(get_usuario_atual)
 ):
     # Valida tipo
     tipo = None
@@ -90,18 +92,27 @@ def upload_midia(
         item = PlaylistItem(tv_id=tv_id, midia_id=midia.id, ordem=ultimo + 1)
         session.add(item)
 
+    salvar_registro(session, "midia", midia.id, midia.nome, "adicionada", usuario)
+
     session.commit()
     session.refresh(midia)
     return midia
 
 @router.delete("/{midia_id}")
-def deletar_midia(midia_id: int, session: Session = Depends(get_session)):
+def deletar_midia(
+    midia_id: int, 
+    session: Session = Depends(get_session),
+    usuario = Depends(get_usuario_atual)
+):
     midia = session.query(Midia).filter(Midia.id == midia_id, Midia.ativo == True).first()
     if not midia:
         raise HTTPException(status_code=404, detail="Mídia não encontrada")
 
     midia.ativo = False
     session.query(PlaylistItem).filter(PlaylistItem.midia_id == midia_id).update({"ativo": False})
+
+    salvar_registro(session, "midia", midia.id, midia.nome, "removida", usuario)
+
     session.commit()
     return {"message": "Mídia desativada com sucesso"}
 
@@ -109,7 +120,8 @@ def deletar_midia(midia_id: int, session: Session = Depends(get_session)):
 @router.delete("/{midia_id}/hard")
 def hard_delete_midia(
     midia_id: int, 
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    usuario = Depends(get_usuario_atual)
 ):
     
     midia = session.query(Midia).filter(Midia.id == midia_id).first()
@@ -120,6 +132,9 @@ def hard_delete_midia(
         PlaylistItem.midia_id == midia_id
     ).delete()
 
+    salvar_registro(session, "midia", midia.id, midia.nome, "deletada", usuario)
+    session.commit()
+    
     session.delete(midia)
     session.commit()
 
@@ -129,7 +144,8 @@ def hard_delete_midia(
 def atualizar_midia(
     midia_id: int, 
     request: MidiaUpdate,
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    usuario = Depends(get_usuario_atual)
 ):
     midia = session.query(Midia).filter(Midia.id == midia_id).first()
 
@@ -174,5 +190,8 @@ def atualizar_midia(
                 session.add(novo_item)
             
     session.commit()
+
+    salvar_registro(session, "midia", midia.id, midia.nome, "editada", usuario)
+
     session.refresh(midia)
     return midia
