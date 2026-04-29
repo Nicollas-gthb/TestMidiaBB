@@ -6,6 +6,7 @@ import { Aside } from "../../components/aside/Aside"
 import { Header } from "../../components/header/Header"
 import { useToast } from "../../contexts/ToastContext"
 import { api } from "../../api/axios"
+import { formatarDataHora } from "../../utils/formatters"
 
 export default function Home() {
 
@@ -62,6 +63,20 @@ export default function Home() {
     const totalMidiasAgendadas = midias.filter(m => calcularStatus(m) === "agendada").length
     const totalMidiasExpiradas = midias.filter(m => calcularStatus(m) === "expirada").length
 
+    const listaMidiasAgendadas = midias.filter(
+        m => calcularStatus(m) === "agendada"
+    ).sort(
+        (a, b) => new Date(a.inicio_exibicao) - new Date(b.inicio_exibicao)
+    ).slice(0, 3)
+
+    const listaMidiasExpirando = midias.filter(m => {
+        if(!m.expiracao) return false
+        const diff = new Date(m.expiracao) - new Date()
+        return diff > 0 && diff < 7 * 24 * 60 * 60 * 1000 // expira nos próximos 7 dias
+    }).sort(
+        (a, b) => new Date(a.expiracao) - new Date(b.expiracao)
+    ).slice(0, 3)
+
     return (
         <div id="home-container">
 
@@ -74,14 +89,15 @@ export default function Home() {
                 <div id="home-menu-main">
                     <h2>Home</h2>
 
-                    <div id="home-cards-container">
+                    <div className="home-cards-container">
                         <div className="home-cards">
                             <div className="home-card-head">
+
+                                <i className="bi card-bi bi-cast"></i>
                                 <p className="home-card-title">
                                     Tvs Ativas
                                 </p>
 
-                                <i className="bi card-bi bi-cast"></i>
 
                             </div>
                             <p className="home-card-numbers">{totalTvsAtivas}</p>
@@ -90,11 +106,12 @@ export default function Home() {
 
                         <div className="home-cards">
                             <div className="home-card-head">
+
+                                <i className="bi card-bi bi-images"></i>
                                 <p className="home-card-title">
                                     Midias Ativas
                                 </p>
 
-                                <i className="bi card-bi bi-images"></i>
 
                             </div>
                             <p className="home-card-numbers">{totalMidiasAtivas}</p>
@@ -103,10 +120,11 @@ export default function Home() {
 
                         <div className="home-cards">
                             <div className="home-card-head">
+
+                                <i className="bi card-bi bi-calendar-event"></i>
                                 <p className="home-card-title">
                                     Midias Agendadas
                                 </p>
-                                <i className="bi card-bi bi-calendar-event"></i>
 
                             </div>
                             <p className="home-card-numbers">{totalMidiasAgendadas}</p>
@@ -115,14 +133,123 @@ export default function Home() {
 
                         <div className="home-card-head" className="home-cards">
                             <div className="home-card-head">
+
+                                <i className="bi card-bi bi-clock"></i>
                                 <p className="home-card-title">
                                     Midias Expiradas
                                 </p>
-                                <i className="bi card-bi bi-clock"></i>
 
                             </div>
                             <p className="home-card-numbers">{totalMidiasExpiradas}</p>
                             <p className="home-card-info">{`de ${midias.length} cadastrdas`}</p>
+                        </div>
+                    </div>
+
+                    <div className="home-cards-container">
+                        
+                        <div id="card-midia-agendada" className="home-cards">
+                            
+                            <div className="home-card-head">
+                                <i className="bi card-bi bi-calendar-event"></i>
+                                Ultimas Midias Agendadas
+                            </div>
+
+                            <div className="home-card-body">
+                                {listaMidiasAgendadas.length === 0 ? (
+                                    <div className="home-card-vazio">
+                                        <p>Sem Conteúdo Agendado</p>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>ID</td>
+                                                    <td>Nome</td>
+                                                    <td>Tipo</td>
+                                                    <td>Tvs</td>
+                                                    <td>Inicio</td>
+                                                </tr>
+                                                {listaMidiasAgendadas.map(m => (
+                                                    <tr key={m.id}>
+                                                        <td>{m.id}</td>
+                                                        <td>{m.nome}</td>
+                                                        <td>{m.tipo}</td>
+                                                        <td>{m.tvs.length}</td>
+                                                        <td>{formatarDataHora(m.inicio_exibicao)}</td>
+                                                        
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </>
+                                )}
+                            </div>
+
+                            <div className="home-card-foot">
+                                Ver Mais Detalhes
+                            </div>
+                        </div>
+
+                        <div id="card-midia-expirando" className="home-cards">
+                            <div className="home-card-head">
+                                <i className="bi card-bi bi-clock"></i>
+                                Midias Expirando em Breve
+                            </div>
+
+                            <div className="home-card-body">
+                                {listaMidiasExpirando.length === 0 ? (
+                                    <div className="home-card-vazio">
+                                        <p>Sem Conteúdo Expirando</p>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>ID</td>
+                                                    <td>Nome</td>
+                                                    <td>Tipo</td>
+                                                    <td>Tvs</td>
+                                                    <td>Expira em</td>
+                                                </tr>
+                                                {listaMidiasExpirando.map(m => (
+                                                    <tr key={m.id}>
+                                                        <td>{m.id}</td>
+                                                        <td>{m.nome}</td>
+                                                        <td>{m.tipo}</td>
+                                                        <td>{m.tvs.length}</td>
+                                                        <td>{formatarDataHora(m.expiracao)}</td>
+                                                        
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>  
+                                    </>
+                                )}
+                            </div>
+
+                            <div className="home-card-foot">
+                                Ver Mais Detalhes
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div className="home-cards-container">
+                        <div id="card-midia-expirando" className="home-cards">
+                            <div className="home-card-head">
+                                <i className="bi card-bi bi-clock"></i>
+                                Midias Expirando em Breve
+                            </div>
+
+                            <div className="home-card-body">
+                                
+                            </div>
+
+                            <div className="home-card-foot">
+                                Ver Mais Detalhes
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,25 +1,27 @@
 #home-container{
     display: flex;
     flex-direction: row;
+    min-height: 100vh;
 
+    overflow-y: auto;
     z-index: 1;
 }
 
 #home-main-container{
     width: 85%;
-    height: 100vh;
+
     display: flex;
     flex-direction: column;
 }
 
 #home-menu-main{
     background-color: var(--blue-bg);
-    height: 90%;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 40px;
-    gap: 50px;
+    padding: 40px;
+    gap: 35px;
 }
 
 table{
@@ -137,7 +139,7 @@ td:nth-child(5){
     color: var(--link-color);
 }
 
-#home-cards-container{
+.home-cards-container{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -163,7 +165,9 @@ td:nth-child(5){
 .home-card-head{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: start;
+
+    gap: 10px;
 }
 
 .home-card-numbers{
@@ -176,4 +180,36 @@ td:nth-child(5){
     font-weight: bold;
     color: var(--text);
     opacity: 0.6;
+}
+
+#card-midia-agendada{
+    min-width: 45%;
+    min-height: 370px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+#card-midia-expirando{
+    min-width: 45%;
+    min-height: 370px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-card-foot{
+    padding: 5px;
+    border: 1px solid var(--table-bg);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.home-card-foot:hover{
+    background-color: var(--hover-action-bg);
+    color: white;
+}
+
+.home-card-vazio{
+    padding: 70px 0px ;
 }
