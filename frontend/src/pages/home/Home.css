@@ -267,3 +267,33 @@ td:nth-child(5){
 .home-tag-editada     { background: #00d9ff; color: #0c5460; }
 .home-tag-removida    { background: #ffc400; color: #856404; }
 .home-tag-deletada    { background: #ff0015; color: #721c24; }
+
+.table-filters {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    align-items: center;
+    width: 100%;
+}
+
+.filter-search {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border, rgba(0,0,0,0.2));
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.9rem;
+    width: 550px;
+}
+
+.filter-select {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border, rgba(0,0,0,0.2));
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.9rem;
+    cursor: pointer;
+    width: 170px;
+}

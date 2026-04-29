@@ -42,10 +42,10 @@ export const Aside = () => {
                 <hr />
 
                 
-                    <p className=" processo">em processo</p>
+                    <p className="processo">em processo</p>
 
                 <button
-                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
                     
                 >
                     <i className="bi aside-bi bi-wifi-off"></i>
@@ -53,7 +53,7 @@ export const Aside = () => {
                 </button>
                 
                 <button
-                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
                     
                 >
                     <i className="bi aside-bi bi-card-heading"></i>
@@ -61,7 +61,7 @@ export const Aside = () => {
                 </button>
                 
                 <button
-                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
                     
                 >
                     <i className="bi aside-bi bi-file-earmark-bar-graph"></i>
@@ -69,7 +69,7 @@ export const Aside = () => {
                 </button>
 
                 <button
-                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
                     
                 >
                     <i className="bi aside-bi bi-person"></i>
@@ -77,7 +77,7 @@ export const Aside = () => {
                 </button>
                 
                 <button
-                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
                     
                 >
                     {/* <i ="bi  bi-gear"></i> */}
@@ -86,7 +86,7 @@ export const Aside = () => {
                 </button>
 
                 <button
-                    className={`menu-buttons processo ${isActive("/tv") ? "menu-active" : "menu-inactive"}`}
+                    className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
                     
                 >
                     <i className="bi aside-bi bi-gear"></i>

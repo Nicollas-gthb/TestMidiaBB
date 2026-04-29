@@ -34,6 +34,20 @@ export default function TvConfig() {
         carregarTvs()
     }, [])
 
+    const [busca, setBusca] = useState("")
+    const [filtroStatus, setFiltroStatus] = useState("todos")
+
+    const tvsFiltradas = tvs
+        .filter(tv => 
+            tv.nome.toLowerCase().includes(busca.toLowerCase()) ||
+            tv.numero.toString().includes(busca)
+        )
+        .filter(tv => {
+            if (filtroStatus === "todos") return true
+            if (filtroStatus === "ativa") return tv.ativo
+            if (filtroStatus === "inativa") return !tv.ativo
+        })
+
     const handleDeletar = async (id) => {
 
         // if (!window.confirm("Tem certeza? Esse é um hard delete, a ação não pode ser desfeita.")) return
@@ -59,10 +73,13 @@ export default function TvConfig() {
 
                 <div id="midia-menu-main">
 
+                    <h2>Gestão de TVs</h2>
+                    
                     <div className="table-title">
+                    </div>
 
-                        <h2>Gestão de TVs</h2>
-        
+                    <div className="table-filters">
+
                         <button 
                             className="action-button"
                             onClick={() => {
@@ -73,6 +90,24 @@ export default function TvConfig() {
                             Nova TV
                         </button>
 
+                        <input
+                            id="search-tvs"
+                            className="filter-search"
+                            type="text"
+                            placeholder="Buscar por nome ou número..."
+                            value={busca}
+                            onChange={(e) => setBusca(e.target.value)}
+                        />
+                        <select
+                            id="select-tv"
+                            className="filter-select"
+                            value={filtroStatus}
+                            onChange={(e) => setFiltroStatus(e.target.value)}
+                        >
+                            <option value="todos">Todas</option>
+                            <option value="ativa">Ativas</option>
+                            <option value="inativa">Inativas</option>
+                        </select>
                     </div>
 
                     <div className="table-container">
@@ -90,7 +125,7 @@ export default function TvConfig() {
                             </thead>
                             <tbody>
 
-                                {tvs.map(tv => (
+                                {tvsFiltradas.map(tv => (
                                     <tr key={tv.id}>
                                         <td>{tv.id}</td>
                                         <td>{tv.nome}</td>

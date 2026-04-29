@@ -15,11 +15,13 @@ export default function Midia() {
     const { addToast } = useToast()
 
     const [addMidiaAberto, setAddMidiaAberto] = useState(false)
-
     const [edit, setEdit] = useState(null)
     const [detail, setDetail] = useState(null)
-
     const [midias, setMidias] = useState([])
+    const [busca, setBusca] = useState("")
+    const [filtroStatus, setFiltroStatus] = useState("todos")
+
+    
 
     const calcularStatus = (midia) => {
         if(!midia.ativo) return "removida"
@@ -32,6 +34,10 @@ export default function Midia() {
 
         return "ativa"
     }
+
+    const midiasFiltradas = midias
+        .filter(m => m.nome.toLowerCase().includes(busca.toLowerCase()))
+        .filter(m => filtroStatus === "todos" ? true : calcularStatus(m) === filtroStatus)
 
     const carregarMidias = async () => {
         try{
@@ -73,18 +79,41 @@ export default function Midia() {
 
                 <div id="midia-menu-main">
 
+                    <h2>Gestão de mídias</h2>
+                    
                     <div className="table-title">
+                    </div>
 
-                        <h2>Gestão de midias</h2>
-        
+                    <div className="table-filters">
+
                         <button 
                             className="action-button"
                             onClick={() => {setAddMidiaAberto(true)}}
                         >
                             <i className="bi bi-arrow-bar-up"></i>
-                            Nova midia
+                            Nova mídia
                         </button>
 
+                        <input
+                            id="search-midias"
+                            className="filter-search"
+                            type="text"
+                            placeholder="Buscar por nome..."
+                            value={busca}
+                            onChange={(e) => setBusca(e.target.value)}
+                        />
+                        <select
+                            id="select-midia"
+                            className="filter-select"
+                            value={filtroStatus}
+                            onChange={(e) => setFiltroStatus(e.target.value)}
+                        >
+                            <option value="todos">Todos</option>
+                            <option value="ativa">Ativas</option>
+                            <option value="agendada">Agendadas</option>
+                            <option value="expirada">Expiradas</option>
+                            <option value="removida">Removidas</option>
+                        </select>
                     </div>
 
                     <div className="table-container">
@@ -104,7 +133,7 @@ export default function Midia() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {midias.map(midia => (
+                                {midiasFiltradas.map(midia => (
                                     <tr key={midia.id}>
                                         <td>{midia.id}</td>
                                         <td>{midia.nome}</td>

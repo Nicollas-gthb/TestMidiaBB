@@ -1,6 +1,5 @@
 #midia-container{
     display: flex;
-    min-height: 100vh;
     flex-direction: row;
     align-items: stretch;
 

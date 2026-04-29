@@ -13,7 +13,7 @@ export function AuthProvider({children}){
         const savedUser = localStorage.getItem("user")
         const savedToken = localStorage.getItem("token")
 
-        if (savedToken && savedUser && savedUser !== "undefined") {
+        if (savedToken && savedUser !== "undefined") {
             setUser(JSON.parse(savedUser))
             setToken(savedToken)
         }
