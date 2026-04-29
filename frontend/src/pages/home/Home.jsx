@@ -1,4 +1,4 @@
-import { useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 
 import "./Home.css"
@@ -9,6 +9,8 @@ import { api } from "../../api/axios"
 import { formatarDataHora } from "../../utils/formatters"
 
 export default function Home() {
+
+    const navigate = useNavigate()
 
     const [tvs, setTvs] = useState([])
     const [midias, setMidias] = useState([])
@@ -151,7 +153,7 @@ export default function Home() {
                             
                             <div className="home-card-head">
                                 <i className="bi card-bi bi-calendar-event"></i>
-                                Ultimas Midias Agendadas
+                                Últimas Mídias Agendadas
                             </div>
 
                             <div className="home-card-body">
@@ -186,7 +188,10 @@ export default function Home() {
                                 )}
                             </div>
 
-                            <div className="home-card-foot">
+                            <div 
+                                className="home-card-foot"
+                                onClick={() => navigate("/midia")}
+                            >
                                 Ver Mais Detalhes
                             </div>
                         </div>
@@ -229,8 +234,11 @@ export default function Home() {
                                 )}
                             </div>
 
-                            <div className="home-card-foot">
-                                Ver Mais Detalhes
+                            <div 
+                                className="home-card-foot"
+                                onClick={() => navigate("/midia")}
+                            >
+                                Ver Todas
                             </div>
                         </div>
 
@@ -240,7 +248,7 @@ export default function Home() {
                         <div id="card-midia-expirando" className="home-cards">
                             <div className="home-card-head">
                                 <i className="bi card-bi bi-clock"></i>
-                                Midias Expirando em Breve
+                                Mídias Expirando em Breve
                             </div>
 
                             <div className="home-card-body">
@@ -248,7 +256,7 @@ export default function Home() {
                             </div>
 
                             <div className="home-card-foot">
-                                Ver Mais Detalhes
+                                Ver Todas
                             </div>
                         </div>
                     </div>

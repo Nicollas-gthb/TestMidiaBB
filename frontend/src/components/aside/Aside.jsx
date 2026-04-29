@@ -11,18 +11,6 @@ export const Aside = () => {
     const navigate = useNavigate()
     const isActive = (path) => location.pathname === path
 
-    const handlePageMidia = () => {
-        navigate("/midia")
-    }
-
-    const handlePageTv = () => {
-        navigate("/tv")
-    }
-
-    const handlePageHome = () => {
-        navigate("/home")
-    }
-
     return (
         <aside id="aside-menu-container">
             <header id="aside-header">
