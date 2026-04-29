@@ -262,7 +262,7 @@ export default function Home() {
                     </div>
 
                     <div className="home-cards-container">
-                        <div id="card-midia-expirando" className="home-cards">
+                        <div id="card-midia-historico" className="home-cards">
                             <div className="home-card-head">
                                 <i className="bi card-bi bi-clock"></i>
                                 Histórico Recente
@@ -279,8 +279,11 @@ export default function Home() {
                                             <tbody>
                                                 {historico.map(h => (
                                                     <tr key={h.id}>
-                                                        <td>
-                                                            <span className="historico-icon"></span>
+                                        
+                                                        <td id="historico-content">
+                                                            <span className={`historico-icon home-tag-${h.acao.replace(" ", "-")}`}>
+                                                                
+                                                            </span>
                                                             <span className="historico-text">
 
                                                                 <p className="historico-main-text">{`${h.entidade} "${h.entidade_nome}" foi ${h.acao}`}</p>
@@ -288,7 +291,12 @@ export default function Home() {
                             
                                                             </span>
                                                         </td>
-                                                        <td>{formatarDataHora(h.criado_em)}</td>
+                                                
+                                                        <td >
+                                                            <span className="historico-data">
+                                                                {formatarDataHora(h.criado_em)}
+                                                            </span>
+                                                        </td>
                                                     </tr>
                                                 ))}
                                             </tbody>

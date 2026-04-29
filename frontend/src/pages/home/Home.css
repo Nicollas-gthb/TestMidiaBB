@@ -198,6 +198,14 @@ td:nth-child(5){
     justify-content: space-between;
 }
 
+#card-midia-historico{
+    min-width: 50%;
+    min-height: 370px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
 .home-card-foot{
     padding: 5px;
     border: 1px solid var(--table-bg);
@@ -213,3 +221,46 @@ td:nth-child(5){
 .home-card-vazio{
     padding: 70px 0px ;
 }
+
+.historico-text{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.historico-main-text{
+    font-size: 0.9em;
+    margin: 0px;
+}
+
+.historico-sub-text{
+    font-size: 0.7em;
+    margin: 0px;
+    opacity: 0.7;
+}
+
+.historico-data{
+    font-size: 0.8em;
+    display: flex;
+    justify-content: end;
+}
+
+#historico-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0px;
+    width: 100%;
+    gap: 35px;
+}
+
+.historico-icon{
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+.home-tag-adicionada  { background: #00d732; color: #155724; }
+.home-tag-editada     { background: #00d9ff; color: #0c5460; }
+.home-tag-removida    { background: #ffc400; color: #856404; }
+.home-tag-deletada    { background: #ff0015; color: #721c24; }
