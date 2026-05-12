@@ -12,6 +12,7 @@ from app.models.playlist_item import PlaylistItem
 from app.models.tv import TV
 from app.schemas.midia import MidiaResponse, MidiaUpdate
 from app.services.historico_service import salvar_registro
+from app.services.ai_service import analyze_media
 
 router = APIRouter(prefix="/api/midias", tags=["Mídias"])
 
@@ -59,6 +60,16 @@ def upload_midia(
     with open(caminho, "wb") as buffer:
         shutil.copyfileobj(arquivo.file, buffer)
 
+    # ===========================
+    # ANÁLISE IA
+    
+    # analise_ia = None
+
+    # if tipo == "image":
+    #     analise_ia = analyze_media(caminho)
+
+    # print(analise_ia)
+    # ===========================
 
     inicio = datetime.fromisoformat(inicio_exibicao).replace(tzinfo=timezone.utc) if inicio_exibicao else None
     expira = datetime.fromisoformat(expiracao).replace(tzinfo=timezone.utc) if expiracao else None

@@ -63,7 +63,7 @@ def analyze_media(image_path: str):
                     "type": "text",
                     "text": prompt
                 }, {
-                    "type": "image",
+                    "type": "image_url",
                     "image_url": {
                         "url": f"data:image/jpeg;base64,{base64_image}"
                     }
@@ -75,4 +75,19 @@ def analyze_media(image_path: str):
 
     content = response.choices[0].message.content
 
-    return json.loads(content)
+    # Remove possíveis blocos markdown
+    content = content.replace("```json", "")
+    content = content.replace("```", "")
+    content = content.strip()
+
+    try:
+
+        return json.loads(content)
+    
+    except Exception as e:
+        print("Erro ao converter JSON:", e)
+        print(content)
+
+        return {
+            "erro": "Falha ao interpretar resposta da IA"
+        }
