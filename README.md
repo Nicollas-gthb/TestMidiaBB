@@ -67,23 +67,24 @@ cd TestMidiaBB
 
 ### 2. Crie o arquivo `.env`
 
-Copie o arquivo de exemplo e preencha as variáveis:
+Copie o conteúdo do arquivo de exemplo `.env.example` e preencha as variáveis:
 
 
+> ⚠️ Os valores das variáveis de ambiente são secretos, contate um responsável do projeto para receber essas variáveis.
 
-Edite o `.env` com os valores desejados:
+Edite o `.env` com os valores corretos:
 
 ```env
 POSTGRES_USER=user
 POSTGRES_PASSWORD=pass
-POSTGRES_DB=appdb
-DB_HOST=db
-DB_PORT=5432
+POSTGRES_DB=nomedobanco
+DB_HOST=host
+DB_PORT=porta
 
-DATABASE_URL=postgresql://user:pass@db:5432/appdb
+DATABASE_URL=url
 
 SECRET_KEY=sua_chave_secreta_aqui
-ALGORITHM=HS256
+ALGORITHM=algoritimo
 ```
 
 > ⚠️ O `DB_HOST` deve ser `db` — nome do serviço no Docker Compose. Não use `localhost`.
