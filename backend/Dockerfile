@@ -1,5 +1,5 @@
 # Imagem Python oficial 
-FROM python:3.14-slim
+FROM python:3.13-slim
 
 # Diretorio onde codigo vai rodar dentro do container
 # Docker cria a pasta se não existir, a partir de onde o dockerfile estiver
@@ -10,6 +10,10 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     build-essential \
     libffi-dev \
+    tesseract-ocr \ 
+    tesseract-ocr-por \
+    tesseract-ocr-eng \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # Copia o arquivo de requisitos primeiro

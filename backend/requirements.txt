@@ -34,4 +34,7 @@ starlette==0.50.0
 typing-inspection==0.4.2
 typing_extensions==4.15.0
 uvicorn==0.30.6
+pytesseract==0.3.13
+Pillow==11.2.1
+opencv-python-headless==4.11.0.86
 openai==1.82.0
