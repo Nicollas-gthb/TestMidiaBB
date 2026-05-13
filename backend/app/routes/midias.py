@@ -12,12 +12,14 @@ from app.models.playlist_item import PlaylistItem
 from app.models.tv import TV
 from app.schemas.midia import MidiaResponse, MidiaUpdate
 from app.services.historico_service import salvar_registro
-from app.services.ai_service import analyze_media
+from app.services.gemini_service import analyze_media
 
 router = APIRouter(prefix="/api/midias", tags=["Mídias"])
 
 UPLOAD_DIR = "/app/midias"
+TEMP_ANALYZE_DIR = os.path.join(UPLOAD_DIR, "temp_ai")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(TEMP_ANALYZE_DIR, exist_ok=True)
 
 def parse_datetime(dt_str: str | None):
     if not dt_str:
@@ -30,11 +32,11 @@ def parse_datetime(dt_str: str | None):
     return dt.replace(tzinfo=timezone.utc)
 
 @router.get("/", response_model=list[MidiaResponse])
-def listar_midias(session: Session = Depends(get_session)):
+async def listar_midias(session: Session = Depends(get_session)):
     return session.query(Midia).options(joinedload(Midia.tvs)).order_by(Midia.id).all()
 
 @router.post("/upload", response_model=MidiaResponse)
-def upload_midia(
+async def upload_midia(
     nome: str = Form(...),
     duracao_segundos: int = Form(...),
     tv_ids: str = Form(...),
@@ -109,8 +111,34 @@ def upload_midia(
     session.refresh(midia)
     return midia
 
+@router.post("/analyze")
+async def analise_midia(arquivo: UploadFile = File(...)): # Adicione async aqui
+    if not arquivo.content_type.startswith(("image/", "video/")):
+        raise HTTPException(status_code=400, detail="Tipo não suportado")
+
+    extensao = arquivo.filename.split(".")[-1]
+    caminho = os.path.join(TEMP_ANALYZE_DIR, f"{uuid.uuid4()}.{extensao}")
+
+    try:
+        with open(caminho, "wb") as buffer:
+            shutil.copyfileobj(arquivo.file, buffer)
+
+        if arquivo.content_type.startswith("image/"):
+            # Chame sua função do Gemini aqui
+            resultado = analyze_media(caminho)
+            return resultado 
+        
+        return {"mensagem": "Vídeo ainda não implementado"}
+
+    except Exception as e:
+        # Se a IA falhar, o FastAPI retorna 500 e o Axios cai no catch
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if os.path.exists(caminho):
+            os.remove(caminho)
+
 @router.delete("/{midia_id}")
-def deletar_midia(
+async def deletar_midia(
     midia_id: int, 
     session: Session = Depends(get_session),
     usuario = Depends(get_usuario_atual)
@@ -129,7 +157,7 @@ def deletar_midia(
 
 
 @router.delete("/{midia_id}/hard")
-def hard_delete_midia(
+async def hard_delete_midia(
     midia_id: int, 
     session: Session = Depends(get_session),
     usuario = Depends(get_usuario_atual)
@@ -152,7 +180,7 @@ def hard_delete_midia(
     return {"message": "Mídia deletada permanentemente"}
 
 @router.patch("/{midia_id}", response_model=MidiaResponse)
-def atualizar_midia(
+async def atualizar_midia(
     midia_id: int, 
     request: MidiaUpdate,
     session: Session = Depends(get_session),

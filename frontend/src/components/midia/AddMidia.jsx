@@ -8,6 +8,11 @@ import { useToast } from "../../contexts/ToastContext"
 
 export const AddMidia = ({ onClose, onSuccess }) => {
 
+    const [analiseIA, setAnaliseIA] = useState(null)
+    const [modalIAaberto, setModalIAaberto] = useState(false)
+    const [loadingIA, setLoadingIA] = useState(false)
+
+
     const { addToast } = useToast()
 
     const [togglePage, setTogglePage] = useState(1)
@@ -84,6 +89,43 @@ export const AddMidia = ({ onClose, onSuccess }) => {
         }
     }
 
+    const handleAnalyseAI = async (e) => {
+        e.preventDefault()
+
+        if(!file){
+            addToast("Insira uma midia primeiro", "aviso")
+            return
+        }
+
+        setLoadingIA(true)
+
+        try{
+            
+            const formData = new FormData()
+            formData.append("arquivo", file)
+
+            const response = await api.post("/midias/analyze", formData)
+
+            const data = response.data
+            setAnaliseIA(data)
+
+
+            // AUTO PREENCHIMENTO
+            setNome(data.titulo)
+            setDuracao(data.tempo_exibicao)
+
+            setModalIAaberto(true)
+
+            addToast("Análise concluída!", "sucesso")
+        }catch(error){
+            console.error("Erro detalhado:", error.response?.data || error.message)
+            addToast("Erro ao analisar analise !", "erro")
+        }finally{
+            setLoadingIA(false)
+        }
+
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         
@@ -109,6 +151,48 @@ export const AddMidia = ({ onClose, onSuccess }) => {
 
     return (
         <div id="addmidia-container" onClick={handleOutsideClick}>
+
+            {modalIAaberto && (
+                <div id="addmidia-analiseIA">
+                    <h2>Análise IA</h2>
+                    {loadingIA ? (
+                        <p>Analisando mídia...</p>
+                    ) : analiseIA && (
+                        <div className="addmidia-analiseIA-result">
+                            <p>
+                                <strong>Título sugerido: </strong>
+                                {analiseIA.titulo}
+                            </p>
+                            <p>
+                                <strong>Categoria: </strong>
+                                {analiseIA.categoria}
+                            </p>
+                            <p>
+                                <strong>Tempo sugerido: </strong>
+                                {analiseIA.tempo_exibicao}s
+                            </p>
+                            <p>
+                                <strong>Descrição: <br /> </strong>
+                                {analiseIA.descricao}
+                            </p>
+                            <p>
+                                <strong>Conteúdo seguro: </strong>
+                                {analiseIA.conteudo_seguro
+                                    ? "Sim"
+                                    : "Não"}
+                            </p>
+                            {analiseIA.alerta && (
+                                <p>
+                                    <strong>Alerta: </strong>
+                                    {analiseIA.alerta}
+                                </p>
+                            )}
+                        </div>
+                    )}
+                </div>
+                
+            )}
+
             <div id="addmidia-content">
 
                 <button 
@@ -168,6 +252,22 @@ export const AddMidia = ({ onClose, onSuccess }) => {
                             </fieldset>
                     
                             <div id="addmidia-buttons-1" className="addmidia-buttons">
+                                <button
+                                    id="send-analyse"
+                                    className="second-action-button"
+                                    type="button"
+                                    onClick={handleAnalyseAI}
+                                >
+                                    {loadingIA ? (
+                                        "Carregando..."
+                                    ) : (
+                                        <>
+                                            <i className="bi bi-openai"></i>
+                                            Analise IA
+                                        </>
+                                    )}
+                                </button>
+
                                 <button
                                     id="addmidia-next"
                                     className="action-button"
@@ -253,7 +353,7 @@ export const AddMidia = ({ onClose, onSuccess }) => {
                             </div>
                         </>
                     ) : togglePage == 3 && file ? (
-                        <>
+                        <div id="addmidia-resumo-container">
                             <h2>Resumo</h2>
                             <div id="addmidia-resumo">
                                 <p><strong>Nome:</strong> {nome}</p>
@@ -292,7 +392,7 @@ export const AddMidia = ({ onClose, onSuccess }) => {
                                 </div>
                             </div>
                     
-                        </>
+                        </div>
                     ) : (
                         <p>Erro ao carregar recurso</p>
                     )}
