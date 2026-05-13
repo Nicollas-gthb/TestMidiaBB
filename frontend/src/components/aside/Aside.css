@@ -20,22 +20,26 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     gap: 20px;
     padding-top: 20px;
+    padding-left: 10px;
 }
 
 .menu-buttons{
-    width: 65%;
+    width: 90%;
     height: 42px;
     border: none;
     border-radius: 10px;
+    gap: 1.5em;
+
     font-weight: bold;
     font-size: 15px;
+
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 1.5em;
+    
     background-color: transparent;
     color: var(--text);
     transition: background-color 0.2s ease;
@@ -101,12 +105,20 @@
 
 .aside-bi{
     color: var(--text);
-    font-size: 22px;
+    font-size: 25px;
+    font-weight: bold;
     margin-left: 5%;
 }
 
+.nav-group{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
 
-.processo{
-    opacity: 0.4;
-    margin: -2px 0px;
+.nav-group-title{
+    margin-left: 10px;
+    font-size: 0.85em;
+    font-weight: 500;
 }
