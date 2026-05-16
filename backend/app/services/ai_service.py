@@ -24,6 +24,9 @@ def analyze_media(image_path: str):
 
     Analise a imagem enviada e retorne APENAS um JSON válido contendo:
 
+    Texto identificado na imagem:
+    {ocr_text}
+
     {
       "titulo": "",
       "descricao": "",

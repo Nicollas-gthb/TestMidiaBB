@@ -1,12 +1,8 @@
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import "./Aside.css"
-import { useToast } from "../../contexts/ToastContext"
-
 
 export const Aside = () => {
-
-    const { addToast } = useToast()
 
     const navigate = useNavigate()
     const isActive = (path) => location.pathname === path
