@@ -32,6 +32,7 @@ export default function TvConfig() {
 
     useEffect(() => {
         carregarTvs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const [busca, setBusca] = useState("")

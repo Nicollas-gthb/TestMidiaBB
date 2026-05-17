@@ -17,6 +17,6 @@ def extract_text(image_path: str):
     
     except Exception as e:
 
-        print(f"Erro ao processar a imagem: {e}")
+        print(f"Erro ao processar a imagem com Tesseract: {e}")
         return ""
     

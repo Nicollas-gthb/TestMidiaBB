@@ -28,6 +28,7 @@ export default function Tv(){
 
     useEffect(() => {
         carregarPlaylist()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [numero])
 
     useEffect(() => {
@@ -48,6 +49,7 @@ export default function Tv(){
 
         return () => clearTimeout(timerRef.current)
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [playlist, indexAtual])
 
     if (playlist.length === 0) {

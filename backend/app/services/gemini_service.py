@@ -3,6 +3,7 @@ import os
 import json
 import PIL.Image
 from fastapi import HTTPException
+
 from app.services.ocr_service import extract_text
 
 # No SDK novo (google-genai), a chave vai direto no Client.
@@ -16,12 +17,12 @@ def analyze_media(image_path: str):
     # Extrai o texto da imagem usando OCR Tesseract
     texto_ocr = extract_text(image_path)
 
-    prompt = """
+    prompt = f"""
     Você é um sistema de análise de mídias corporativas do Banco do Brasil.
     Analise a imagem enviada e retorne um JSON seguindo este esquema:
 
     Texto identificado na imagem:
-    {ocr_text}
+    {texto_ocr}
 
     {
       "titulo": "string",
@@ -37,7 +38,7 @@ def analyze_media(image_path: str):
     """
 
     try:
-        # A chamada também mudou levemente no SDK novo
+        
         response = client.models.generate_content(
             model="gemini-2.5-flash-lite", # Versão Lite costuma ter cota livre, 
             contents=[prompt, img],

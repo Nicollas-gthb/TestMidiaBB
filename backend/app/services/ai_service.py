@@ -1,7 +1,11 @@
+from http.client import HTTPException
+
 from openai import OpenAI
 import base64
 import os
 import json
+
+from backend.app.services.ocr_service import extract_text
 
 client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY")
@@ -19,21 +23,24 @@ def analyze_media(image_path: str):
 
     base64_image = encode_image(image_path)
 
-    prompt = """
+    # Extrai o texto da imagem usando OCR Tesseract
+    texto_ocr = extract_text(image_path)
+
+    prompt = f"""
     Você é um sistema de análise de mídias corporativas do Banco do Brasil.
 
     Analise a imagem enviada e retorne APENAS um JSON válido contendo:
 
     Texto identificado na imagem:
-    {ocr_text}
+    {texto_ocr}
 
     {
-      "titulo": "",
-      "descricao": "",
-      "categoria": "",
-      "tempo_exibicao": 0,
-      "conteudo_seguro": true,
-      "alerta": ""
+      "titulo": "string",
+      "descricao": "string",
+      "categoria": "marketing" | "informativo" | "institucional" | "alerta",
+      "tempo_exibicao": number,
+      "conteudo_seguro": boolean,
+      "alerta": "string"
     }
 
     Categorias permitidas:
@@ -88,9 +95,5 @@ def analyze_media(image_path: str):
         return json.loads(content)
     
     except Exception as e:
-        print("Erro ao converter JSON:", e)
-        print(content)
-
-        return {
-            "erro": "Falha ao interpretar resposta da IA"
-        }
+        print(f"Erro na análise do GPT: {e}")
+        raise HTTPException(status_code=500, detail="IA  indisponível no momento")

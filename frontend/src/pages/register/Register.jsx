@@ -36,7 +36,7 @@ export default function Register() {
         }
 
         try{
-            const response = await api.post("/user/register", payload)
+            await api.post("/user/register", payload)
             addToast("Usuario cadastrado com sucesso !", "sucesso")
             navigate("/home")
         }catch(error){

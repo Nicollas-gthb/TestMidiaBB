@@ -29,10 +29,6 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
     const [tvsSelecionadas, setTvsSelecionadas] = useState(
         item.tvs.map(tv => tv.id)
     )
-    
-
-    const [file, setFile] = useState(null)
-    const [preview, setPreview] = useState(null)
 
     const [tvs, setTvs] = useState([])
 
@@ -54,24 +50,6 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
         todasTvsSelecionadas ? 
         setTvsSelecionadas([]) :
         setTvsSelecionadas(tvs.map(tv => tv.id))
-    }
-
-    const handleFileChange = (e) => {
-        const selectedFile = e.target.files[0]
-        if(!selectedFile) return
-
-        setFile(selectedFile)
-
-        const previewUrl = URL.createObjectURL(selectedFile)
-        setPreview(previewUrl)
-    }
-
-    const handleRemoveFile = () => {
-        if (preview) {
-            URL.revokeObjectURL(preview)
-        }
-        setFile(null)
-        setPreview(null)
     }
 
     const handleOutsideClick = (e) => {
