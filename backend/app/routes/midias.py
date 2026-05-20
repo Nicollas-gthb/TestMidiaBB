@@ -12,7 +12,7 @@ from app.models.playlist_item import PlaylistItem
 from app.models.tv import TV
 from app.schemas.midia import MidiaResponse, MidiaUpdate
 from app.services.historico_service import salvar_registro
-from app.services.gemini_service import analyze_media
+from app.services.gemini_service import analyze_media, analyze_video
 
 router = APIRouter(prefix="/api/midias", tags=["Mídias"])
 
@@ -124,11 +124,16 @@ async def analise_midia(arquivo: UploadFile = File(...)): # Adicione async aqui
             shutil.copyfileobj(arquivo.file, buffer)
 
         if arquivo.content_type.startswith("image/"):
-            # Chame sua função do Gemini aqui
+            
             resultado = analyze_media(caminho)
             return resultado 
         
-        return {"mensagem": "Vídeo ainda não implementado"}
+        elif arquivo.content_type.startswith("video/"):
+
+            resultado = analyze_video(caminho)
+            return resultado
+        
+        return {"mensagem": "Tipo de arquivo ainda não implementado"}
 
     except Exception as e:
         # Se a IA falhar, o FastAPI retorna 500 e o Axios cai no catch
