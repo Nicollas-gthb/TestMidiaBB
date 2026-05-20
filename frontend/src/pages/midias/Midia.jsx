@@ -40,6 +40,19 @@ export default function Midia() {
         .filter(m => filtroStatus === "todos" ? true : calcularStatus(m) === filtroStatus)
 
     const carregarMidias = async () => {
+        try {
+            const response = await api.get("/midias/");
+            setMidias(response.data);
+            addToast("Mídias carregadas !", "sucesso");
+        } catch (error) {
+            const mensagem = error.response?.data?.detail || "Erro ao carregar mídias !";
+            addToast(mensagem, "erro");
+        }
+    };
+
+    useEffect(() => {
+
+        const carregarMidias = async () => {
             try {
                 const response = await api.get("/midias/");
                 setMidias(response.data);
@@ -50,10 +63,9 @@ export default function Midia() {
             }
         };
 
-    useEffect(() => {
         carregarMidias()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    
+    }, [addToast])
 
     const handleDeletar = async (id) => {
 

@@ -59,6 +59,23 @@ export const AddMidia = ({ onClose, onSuccess }) => {
 
         const previewUrl = URL.createObjectURL(selectedFile)
         setPreview(previewUrl)
+
+        if(selectedFile.type.startsWith("video/")){
+            const video = document.createElement("video")
+            video.preload = "metadata"
+
+            video.onloadedmetadata = () => {
+                window.URL.revokeObjectURL(video.src)
+
+                // duração em segundos
+                const duration = Math.ceil(video.duration)
+
+                setDuracao(duration.toString())
+            }
+
+            video.src = previewUrl
+        }
+
     }
 
     const handleRemoveFile = () => {
@@ -112,7 +129,7 @@ export const AddMidia = ({ onClose, onSuccess }) => {
 
             // AUTO PREENCHIMENTO
             setNome(data.titulo)
-            setDuracao(data.tempo_exibicao)
+            setDuracao(data?.tempo_exibicao)
 
             setModalIAaberto(true)
 

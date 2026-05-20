@@ -18,30 +18,9 @@ export default function Home() {
 
     const [historico, setHistorico] = useState([])
     
-    useEffect(() => {
-        carregarTvs()
-    }, [])
 
-    useEffect(() => {
-        carregarMidias()
-    }, [])
 
-    useEffect(() => {
-        carregarHistorico()
-    }, [])
 
-    const carregarTvs = async () => {
-        try{
-            const response = await api.get("/tv/")
-            setTvs(response.data)
-            addToast("TVs carregadas !", "sucesso")
-        }catch(error){
-            const mensagem = error.response?.data.detail || "Erro ao carregar as tvs !"
-            addToast(mensagem, "erro")
-        }
-    }
-
-    
     const calcularStatus = (midia) => {
         if(!midia.ativo) return "removida"
 
@@ -54,28 +33,50 @@ export default function Home() {
         return "ativa"
     }
 
-    const carregarMidias = async () => {
-        try{
-            const response = await api.get("/midias/")
-            setMidias(response.data)
-            addToast("Mídias carregadas !", "sucesso")
-        }catch(error){
-            const mensagem = error.response?.data?.detail || "Erro ao carregar mídias !"
-            addToast(mensagem, "erro")
-        }
-    }
-
-    const carregarHistorico = async () => {
-        try{
-            const response = await api.get("/historico/")
-            setHistorico(response.data)
-            addToast("Histórico carregado !", "sucesso")
-        }catch(error){
-            const mensagem = error?.response?.data?.detail || "Erro ao carregar histórico"
-            addToast(mensagem, "erro")
-        }
-    }
     
+    useEffect(() => {
+        const carregarTvs = async () => {
+            try{
+                const response = await api.get("/tv/")
+                setTvs(response.data)
+                addToast("TVs carregadas !", "sucesso")
+            }catch(error){
+                const mensagem = error.response?.data.detail || "Erro ao carregar as tvs !"
+                addToast(mensagem, "erro")
+            }
+        }
+        carregarTvs()
+    }, [addToast])
+
+
+    useEffect(() => {
+        const carregarMidias = async () => {
+            try{
+                const response = await api.get("/midias/")
+                setMidias(response.data)
+                addToast("Mídias carregadas !", "sucesso")
+            }catch(error){
+                const mensagem = error.response?.data?.detail || "Erro ao carregar mídias !"
+                addToast(mensagem, "erro")
+            }
+        }
+        carregarMidias()
+    }, [addToast])
+
+
+    useEffect(() => {
+        const carregarHistorico = async () => {
+            try{
+                const response = await api.get("/historico/")
+                setHistorico(response.data)
+                addToast("Histórico carregado !", "sucesso")
+            }catch(error){
+                const mensagem = error?.response?.data?.detail || "Erro ao carregar histórico"
+                addToast(mensagem, "erro")
+            }
+        }
+        carregarHistorico()
+    }, [addToast])
         
     const totalTvsAtivas = tvs.filter(tv => tv.ativo).length
     const totalMidiasAtivas = midias.filter(m => calcularStatus(m) === "ativa").length
@@ -95,6 +96,10 @@ export default function Home() {
     }).sort(
         (a, b) => new Date(a.expiracao) - new Date(b.expiracao)
     ).slice(0, 3)
+
+    const listaHistorico = historico.sort(
+        (a, b) => new Date(b.criado_em) - new Date(a.criado_em)
+    ).slice(0, 5)
 
     return (
         <div id="home-container">
@@ -277,7 +282,7 @@ export default function Home() {
                                     <>
                                         <table>
                                             <tbody>
-                                                {historico.map(h => (
+                                                {listaHistorico.map(h => (
                                                     <tr key={h.id}>
                                         
                                                         <td id="historico-content">
@@ -305,7 +310,10 @@ export default function Home() {
                                 )}
                             </div>
 
-                            <div className="home-card-foot">
+                            <div 
+                                className="home-card-foot"
+                                onClick={() => navigate("/reports")}
+                            >
                                 Ver Todas
                             </div>
                         </div>

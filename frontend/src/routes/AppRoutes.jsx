@@ -8,6 +8,7 @@ import Midia from "../pages/midias/Midia"
 import TvConfig from "../pages/tvs/TvConfig"
 import Tv from "../pages/tvs/Tvs"
 import Register from "../pages/register/Register"
+import Reports from "../pages/reports/Reports"
 
 export default function AppRoutes() {
     const { token } = useContext(AuthContext)
@@ -36,7 +37,9 @@ export default function AppRoutes() {
                 } />
 
                 {/* Pública — telão não precisa de login */}
-                <Route path="/tv/:numero" element={<Tv />} />
+                <Route path="/tv/:numero" element={ <Tv /> } />
+
+                <Route path="/reports" element={ <Reports /> }/>
 
                 {/* O * no final redireciona qualquer rota desconhecida para o login.  */}
                 <Route path="*" element={<Navigate to="/login" />} />

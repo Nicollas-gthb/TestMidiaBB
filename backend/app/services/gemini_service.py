@@ -134,3 +134,13 @@ def analyze_video(video_path: str):
         print(f"Erro na análise do Gemini: {e}")
         raise HTTPException(status_code=500, detail="IA indisponível no momento")
 
+def test():
+
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents="Diga olá"
+    )
+
+    return {
+        "response": response.text
+    }
