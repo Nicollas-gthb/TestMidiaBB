@@ -164,6 +164,8 @@ async def hard_delete_midia(
 ):
     
     midia = session.query(Midia).filter(Midia.id == midia_id).first()
+
+    
     if not midia:
         raise HTTPException(status_code=404, detail="Mídia não encontrada")
 

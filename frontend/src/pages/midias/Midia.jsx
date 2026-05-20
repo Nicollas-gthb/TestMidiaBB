@@ -61,10 +61,21 @@ export default function Midia() {
 
         try{
             await api.delete(`/midias/${id}`)
-            addToast("Mídias removidas !", "aviso")
+            addToast("Mídia removida !", "aviso")
             carregarMidias()
         }catch(error){
-            const mensagem = error.response?.data?.detail || "Erro ao deletar mídias !"
+            const mensagem = error.response?.data?.detail || "Erro ao desativar mídia !"
+            addToast(mensagem, "erro")
+        }
+    }
+
+    const handleHardDelete = async (id) => {
+        try{
+            await api.delete(`/midias/${id}/hard`)
+            addToast("Mídia removida permanentemente !", "aviso")
+            carregarMidias()
+        }catch(error){
+            const mensagem = error.response?.data?.detail || "Erro ao deletar mídia !"
             addToast(mensagem, "erro")
         }
     }
@@ -175,7 +186,13 @@ export default function Midia() {
                                             </button>
                                             <button
                                                 className="second-action-button"
-                                                onClick={() => handleDeletar(midia.id)}
+                                                onClick={() => {
+                                                    if(midia.ativo){
+                                                        handleDeletar(midia.id)
+                                                    }else{
+                                                        handleHardDelete(midia.id)
+                                                    }
+                                                }}
                                             >
                                                 <i className="bi bi-trash"></i>
                                             </button>
