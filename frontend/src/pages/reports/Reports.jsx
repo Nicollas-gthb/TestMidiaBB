@@ -1,3 +1,6 @@
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid} from "recharts"
+
 import { useState, useEffect } from "react"
 
 import "./Reports.css"
@@ -13,7 +16,27 @@ export default function Reports(){
     
     const [historico, setHistorico] = useState([])
 
-      
+    const [mediaTypes, setMediaTypes] = useState([])
+    const [tvStats, setTvStats] = useState([])
+
+    useEffect(() => {
+        api.get("/dashboard/media-types")
+            .then(res => {
+                setMediaTypes(res.data)
+            })
+
+    }, [])
+
+    useEffect(() => {
+        api.get("/dashboard/tv-midias")
+            .then(res => {
+
+                console.log(res.data)
+
+                setTvStats(res.data)
+            })
+
+    }, [])
 
     useEffect(() => {
         const carregarHistorico = async () => {
@@ -43,7 +66,57 @@ export default function Reports(){
 
                     <div className="home-cards-container">
                         <div className="home-cards">
+
+                            <div className="reports-chart-container">
+                                <ResponsiveContainer width="100%" height="100%">
+
+                                    <BarChart data={tvStats}>
+
+                                        <CartesianGrid strokeDasharray="3 3" />
+
+                                        <XAxis dataKey="tv" />
+
+                                        <YAxis />
+
+                                        <Tooltip />
+
+                                        <Bar
+                                            dataKey="midias"
+                                            radius={[10, 10, 0, 0]}
+                                        />
+
+                                    </BarChart>
+
+                                </ResponsiveContainer>
+
+                            </div>
                             
+                            <div style={{ width: "100%", height: 800 }}>
+
+                                <ResponsiveContainer>
+
+                                    <PieChart>
+
+                                        <Pie
+                                            data={mediaTypes}
+                                            dataKey="value"
+                                            nameKey="name"
+                                            outerRadius={120}
+                                        >
+
+                                            <Cell fill="#3b82f6" />
+                                            <Cell fill="#22c55e" />
+                                            <Cell fill="#f59e0b" />
+
+                                        </Pie>
+
+                                        <Tooltip />
+
+                                    </PieChart>
+
+                                </ResponsiveContainer>
+
+                            </div>
                         </div>
                         <div id="card-midia-historico" className="home-cards">
                             <div className="home-card-head">

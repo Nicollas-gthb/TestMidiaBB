@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.seed import seed
-from app.routes import auth, tvs, midias, playlist, users, historico
+from app.routes import auth, tvs, midias, playlist, users, historico, dashboard
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -33,3 +33,4 @@ app.include_router(midias.router)
 app.include_router(playlist.router)
 app.include_router(users.router)
 app.include_router(historico.router)
+app.include_router(dashboard.router)

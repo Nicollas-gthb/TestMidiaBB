@@ -95,6 +95,7 @@ export const Aside = () => {
 
                     <button
                         className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
+                        onClick={() => navigate("/reports")}
                     >
                         <i className="bi aside-bi bi-card-heading"></i>
                         Log Atividades
@@ -102,6 +103,7 @@ export const Aside = () => {
                     
                     <button
                         className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
+                        onClick={() => navigate("/reports")}
                     >
                         <i className="bi aside-bi bi-file-earmark-bar-graph"></i>
                         Relatórios
