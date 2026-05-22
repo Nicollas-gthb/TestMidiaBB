@@ -258,9 +258,10 @@ td:nth-child(5){
 }
 
 .historico-icon{
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
+    width: 0.2em;
+    height: 2.5em;
+    border-radius: 10px;
+    display: block;
 }
 
 .home-tag-adicionada  { background: #00d732; color: #155724; }
