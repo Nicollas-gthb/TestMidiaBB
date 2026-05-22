@@ -1,4 +1,100 @@
+#reports-menu-main{
+    background-color: var(--blue-bg);
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    gap: 35px;
+}
+
 .reports-chart-container{
-    width: 100%;
+    width: 25em;
     height: 400px;
+
+    display: flex;
+    justify-content: start;
+
+
+
+}
+
+.reports-cards-container{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+    width: 100%;
+
+    gap: 20px;
+}
+
+.reports-cards-graficos{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+#card-reports-historico{
+    min-width: 50%;
+    min-height: 370px;
+    height: auto;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.reports-cards{
+    background-color: var(--td-bg);
+    border: 1px solid var(--table-bg);
+    border-radius: 15px;
+    padding: 10px 20px;
+
+    display: flex;
+    flex-direction: column;
+    
+    height: auto;
+    width: auto;
+}
+
+
+#donut-container{
+    position: relative;
+}
+
+.donut-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.donut-center h1{
+    color: var(--text);
+    font-size: 2.5em;
+}
+
+.donut-center p{
+    color: var(--text);
+}
+
+#donut-legend{
+    display: flex;
+    gap: 0.5em;
+}
+
+.donut-legend-item{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-right: 1em;
+}
+
+.donut-legend-color{
+    background-color: red;
+    width: 1em;
+    height: 1em;
+    display: block;
+    
 }

@@ -12,31 +12,39 @@ import { Header } from "../../components/header/Header"
 
 export default function Reports(){
 
+    const COLORS = [
+        "#3b82f6",
+        "#22c55e",
+        "#f5740b",
+        "#656970"
+    ]
+
     const { addToast } = useToast()
     
     const [historico, setHistorico] = useState([])
 
     const [mediaTypes, setMediaTypes] = useState([])
-    const [tvStats, setTvStats] = useState([])
+    const [totalMidias, setTotalMidias] = useState(0)
+    //const [tvStats, setTvStats] = useState([])
 
     useEffect(() => {
         api.get("/dashboard/media-types")
             .then(res => {
-                setMediaTypes(res.data)
+                setMediaTypes(res.data.data)
+                setTotalMidias(res.data.total)
             })
-
     }, [])
 
-    useEffect(() => {
-        api.get("/dashboard/tv-midias")
-            .then(res => {
+    // useEffect(() => {
+    //     api.get("/dashboard/tv-midias")
+    //         .then(res => {
 
-                console.log(res.data)
+    //             console.log(res.data)
 
-                setTvStats(res.data)
-            })
+    //             setTvStats(res.data)
+    //         })
 
-    }, [])
+    // }, [])
 
     useEffect(() => {
         const carregarHistorico = async () => {
@@ -61,64 +69,72 @@ export default function Reports(){
 
                 <Header />
 
-                <div id="home-menu-main">
+                <div id="reports-menu-main">
                     <h2>Relatórios</h2>
 
-                    <div className="home-cards-container">
-                        <div className="home-cards">
+                    <div className="reports-cards-container"></div>
 
-                            <div className="reports-chart-container">
-                                <ResponsiveContainer width="100%" height="100%">
+                    <div className="reports-cards-container">
 
-                                    <BarChart data={tvStats}>
+                        <div className="reports-cards-graficos">
 
-                                        <CartesianGrid strokeDasharray="3 3" />
-
-                                        <XAxis dataKey="tv" />
-
-                                        <YAxis />
-
-                                        <Tooltip />
-
-                                        <Bar
-                                            dataKey="midias"
-                                            radius={[10, 10, 0, 0]}
-                                        />
-
-                                    </BarChart>
-
-                                </ResponsiveContainer>
-
-                            </div>
                             
-                            <div style={{ width: "100%", height: 800 }}>
+                            <div className="reports-cards">
+                                <div className="reports-chart-container">
+                                    
+                                </div>
+                            </div>
 
-                                <ResponsiveContainer>
+                            <div className="reports-cards">
+                                <div id="donut-container" className="reports-chart-container">
 
-                                    <PieChart>
-
-                                        <Pie
-                                            data={mediaTypes}
-                                            dataKey="value"
-                                            nameKey="name"
-                                            outerRadius={120}
-                                        >
-
-                                            <Cell fill="#3b82f6" />
-                                            <Cell fill="#22c55e" />
-                                            <Cell fill="#f59e0b" />
-
-                                        </Pie>
+                                    <ResponsiveContainer width={"100%"} height={"100%"}>
+                                        <PieChart>
+                                            <Pie
+                                                data={mediaTypes}
+                                                dataKey={"value"}
+                                                nameKey={"name"}
+                                                innerRadius={90}
+                                                outerRadius={130}
+                                                paddingAngle={4}
+                                            >
+                                                {mediaTypes.map((entry, index) => (
+                                                    <Cell 
+                                                        key={index}
+                                                        fill={COLORS[index % COLORS.length]}
+                                                    />
+                                                ))}
+                                            </Pie>
+                                        </PieChart>
 
                                         <Tooltip />
 
-                                    </PieChart>
+                                    </ResponsiveContainer>
 
-                                </ResponsiveContainer>
+                                    <div className="donut-center">
+                                        <h1>{totalMidias}</h1>
+                                        <p>mídias</p>
+                                    </div>
+
+                                    
+
+                                </div>
+
+                                <div id="donut-legend">
+                                    {mediaTypes.map((entry, index) => (
+                                        <div key={index} className="donut-legend-item">
+                                            <section className="donut-legend-color" style={{ backgroundColor: COLORS[index % COLORS.length ] }}></section>    
+                                            <p className="donut-legend-text">{entry.name} : {entry.value}</p>
+                                        </div>
+                                    ))}
+                                </div>
 
                             </div>
+           
                         </div>
-                        <div id="card-midia-historico" className="home-cards">
+
+                        
+                        <div id="card-reports-historico" className="reports-cards">
                             <div className="home-card-head">
                                 <i className="bi card-bi bi-clock"></i>
                                 Histórico Recente
@@ -130,39 +146,38 @@ export default function Reports(){
                                         <p>Sem Histórico</p>
                                     </div>
                                 ) : (
-                                    <>
-                                        <table>
-                                            <tbody>
-                                                {historico.map(h => (
-                                                    <tr key={h.id}>
-                                        
-                                                        <td id="historico-content">
-                                                            <span className={`historico-icon home-tag-${h.acao.replace(" ", "-")}`}>
-                                                                
-                                                            </span>
-                                                            <span className="historico-text">
+                                    
+                                    <table>
+                                        <tbody>
+                                            {historico.map(h => (
+                                                <tr key={h.id}>
+                                    
+                                                    <td id="historico-content">
+                                                        <span className={`historico-icon home-tag-${h.acao.replace(" ", "-")}`}>
+                                                            
+                                                        </span>
+                                                        <span className="historico-text">
 
-                                                                <p className="historico-main-text">{`${h.entidade} "${h.entidade_nome}" foi ${h.acao}`}</p>
-                                                                <p className="historico-sub-text">{`${h.usuario_nome}`}</p>
-                            
-                                                            </span>
-                                                        </td>
-                                                
-                                                        <td >
-                                                            <span className="historico-data">
-                                                                {formatarDataHora(h.criado_em)}
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </>
+                                                            <p className="historico-main-text">{`${h.entidade} "${h.entidade_nome}" foi ${h.acao}`}</p>
+                                                            <p className="historico-sub-text">{`${h.usuario_nome}`}</p>
+                        
+                                                        </span>
+                                                    </td>
+                                            
+                                                    <td >
+                                                        <span className="historico-data">
+                                                            {formatarDataHora(h.criado_em)}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                   
                                 )}
                             </div>
-
-                            
                         </div>
+                        
                     </div>
                 </div>
             </main>

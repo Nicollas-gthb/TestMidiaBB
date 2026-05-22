@@ -22,13 +22,18 @@ def media_types(
         .group_by(Midia.tipo).all()
     )
 
-    return [
-        {
-            "name": tipo,
-            "value": total
-        }
-        for tipo, total in result
-    ]
+    total = sum([item[1] for item in result])
+
+    return {
+        "total": total,
+        "data": [
+            {
+                "name": tipo,
+                "value": total
+            }
+            for tipo, total in result
+        ]
+    }
 
 
 @router.get("/tv-midias")
@@ -53,3 +58,4 @@ def tv_midias(
         }
         for nome, total in result
     ]
+
