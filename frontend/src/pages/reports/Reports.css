@@ -1,30 +1,22 @@
 #reports-menu-main{
     background-color: var(--blue-bg);
     height: auto;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px;
-    gap: 35px;
-}
-
-.reports-chart-container{
-    width: 25em;
-    height: 400px;
-
-    display: flex;
-    justify-content: start;
-
-
-
+    padding: 3em;
+    gap: 2em;
 }
 
 .reports-cards-container{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: start;
 
     width: 100%;
+    height: auto;
+    min-height: 5em;
 
     gap: 20px;
 }
@@ -32,31 +24,42 @@
 .reports-cards-graficos{
     display: flex;
     flex-direction: column;
-    gap: 1.5em;
-}
 
-#card-reports-historico{
-    min-width: 50%;
-    min-height: 370px;
+    gap: 2em;
+    
+    width: 50%;
     height: auto;
-
-    display: flex;
-    justify-content: space-between;
+    min-height: 100%;
 }
 
 .reports-cards{
     background-color: var(--td-bg);
     border: 1px solid var(--table-bg);
+
     border-radius: 15px;
-    padding: 10px 20px;
+    padding: 1em 1.5em;
 
     display: flex;
     flex-direction: column;
     
+    
+    width: 90%;
     height: auto;
-    width: auto;
 }
 
+.reports-chart-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    
+    width: 100%;
+    height: 15em;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
 
 #donut-container{
     position: relative;
@@ -97,4 +100,40 @@
     height: 1em;
     display: block;
     
+}
+
+.donut-legend-text{
+    font-size: 15px;
+}
+
+#axis-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+
+}
+
+#bar-legend{
+    display: flex;
+    gap: 0.5em;
+}
+
+.bar-legend-item{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-right: 1em;
+}
+
+.bar-legend-color{
+    background-color: red;
+    width: 1em;
+    height: 1em;
+    display: block;
+    
+}
+
+.bar-legend-text{
+    font-size: 12px;
 }
