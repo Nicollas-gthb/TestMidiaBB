@@ -177,8 +177,8 @@ export default function Midia() {
                                                 {calcularStatus(midia)}
                                             </div>
                                         </td>
-                                        <td>{formatarDataHora(midia.inicio_exibicao)}</td>
-                                        <td>{formatarDataHora(midia.expiracao)}</td>
+                                        <td>{formatarDataHora(midia.inicio_exibicao) || "-- : --"}</td>
+                                        <td>{formatarDataHora(midia.expiracao) || "-- : --"}</td>
                                         <td>{midia.duracao_segundos}s</td>
                                         <td>
                                             <a 

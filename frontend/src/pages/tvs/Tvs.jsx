@@ -27,9 +27,22 @@ export default function Tv(){
     }
 
     useEffect(() => {
+
+        const carregarPlaylist = async () => {
+            try{
+                const response = await api.get(`/tv/${numero}/playlist`)
+                setPlaylist(response.data)
+                setIndexAtual(0)
+
+            }catch(error){
+                const mensagem = error.response?.data.detail || "Erro ao carregar playlist !"
+                addToast(mensagem, "erro")
+            }
+        }
+
         carregarPlaylist()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [numero])
+    
+    }, [addToast, numero])
 
     useEffect(() => {
         if(playlist.length === 0) return

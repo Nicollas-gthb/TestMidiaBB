@@ -202,10 +202,18 @@ async def atualizar_midia(
         midia.nome = request.nome
     if request.duracao_segundos is not None:
         midia.duracao_segundos = request.duracao_segundos
+
     if request.inicio_exibicao is not None:
         midia.inicio_exibicao = request.inicio_exibicao
+    else:
+        midia.inicio_exibicao = None
+        
+
     if request.expiracao is not None:
         midia.expiracao = request.expiracao
+    else:
+        midia.expiracao = None
+
     if request.ativo is not None:
         midia.ativo = request.ativo
 

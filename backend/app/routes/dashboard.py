@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from datetime import date, datetime, timezone
 
 from app.core.database import get_session
@@ -82,8 +82,19 @@ def media_status(
 
     ativas = session.query(Midia).filter(
         Midia.ativo == True,
-        Midia.inicio_exibicao < agora,
-        Midia.expiracao > agora
+
+        # início já chegou OU não existe
+        or_(
+            Midia.inicio_exibicao == None,
+            Midia.inicio_exibicao <= agora
+        ),
+
+        # expiração ainda não chegou OU não existe
+        or_(
+            Midia.expiracao == None,
+            Midia.expiracao > agora
+        )
+
     ).count()
 
     expiradas = session.query(Midia).filter(

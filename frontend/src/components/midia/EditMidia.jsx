@@ -110,14 +110,14 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
                 <h2>Editar Mídia</h2>
                 <p>ID: {item.id}</p>
 
-                <form id="editmidia-form-modal" className="addmidia-form" onSubmit={handleSubmit}>
+                <form id="editmidia-form-modal" className="editmidia-form" onSubmit={handleSubmit}>
                     {togglePage == 1 ? (
                         <>
-                            <fieldset id="editmidia-field-nome" className="addmidia-field">
-                                <legend className="addmidia-legend">Nome</legend>
+                            <fieldset id="editmidia-field-nome" className="editmidia-field">
+                                <legend className="editmidia-legend">Nome</legend>
                                 <input
                                     id="editmidia-nome"
-                                    className="addmidia-input"
+                                    className="editmidia-input"
                                     type="text"
                                     placeholder="Nome"
                                     value={nome}
@@ -125,11 +125,11 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
                                 />
                             </fieldset>
 
-                            <fieldset id="editmidia-field-duracao" className="addmidia-field">
-                                <legend className="addmidia-legend">Duração</legend>
+                            <fieldset id="editmidia-field-duracao" className="editmidia-field">
+                                <legend className="editmidia-legend">Duração</legend>
                                 <input
                                     id="editmidia-duracao"
-                                    className="addmidia-input"
+                                    className="editmidia-input"
                                     type="text"
                                     placeholder="padrão 3 segundos"
                                     value={duracao}
@@ -137,32 +137,48 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
                                 />
                             </fieldset>
 
-                            <fieldset id="editmidia-field-exibicao" className="addmidia-field">
-                                <legend className="addmidia-legend">Inicio da exibição</legend>
+                            <fieldset id="editmidia-field-exibicao" className="editmidia-field">
+                                <legend className="editmidia-legend">Inicio da exibição</legend>
                                 <input
                                     id="editmidia-exibicao"
-                                    className="addmidia-input"
+                                    className="editmidia-input"
                                     type="datetime-local"
                                     placeholder="Data e hora de inicio"
-                                    value={exibicao}
+                                    value={exibicao || ""}
                                     onChange={(e) => setExibicao(e.target.value)}
                                 />
+
                             </fieldset>
 
-                            <fieldset id="editmidia-field-expiracao" className="addmidia-field">
-                                <legend className="addmidia-legend">Expiração</legend>
+                            <button
+                                id="editmidia-clearExibicao"
+                                type="button"
+                                className="second-action-button"
+                                onClick={() => setExibicao("")}
+                            >
+                                Sem data de início
+                            </button>
+
+                            <fieldset id="editmidia-field-expiracao" className="editmidia-field">
+                                <legend className="editmidia-legend">Expiração</legend>
                                 <input
                                     id="editmidia-expiracao"
-                                    className="addmidia-input"
+                                    className="editmidia-input"
                                     type="datetime-local"
                                     placeholder="Data e hora de fim"
-                                    value={expiracao}
+                                    value={expiracao || ""}
                                     onChange={(e) => setExpiracao(e.target.value)}
                                 />
                             </fieldset>
-
-                            
-                    
+                            <button
+                                id="editmidia-clearExpiracao"
+                                type="button"
+                                className="second-action-button"
+                                onClick={() => setExpiracao("")}
+                            >
+                                Sem data de expiração
+                            </button>
+           
                             <div id="editmidia-buttons-1" className="addmidia-buttons">
                                 <button
                                     id="editmidia-next"
@@ -176,10 +192,10 @@ export const EditMidia = ({ item, onClose, onSuccess }) => {
                         <>
                             
 
-                            <fieldset id="editmidia-field-tvs" className="addmidia-field">
+                            <fieldset id="addmidia-field-tvs" className="addmidia-field">
                                 <legend className="addmidia-legend">TV Associada</legend>
 
-                                <button type="button" className="second-action-button" id="editmidia-selectAll" onClick={handleToggleAllTvs}>
+                                <button type="button" className="second-action-button" id="addmidia-selectAll" onClick={handleToggleAllTvs}>
                                     {todasTvsSelecionadas ? "Desmarcar Todas" : "Marcar Todas"}
                                 </button>
 

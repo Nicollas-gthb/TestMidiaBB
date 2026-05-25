@@ -1,5 +1,5 @@
 export const formatarDataHora = (valor) => {
-    if (!valor) return "—"
+    if (!valor) return ""
     return new Date(valor).toLocaleString("pt-BR", {
         day: "2-digit",
         month: "2-digit",
