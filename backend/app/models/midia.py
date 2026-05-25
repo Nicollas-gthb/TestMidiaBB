@@ -9,8 +9,9 @@ class Midia(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String, nullable=False)
-    tipo = Column(String, nullable=False)  # "image" || "video"
-    arquivo = Column(String, nullable=False)  # caminho do arquivo salvo
+    tipo = Column(String, nullable=False)  # "image" | "video" | "iframe"
+    arquivo = Column(String, nullable=True)  # caminho do arquivo salvo
+    url_externa = Column(String, nullable=True)  # para iframes ou vídeos externos
     
     inicio_exibicao = Column(DateTime(timezone=True), nullable=True)
     expiracao = Column(DateTime(timezone=True), nullable=True)
