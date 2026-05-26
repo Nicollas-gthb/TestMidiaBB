@@ -74,7 +74,7 @@ export default function Tv(){
     }
 
     const itemAtual = playlist[indexAtual]
-    const { tipo, arquivo } = itemAtual.midia
+    const { tipo, arquivo, url_externa } = itemAtual.midia
 
     return (
         <div id="tvs-container">
@@ -84,6 +84,15 @@ export default function Tv(){
                     className="tvs-img" 
                     src={arquivo} 
                     alt="" 
+                />
+            ) : tipo === "iframe" ? (
+                <iframe 
+                    key={url_externa}
+                    className="tvs-iframe"
+                    src={url_externa}
+                    frameBorder="0"
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
                 />
             ) : (
                 <video 
