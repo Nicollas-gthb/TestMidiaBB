@@ -1,3 +1,4 @@
+# services/ocr_service.py
 from PIL import Image
 import pytesseract
 

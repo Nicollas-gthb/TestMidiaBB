@@ -1,3 +1,4 @@
+# services/gemini_service.py
 from google import genai
 import os
 import json
@@ -121,9 +122,6 @@ def analyze_video(video_path: str):
         }
     )
     
-    for frame_path in frames:
-        if os.path.exists(frame_path):
-            os.remove(frame_path)
 
 
     try:
@@ -133,14 +131,9 @@ def analyze_video(video_path: str):
     except Exception as e:
         print(f"Erro na análise do Gemini: {e}")
         raise HTTPException(status_code=500, detail="IA indisponível no momento")
+    
+    finally:
+        for frame_path in frames:
+            if os.path.exists(frame_path):
+                os.remove(frame_path)
 
-def test():
-
-    response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents="Diga olá"
-    )
-
-    return {
-        "response": response.text
-    }

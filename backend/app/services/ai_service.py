@@ -1,196 +1,65 @@
-from http.client import HTTPException
-
-from openai import OpenAI
-import base64
+# services/ai_service.py
 import os
-import json
+from fastapi import HTTPException
 
-from backend.app.services.ocr_service import extract_text, extract_videoframes
-
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY")
-)
-
-def encode_image(image_path: str):
-
-    with open(image_path, "rb") as image_file:
-        return base64.b64encode(
-            image_file.read()
-        ).decode("utf-8")
-
-
-def analyze_media(image_path: str):
-
-    base64_image = encode_image(image_path)
-
-    # Extrai o texto da imagem usando OCR Tesseract
-    texto_ocr = extract_text(image_path)
-
-    prompt = f"""
-    Você é um sistema de análise de mídias corporativas do Banco do Brasil.
-    Analise a imagem enviada e retorne APENAS um JSON válido contendo:
-
-    Texto identificado na imagem:
-    {texto_ocr}
-
-    {
-      "titulo": "string",
-      "descricao": "string",
-      "categoria": "marketing" | "informativo" | "institucional" | "alerta",
-      "tempo_exibicao": number,
-      "conteudo_seguro": boolean,
-      "alerta": "string"
-    }
-
-    Categorias permitidas:
-    - marketing
-    - informativo
-    - institucional
-    - alerta
-
-    O tempo de exibição deve considerar:
-    - quantidade de texto
-    - legibilidade
-    - complexidade visual
-
-    Considere inadequado:
-    - nudez
-    - violência
-    - conteúdo ofensivo
-    - discurso político extremista
-    - qualquer conteúdo incompatível com ambiente bancário.
-
-    Caso seja inadequado, justifique no campo "alerta".
-
-    Retorne apenas JSON.
+def analisar_midia(caminho: str, content_type: str) -> dict:
     """
+    Roteador com fallback chain: GPT → Gemini → Claude
+    Recebe o caminho do arquivo temporário e o content_type.
+    """
+    
+    eh_video = content_type.startswith("video/")
+    provedores = montar_chain(eh_video)
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{
-            "role": "user",
-            "content": [
-                {"type": "text", "text": prompt},
+    if not provedores:
+        raise HTTPException(status_code=503, detail="Nenhum provedor de IA configurado. Verifique as variáveis de ambiente.")
 
-                {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}}
-            ]
-        }],
-        max_tokens=300
+    erros = []
+
+    for nome, funcao in provedores:
+        try:
+            print(f"[AI] Tentando {nome}...")
+            resultado = funcao(caminho)
+            resultado["provedor"] = nome
+            print(f"[AI] Sucesso com {nome}")
+            return resultado
+
+        except HTTPException:
+            # HTTPException dos services = IA retornou mas deu erro de parsing
+            # Não re-lança, apenas registra e tenta o próximo
+            print(f"[AI] {nome} falhou (HTTPException)")
+            erros.append(nome)
+
+        except Exception as e:
+            print(f"[AI] {nome} falhou: {e}")
+            erros.append(f"{nome}: {str(e)}")
+
+    raise HTTPException(
+        status_code=503,
+        detail=f"Todos os provedores falharam: {', '.join(erros)}"
     )
 
-    result = response.choices[0].message.content
 
-    # Remove possíveis blocos markdown
-    result = result.replace("```json", "")
-    result = result.replace("```", "")
-    result = result.strip()
-
-    try:
-
-        return json.loads(result)
-    
-    except Exception as e:
-        print(f"Erro na análise do GPT: {e}")
-        raise HTTPException(status_code=500, detail="IA  indisponível no momento")
-
-
-
-def analyze_video(video_path: str):
-    
-    frames = extract_videoframes(video_path)
-    ocr_results = []
-    encoded_frames = []
-
-    for index, frame_path in enumerate(frames):
-
-        # OCR do frame
-        text = extract_text(frame_path)
-
-        # Adiciona texto OCR
-        ocr_results.append(
-            f"FRAME {index+1}:\n{text}"
-        )
-
-        # Converte imagem para Base64
-        encoded_frames.append(
-            encode_image(frame_path)
-        )
-
-    ocr_text = "\n\n".join(ocr_results)
-
-    prompt = f"""
-    Você está analisando frames extraídos de um único vídeo corporativo.
-
-    Os frames representam:
-    - início
-    - meio
-    - encerramento
-
-    Texto identificado via OCR:
-
-    {ocr_text}
-
-
-    Retorne APENAS um JSON válido:
-
-    {{
-    "titulo": "",
-    "descricao": "",
-    "categoria": "",
-    "conteudo_seguro": true,
-    "alerta": ""
-    }}
-
-    Categorias:
-    - marketing
-    - informativo
-    - institucional
-    - alerta
-
-    Considere inadequado:
-    - nudez
-    - violência
-    - discurso ofensivo
-    - conteúdo incompatível com ambiente bancário
-
-    Caso seja inadequado, justifique no campo "alerta".
+def montar_chain(eh_video: bool) -> list:
     """
+    Monta a lista de provedores disponíveis com base nas keys configuradas.
+    Seleciona analyze_video ou analyze_media dependendo do tipo.
+    """
+    chain = []
 
-    content = [{"type": "text", "text": prompt}]
+    if os.getenv("OPENAI_API_KEY"):
+        from app.services.gpt_service import analyze_media, analyze_video
+        funcao = analyze_video if eh_video else analyze_media
+        chain.append(("GPT-4o-mini", funcao))
 
-    # Adiciona os frames ao content
-    for base64_frame in encoded_frames:
+    if os.getenv("GEMINI_API_KEY"):
+        from app.services.gemini_service import analyze_media, analyze_video
+        funcao = analyze_video if eh_video else analyze_media
+        chain.append(("Gemini-2.5-flash-lite", funcao))
 
-        content.append(
-            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_frame}"}}
-        )
+    # if os.getenv("ANTHROPIC_API_KEY"):
+    #     from app.services.claude_service import analyze_media, analyze_video
+    #     funcao = analyze_video if eh_video else analyze_media
+    #     chain.append(("Claude-Haiku-4.5", funcao))
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{
-            "role": "user",
-            "content": content
-        }],
-        max_tokens=500
-    )
-
-    result = response.choices[0].message.content
-
-    # Remove possíveis blocos markdown
-    result = result.replace("```json", "")
-    result = result.replace("```", "")
-    result = result.strip()
-
-    # Remove os frames temporários
-    for frame_path in frames:
-
-        if os.path.exists(frame_path):
-            os.remove(frame_path)
-
-    try:
-
-        return json.loads(result)
-    
-    except Exception as e:
-        print(f"Erro na análise do GPT: {e}")
-        raise HTTPException(status_code=500, detail="IA  indisponível no momento")
+    return chain
