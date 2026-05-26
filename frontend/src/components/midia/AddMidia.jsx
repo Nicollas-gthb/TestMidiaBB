@@ -24,6 +24,8 @@ export const AddMidia = ({ onClose, onSuccess }) => {
     const [file, setFile] = useState(null)
     const [preview, setPreview] = useState(null)
 
+    const [tipoEntrada, setTipoEntrada] = useState("arquivo") // "arquivo" | "youtube"
+    const [urlYoutube, setUrlYoutube] = useState("")
 
     const [tvsSelecionadas, setTvsSelecionadas] = useState([])
 
@@ -148,9 +150,15 @@ export const AddMidia = ({ onClose, onSuccess }) => {
         
         const formData = new FormData()
         formData.append("nome", nome)
-        formData.append("arquivo", file)
+        
         formData.append("duracao_segundos", duracao)
         formData.append("tv_ids", JSON.stringify(tvsSelecionadas))
+
+        if (tipoEntrada === "youtube") {
+            formData.append("url_externa", urlYoutube)
+        }else{
+            formData.append("arquivo", file)
+        }
 
         if (exibicao) formData.append("inicio_exibicao", toUTC(exibicao))
         if (expiracao) formData.append("expiracao", toUTC(expiracao))
@@ -236,37 +244,65 @@ export const AddMidia = ({ onClose, onSuccess }) => {
                                 />
                             </fieldset>
 
-                            <label htmlFor="addmidia-input-upload" id="addmidia-label-upload">
-                    
-                                {preview ? (
-                                    <>
-                                        <button
-                                            type="button"
-                                            className="close-button"
-                                            onClick={handleRemoveFile}
-                                        >
-                                            <i className="bi bi-x-circle"></i>
-                                        </button>
-                                        <Preview preview={preview} file={file} />
-                                    </>
-                                ) : (
-                                    <span id="addmidia-span-upload">Escolha o arquivo <br /> Arquivos suportados: PNG, JPEG, MP4 <br /> Max: 100MB </span>
-                                )}
-                    
-                                <input
-                                    id="addmidia-input-upload"
-                                    className="addmidia-input"
-                                    type="file"
-                                    accept="image/*,video/*"
-                                    placeholder="Upload"
-                                    onChange={handleFileChange}
-                                />
-                            </label>
+                            {/* Toggle tipo de entrada */}
+                            <div className="addmidia-toggle-tipo">
+                                <button
+                                    type="button"
+                                    className={tipoEntrada === "arquivo" ? "action-button" : "second-action-button"}
+                                    onClick={() => setTipoEntrada("arquivo")}
+                                >
+                                    Arquivo Local
+                                </button>
+                                <button
+                                    type="button"
+                                    className={tipoEntrada === "youtube" ? "action-button" : "second-action-button"}
+                                    onClick={() => setTipoEntrada("youtube")}
+                                >
+                                    <i className="bi bi-youtube"></i> YouTube / Live
+                                </button>
+                            </div>
 
-                            <fieldset id="addmidia-field-url" className="addmidia-field">
-                                <legend className="addmidia-legend">URL</legend>
-                                <p id="addmidia-output-url">{preview}</p>
-                            </fieldset>
+                            {tipoEntrada === "arquivo" ? (
+                                <label htmlFor="addmidia-input-upload" id="addmidia-label-upload">
+                                              
+                                    {preview ? (
+                                        <>
+                                            <button
+                                                type="button"
+                                                className="close-button"
+                                                onClick={handleRemoveFile}
+                                            >
+                                                <i className="bi bi-x-circle"></i>
+                                            </button>
+                                            <Preview preview={preview} file={file} />
+                                        </>
+                                    ) : (
+                                        <span id="addmidia-span-upload">Escolha o arquivo <br /> Arquivos suportados: PNG, JPEG, MP4 <br /> Max: 100MB </span>
+                                    )}
+
+                                    <input
+                                        id="addmidia-input-upload"
+                                        className="addmidia-input"
+                                        type="file"
+                                        accept="image/*,video/*"
+                                        placeholder="Upload"
+                                        onChange={handleFileChange}
+                                    />
+                                
+                                </label>
+                            ) : (
+                                <fieldset className="addmidia-field">
+                                    <legend className="addmidia-legend">URL do YouTube</legend>
+                                    <input
+                                        className="addmidia-input"
+                                        type="text"
+                                        placeholder="https://www.youtube.com/watch?v=..."
+                                        value={urlYoutube}
+                                        onChange={(e) => setUrlYoutube(e.target.value)}
+                                    />
+                                    <small>Funciona com vídeos, lives e Shorts</small>
+                                </fieldset>
+                            )}
                     
                             <div id="addmidia-buttons-1" className="addmidia-buttons">
                                 <button
