@@ -14,7 +14,8 @@ class MidiaResponse(BaseModel):
     id: int
     nome: str
     tipo: str
-    arquivo: str
+    arquivo: str | None = None
+    url_externa: str | None = None
     duracao_segundos: int
     inicio_exibicao: datetime | None = None
     expiracao: datetime | None = None
@@ -31,3 +32,4 @@ class MidiaUpdate(BaseModel):
     expiracao: datetime | None = None
     ativo: bool | None = None
     tv_ids: list[int] | None = None
+    url_externa: str | None = None
