@@ -22,3 +22,4 @@ class Midia(Base):
 
     playlist_items = relationship("PlaylistItem", back_populates="midia")
     tvs = relationship("TV", secondary="playlist_items", viewonly=True)
+    
