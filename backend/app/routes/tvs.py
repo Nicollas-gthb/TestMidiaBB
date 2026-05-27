@@ -19,14 +19,17 @@ def criar_tv(
     session: Session = Depends(get_session), 
     usuario = Depends(get_usuario_atual)
 ):
-    
     existe = session.query(TV).filter(TV.numero == tv.numero).first()
     if existe:
         raise HTTPException(status_code=400, detail="Já existe uma TV com esse número")
 
     nova_tv = TV(numero=tv.numero, nome=tv.nome)
     session.add(nova_tv)
+    
+    # CORREÇÃO: Sincroniza o objeto com o banco para gerar o nova_tv.id
+    session.flush() 
 
+    # Agora nova_tv.id já tem o valor numérico correto gerado pelo Postgres
     salvar_registro(session, "tv", nova_tv.id, nova_tv.nome, "adicionada", usuario)
 
     session.commit()
@@ -57,14 +60,15 @@ def hard_delete_tv(
     session: Session = Depends(get_session),
     usuario = Depends(get_usuario_atual)
 ):
-    
     tv = session.query(TV).filter(TV.id == tv_id).first()
     if not tv:
         raise HTTPException(status_code=404, detail="TV não encontrada")
     
+    # AJUSTE: Primeiro criamos o histórico e damos um flush
     salvar_registro(session, "tv", tv.id, tv.nome, "deletada", usuario)
-    session.commit()
+    session.flush()
 
+    # Depois removemos a TV e commitamos os dois eventos de uma vez só 
     session.delete(tv)
     session.commit()
 

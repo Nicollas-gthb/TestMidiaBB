@@ -68,6 +68,10 @@ async def upload_midia(
     if not arquivo and not url_externa:
         raise HTTPException(status_code=400, detail="Envie um arquivo ou uma URL externa")
 
+    caminho = None
+    url_salva = None
+    tipo = None
+    
     # Valida tipo
     if url_externa:
         embed_url = extrair_url(url_externa)

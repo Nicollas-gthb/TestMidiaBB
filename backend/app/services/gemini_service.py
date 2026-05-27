@@ -25,14 +25,14 @@ def analyze_media(image_path: str):
     Texto identificado na imagem:
     {texto_ocr}
 
-    {
-      "titulo": "string",
-      "descricao": "string",
-      "categoria": "marketing" | "informativo" | "institucional" | "alerta",
-      "tempo_exibicao": number,
-      "conteudo_seguro": boolean,
-      "alerta": "string"
-    }
+    Analise a imagem enviada e retorne APENAS um JSON válido contendo:
+    
+    "titulo": "string",
+    "descricao": "string",
+    "categoria": "marketing" | "informativo" | "institucional" | "alerta",
+    "tempo_exibicao": number,
+    "conteudo_seguro": boolean,
+    "alerta": "string"
 
     O tempo de exibição deve considerar: quantidade de texto, legibilidade e complexidade visual.
     Considere inadequado: nudez, violência, conteúdo ofensivo, política extremista ou incompatível com ambiente bancário.
@@ -92,13 +92,14 @@ def analyze_video(video_path: str):
 
     Retorne APENAS um JSON válido:
 
-    {{
-    "titulo": "",
-    "descricao": "",
-    "categoria": "",
-    "conteudo_seguro": true,
-    "alerta": ""
-    }}
+    Analise a imagem enviada e retorne APENAS um JSON válido contendo:
+    
+    "titulo": "string",
+    "descricao": "string",
+    "categoria": "marketing" | "informativo" | "institucional" | "alerta",
+    "conteudo_seguro": boolean,
+    "alerta": "string"
+
 
     Categorias:
     - marketing

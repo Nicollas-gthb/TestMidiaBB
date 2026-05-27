@@ -24,14 +24,14 @@ PROMPT_BASE = """
     Analise a imagem enviada e retorne APENAS um JSON válido, sem texto adicional, sem markdown.
 
     Estrutura obrigatória:
-    {
+    Analise a imagem enviada e retorne APENAS um JSON válido contendo:
+    
     "titulo": "string",
     "descricao": "string",
     "categoria": "marketing" | "informativo" | "institucional" | "alerta",
     "tempo_exibicao": number,
     "conteudo_seguro": boolean,
-    "alerta": "string ou null"
-    }
+    "alerta": "string"
 
     O tempo de exibição deve considerar: quantidade de texto, legibilidade e complexidade visual.
     Considere inadequado: nudez, violência, conteúdo ofensivo, política extremista ou incompatível com ambiente bancário.
@@ -101,14 +101,23 @@ def analyze_video(video_path: str) -> dict:
     ocr_text = "\n\n".join(ocr_results)
 
     prompt_video = f"""
-Você está analisando frames extraídos de um único vídeo corporativo.
-Os frames representam início, meio e encerramento do vídeo.
+    Você está analisando frames extraídos de um único vídeo corporativo.
+    Os frames representam início, meio e encerramento do vídeo.
 
-Texto identificado via OCR:
-{ocr_text}
+    Texto identificado via OCR:
+    {ocr_text}
 
-Retorne APENAS um JSON válido com a estrutura definida.
-"""
+    Retorne APENAS um JSON válido com a estrutura definida.
+
+    Analise a imagem enviada e retorne APENAS um JSON válido contendo:
+    
+    "titulo": "string",
+    "descricao": "string",
+    "categoria": "marketing" | "informativo" | "institucional" | "alerta",
+    "tempo_exibicao": number,
+    "conteudo_seguro": boolean,
+    "alerta": "string"
+    """
 
     try:
         response = client.messages.create(
