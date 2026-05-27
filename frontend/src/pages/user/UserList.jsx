@@ -47,11 +47,11 @@ export default function UserList() {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th className="left-table">ID</th>
                                     <th>NOME</th>
                                     <th>EMAIL</th>
                                     <th>PERFIL</th>
-                                    <th>STATUS</th>
+                                    <th className="right-table">STATUS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,7 +63,7 @@ export default function UserList() {
                                         <td>{u.perfil}</td>
                                         <td>
                                             <div className="status">
-                                                {u.status}
+                                                {u.ativo ? "Ativo" : "Inativo"}
                                             </div>
                                         </td>
                                     </tr>
