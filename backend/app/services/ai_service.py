@@ -57,9 +57,9 @@ def montar_chain(eh_video: bool) -> list:
         funcao = analyze_video if eh_video else analyze_media
         chain.append(("Gemini-2.5-flash-lite", funcao))
 
-    # if os.getenv("ANTHROPIC_API_KEY"):
-    #     from app.services.claude_service import analyze_media, analyze_video
-    #     funcao = analyze_video if eh_video else analyze_media
-    #     chain.append(("Claude-Haiku-4.5", funcao))
+    if os.getenv("ANTHROPIC_API_KEY"):
+        from app.services.claude_service import analyze_media, analyze_video
+        funcao = analyze_video if eh_video else analyze_media
+        chain.append(("Claude-Haiku-4.5", funcao))
 
     return chain

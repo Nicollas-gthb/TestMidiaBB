@@ -44,6 +44,7 @@ def analyze_media(image_path: str):
         response = client.models.generate_content(
             model="gemini-2.5-flash-lite", # Versão Lite costuma ter cota livre, 
             contents=[prompt, img],
+            max_tokens=500,
             config={
                 "response_mime_type": "application/json"
             }
