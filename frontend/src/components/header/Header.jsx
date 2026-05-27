@@ -11,7 +11,7 @@ import logo_light from "../../assets/bb_logo_light.svg"
 
 export const Header = () => {
 
-    const { logout } = useContext(AuthContext)
+    const { logout, user } = useContext(AuthContext)
     const { theme } = useContext(ThemeContext)
 
     const navigate = useNavigate()
@@ -30,6 +30,12 @@ export const Header = () => {
             </div>
 
             <nav id="component-header-right">
+                {user ? (
+                    <small>{user?.name || user?.nome}</small>
+                ) : (
+                    <small>Não autenticado</small>
+                )}
+                
                 <ThemeToggle />
                 <LogoutButton onClick={handleLogout}/>
             </nav>

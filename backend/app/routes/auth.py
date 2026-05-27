@@ -24,7 +24,7 @@ def login(
 
     token = criar_access_token(usuario.id)
 
-    return TokenResponse(access_token=token)
+    return TokenResponse(access_token=token, user=usuario)
 
 from fastapi.security import OAuth2PasswordRequestForm
 

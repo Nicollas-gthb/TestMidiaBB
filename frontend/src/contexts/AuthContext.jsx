@@ -10,16 +10,21 @@ export function AuthProvider({children}){
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const savedUser = localStorage.getItem("user")
-        const savedToken = localStorage.getItem("token")
+        const savedUser = localStorage.getItem("user");
+        const savedToken = localStorage.getItem("token");
 
-        if (savedToken && savedUser !== "undefined") {
-            setUser(JSON.parse(savedUser))
-            setToken(savedToken)
+        if (savedToken && savedUser && savedUser !== "undefined") {
+            try {
+                setUser(JSON.parse(savedUser));
+                setToken(savedToken);
+            } catch (e) {
+                // Se o JSON estiver corrompido, limpa tudo de forma segura
+                logout(); 
+            }
         }
 
-        setLoading(false)
-    }, [])
+        setLoading(false);
+    }, []);
 
     function login(newToken, userData){
         localStorage.setItem("token", newToken)
