@@ -5,6 +5,7 @@ import { Preview } from "./PreviewMidia"
 import { api } from "../../api/axios"
 import { toUTC } from "../../utils/formatters"
 import { useToast } from "../../contexts/ToastContext"
+import { extrairIdYoutube } from "../../utils/extractUrl"
 
 export const AddMidia = ({ onClose, onSuccess }) => {
 
@@ -446,6 +447,46 @@ export const AddMidia = ({ onClose, onSuccess }) => {
                             </div>
                     
                         </div>
+                    ) : togglePage === 3 && urlYoutube ? (
+                            <div id="addmidia-resumo-container">
+                                <h2>Resumo</h2>
+                                <div id="addmidia-resumo">
+
+                                    {/* Thumbnail do vídeo */}
+                                    {extrairIdYoutube(urlYoutube) && (
+                                        <img
+                                            src={`https://img.youtube.com/vi/${extrairIdYoutube(urlYoutube)}/hqdefault.jpg`}
+                                            alt="Thumbnail do vídeo"
+                                            style={{ width: "100%", borderRadius: "8px", marginBottom: "12px" }}
+                                        />
+                                    )}
+
+                                    <p><strong>Nome:</strong> {nome}</p>
+                                    <p><strong>Tipo de mídia:</strong> YouTube / Live</p>
+                                    <p><strong>Duração:</strong> {duracao || "(padrão) 5"} segundos</p>
+                                    <p><strong>Início da exibição:</strong> {exibicao || "Imediato"}</p>
+                                    <p><strong>Fim da exibição:</strong> {expiracao || "Sem expiração"}</p>
+                                    <p><strong>URL:</strong> {urlYoutube}</p>
+                                    <p><strong>TVs:</strong> {
+                                        tvs
+                                        .filter(tv => tvsSelecionadas.includes(tv.id))
+                                        .map(tv => tv.nome).join(", ")
+                                    }</p>
+
+                                    <div className="addmidia-buttons">
+                                        <button
+                                            className="second-action-button"
+                                            type="button"
+                                            onClick={handlePreviousPage}
+                                        >Voltar</button>
+                                        <button
+                                            className="action-button"
+                                            type="submit"
+                                            onClick={handleSubmit}
+                                        >Confirmar</button>
+                                    </div>
+                                </div>
+                            </div>
                     ) : (
                         <p>Erro ao carregar recurso</p>
                     )}

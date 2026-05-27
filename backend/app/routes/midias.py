@@ -35,14 +35,18 @@ def extrair_url(url: str) -> str:
 
     import re
     padrao = r"(?:v=|youtu\.be/|/live/|/shorts/)([a-zA-Z0-9_-]{11})"
-
     match = re.search(padrao, url)
-
     if not match:
         raise HTTPException(status_code=400, detail="URL do YouTube inválida")
-    
     video_id = match.group(1)
-    return f"https://www.youtube.com/embed/{video_id}?autoplay=1&mute=1&loop=1&playlist={video_id}"
+    return (
+        f"https://www.youtube.com/embed/{video_id}"
+        f"?autoplay=1&mute=1&loop=1&playlist={video_id}"
+        f"&controls=0"       # esconde os controles
+        f"&modestbranding=1" # remove logo do YouTube
+        f"&rel=0"            # não mostra vídeos relacionados no fim
+        f"&showinfo=0"       # esconde título e info
+    )
 
 @router.get("/", response_model=list[MidiaResponse])
 async def listar_midias(session: Session = Depends(get_session)):
