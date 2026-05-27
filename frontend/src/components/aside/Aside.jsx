@@ -118,6 +118,7 @@ export const Aside = () => {
 
                     <button
                         className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
+                        onClick={() => navigate("/user/list")}
                     >
                         <i className="bi aside-bi bi-person"></i>
                         Usuários

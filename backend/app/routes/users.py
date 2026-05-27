@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from typing import List
 
 from app.core.database import get_session
 from app.core.security import criptografar
@@ -9,7 +10,7 @@ from app.schemas.user import UsuarioCreate, UsuarioResponse
 router = APIRouter(prefix="/api/user", tags=["user"])
 
 @router.post("/register", response_model=UsuarioResponse)
-def create(
+async def create(
         request: UsuarioCreate,
         session: Session = Depends(get_session)
 ):
@@ -32,3 +33,9 @@ def create(
     session.refresh(novo_usuario)
 
     return novo_usuario
+
+@router.get("/list", response_model=List[UsuarioResponse])
+async def listar_usuarios(session: Session = Depends(get_session)):
+
+    lista = session.query(Usuario).order_by(Usuario.id).all()
+    return lista

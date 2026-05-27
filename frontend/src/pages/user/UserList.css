@@ -1,0 +1,24 @@
+#userlist-container{
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    z-index: 1;
+}
+
+#userlist-main-container{
+    width: 85%;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+#userlist-menu-main{
+    background-color: var(--blue-bg);
+    height: auto;
+    min-height: 150vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+}
