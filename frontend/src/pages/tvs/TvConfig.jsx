@@ -63,6 +63,19 @@ export default function TvConfig() {
         }
     }
 
+    const handleHardDelete = async (id) => {
+        // if (!window.confirm("Tem certeza? Esse é um hard delete, a ação não pode ser desfeita.")) return
+        
+        try{
+            await api.delete(`/tv/${id}/hard`)
+            addToast("TV foi deletada", "aviso")
+            carregarTvs()
+        }catch(error){
+            const mensagem = error.response?.data.detail || "Erro ao deletar as tvs !"
+            addToast(mensagem, "erro")
+        }
+    }
+
     return (
         <div id="midia-container">
 
@@ -148,16 +161,14 @@ export default function TvConfig() {
                                         </td>
                                         <td>
                                             {tv.ativo ? (
-                                                <a 
-                                                href={`/tv/${tv.numero}`} 
-                                                className="table-link" 
-                                                target="_blank" 
-                                                rel="noreferrer">
-                                                Transmissão
-                                                </a>
-                                            ) : (<></>)
-                                            }
-                                            
+                                                    <a 
+                                                    href={`/tv/${tv.numero}`} 
+                                                    className="table-link" 
+                                                    target="_blank" 
+                                                    rel="noreferrer">
+                                                    Transmissão
+                                                    </a>
+                                                ) : (<></>)}     
                                         </td>
                                         <td>
                                             <button
@@ -168,7 +179,13 @@ export default function TvConfig() {
                                             </button>
                                             <button
                                                 className="second-action-button"
-                                                onClick={() => handleDeletar(tv.id)}
+                                                onClick={() => {
+                                                    if(tv.ativo){
+                                                        handleDeletar(tv.id)
+                                                    }else{
+                                                        handleHardDelete(tv.id)
+                                                    }
+                                                }}
                                             >
                                                 <i className="bi bi-trash"></i>
                                             </button>

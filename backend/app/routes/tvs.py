@@ -10,11 +10,11 @@ from app.services.historico_service import salvar_registro
 router = APIRouter(prefix="/api/tv", tags=["TVs"])
 
 @router.get("/", response_model=list[TVResponse])
-def listar_tvs(session: Session = Depends(get_session)):
+async def listar_tvs(session: Session = Depends(get_session)):
     return session.query(TV).options(joinedload(TV.midias)).order_by(TV.id).all()
 
 @router.post("/", response_model=TVResponse)
-def criar_tv(
+async def criar_tv(
     tv: TVCreate, 
     session: Session = Depends(get_session), 
     usuario = Depends(get_usuario_atual)
@@ -37,7 +37,7 @@ def criar_tv(
     return nova_tv
 
 @router.delete("/{tv_id}")
-def deletar_tv(
+async def deletar_tv(
     tv_id: int, 
     session: Session = Depends(get_session),
     usuario = Depends(get_usuario_atual)
@@ -49,13 +49,14 @@ def deletar_tv(
     tv.ativo = False
 
     salvar_registro(session, "tv", tv.id, tv.nome, "removida", usuario)
+    session.flush()
 
     session.commit()
     return {"message": f"TV {tv.numero} desativada com sucesso"}
 
 
 @router.delete("/{tv_id}/hard")
-def hard_delete_tv(
+async def hard_delete_tv(
     tv_id: int, 
     session: Session = Depends(get_session),
     usuario = Depends(get_usuario_atual)
@@ -75,7 +76,7 @@ def hard_delete_tv(
     return {"message": "TV deletada permanentemente"}
 
 @router.patch("/{tv_id}", response_model=TVResponse)
-def atualizar_tv(
+async def atualizar_tv(
     tv_id: int, 
     request: TVUpdate,
     session: Session = Depends(get_session),
