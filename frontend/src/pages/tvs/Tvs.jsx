@@ -86,14 +86,30 @@ export default function Tv(){
                     alt="" 
                 />
             ) : tipo === "iframe" ? (
-                <iframe 
-                    key={url_externa}
-                    className="tvs-iframe"
-                    src={url_externa}
-                    frameBorder="0"
-                    allow="autoplay; encrypted-media"
-                    allowFullScreen
-                />
+                
+                    <div style={{
+                        position: "relative",
+                        width: "100vw",
+                        height: "100vh"
+                    }}>
+                        <iframe
+                            key={url_externa}
+                            className="tvs-iframe"
+                            src={url_externa}
+                            frameBorder="0"
+                            allow="autoplay; encrypted-media"
+                        />
+                        {/* Bloqueador de cliques */}
+                        <div style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            zIndex: 1
+                        }} />
+                    </div>
+                
             ) : (
                 <video 
                     key={arquivo}

@@ -62,7 +62,7 @@ export default function UserList() {
                                         <td>{u.email}</td>
                                         <td>{u.perfil}</td>
                                         <td>
-                                            <div className="status">
+                                            <div className={`status status-${u.ativo ? 'ativa' : 'removida'}`}>
                                                 {u.ativo ? "Ativo" : "Inativo"}
                                             </div>
                                         </td>
