@@ -1,15 +1,19 @@
+
 import { useState, useContext } from "react"
 
 import { Link } from "react-router-dom"
 import { api } from "../../api/axios"
 import { AuthContext } from "../../contexts/AuthContext"
+import { ThemeContext } from "../../contexts/ThemeContext"
 import "./Login.css"
 import { useToast } from "../../contexts/ToastContext"
-import logo from "../../assets/bb_logo.svg"
+import logo_amarela from "../../assets/bb_logo_amarela.svg"
+import logo_azul from "../../assets/bb_logo_azul.svg"
 
 export default function Login(){
 
     const { addToast } = useToast()
+    const { theme } = useContext(ThemeContext)
 
     //quando o use context é usado, ele volta na primeira tag <AuthContext.Provider> 
     // que encontrar, e procura no value o { login }
@@ -48,66 +52,85 @@ export default function Login(){
 
     return (
         <>
-            <header id="header-inicial">
-                <img id="header-img" src={logo} alt="logo" /> 
-                {/* <h1>LOGO</h1> */}
-            </header>
+            
 
-            <main className="background">
-                <section id="login">
-                    
-                    <div id="box-formulario">
+            <main className="login-page">
 
-                        <h1 id="login-titulo">Faca seu login para adicionar vagas</h1>
+            <div className="bb-decoration bb-left"></div>
+            <div className="bb-decoration bb-right"></div>
 
-                        <form onSubmit={handleSubmit} method="post" autoComplete="on">
+            <section className="login-card">
 
-                            <fieldset className="login-fieldset">
-                                <legend className="login-legend">Email</legend>
-                                <input 
-                                    className="login-input" 
-                                    id="input-email" 
-                                    type="email" 
-                                    placeholder="email@dominio.com" 
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                    required 
-                                    maxLength="50"
-                                />
-                            </fieldset>
+                <img
+                    src={theme === "dark" ? logo_amarela : logo_azul}
+                    alt="Banco do Brasil"
+                    className="login-logo"
+                />
 
-                            <fieldset className="login-fieldset">
-                                <legend className="login-legend">Senha</legend>
-                                <input 
-                                    className="login-input" 
-                                    id="input-senha" 
-                                    type="password" 
-                                    placeholder="Sua Senha"
-                                    value={senha}
-                                    onChange={e => setSenha(e.target.value)}
-                                    required 
-                                    minLength="5" 
-                                    maxLength="50"
-                                />
-                            </fieldset>
+                <h1 className="login-title">
+                    Bem-vindo de volta!
+                </h1>
 
-                            
-                            <Link to="/register" className="login-link">Criar conta</Link>
-                        
+                <p className="login-subtitle">
+                    Faça login para acessar sua conta e continuar.
+                </p>
 
-                            <button 
-                                className="button-enviar" 
-                                type="submit" 
-                                disabled={loading} 
-                            >{loading ? "Carregando..." : "Entrar"}</button>
-                        </form>
+                <form onSubmit={handleSubmit}>
 
+                    <div className="input-group">
+                        <label>Email</label>
 
+                        <input
+                            type="email"
+                            placeholder="seu@email.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
                     </div>
 
-                    <div id="login-box-imagem"></div>
-                </section>
-            </main>
+                    <div className="input-group">
+                        <label>Senha</label>
+
+                        <input
+                            type="password"
+                            placeholder="Sua senha"
+                            value={senha}
+                            onChange={(e) => setSenha(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <Link
+                        to="/recuperar-senha"
+                        className="forgot-password"
+                    >
+                        Esqueceu sua senha?
+                    </Link>
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="login-button"
+                    >
+                        {loading
+                            ? "Carregando..."
+                            : "Entrar"}
+                    </button>
+
+                    <div className="register-area">
+                        Ainda não tem uma conta?
+
+                        <Link to="/register">
+                            Criar conta
+                        </Link>
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
         </>
     )
 }

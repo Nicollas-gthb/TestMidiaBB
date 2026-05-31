@@ -24,9 +24,12 @@
   --sub-text: #5b5b5b;
   --text-hover: #deecff;
   --bg: #ffdd00;
+  --bg1: #ebcd0b;
+  --bg2: #71640a;
   --header-bg: #ffcc00;
+  --bb-yellow: #ffcc00;
   --aside-bg: #ffffff;
-  --blue-bg: #eceef0;
+  --blue-bg: #e9e9d8;
   --table-border: #6d8bbc;
   --code-bg: #e8edf5;
   --th-bg: #0c51be;
@@ -37,6 +40,7 @@
   --hover-action-bg: #073783;
   --close-btn: #F44336;
   --login-bg: #f1d104;
+  --login-btn: #001845;
   --link-color: #06B8F3;
   --status-inativa: #717171;
   --status-inativa-bg: #6666664b;
@@ -51,9 +55,12 @@
   --sub-text: #aeaeae;
   --text-hover: #a9b1c0;
   --bg: #16171d;
+  --bg1: #001845;
+  --bg2: #002f8f;
   --header-bg: #354b8e;
   --aside-bg: #16171d;
   --blue-bg: #071745;
+  --bb-yellow: #ffcc00;
   --table-border: #6d8bbc;
   --code-bg: #1f2028;
   --th-bg: #0c51be;
@@ -64,6 +71,7 @@
   --hover-action-bg: #073783;
   --close-btn: #F44336;
   --login-bg: #020d5d;
+  --login-btn: #ffcc00;
   --link-color: #CCEC00;
   --status-inativa: #878787;
   --status-inativa-bg: #33333392;
