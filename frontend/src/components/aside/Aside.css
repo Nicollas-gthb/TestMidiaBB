@@ -1,19 +1,81 @@
-#aside-menu-container{
-    width: 15%;
+#aside-menu-container {
+    width: 20%;
+    min-width: 1em;
+    height: auto;
     display: flex;
     flex-direction: column;
-    
     left: 0;
     top: 0;
-
-    height: auto;
+    transition: width 0.1s ease, min-width 0.1s ease;
 }
 
-#aside-header{
+/* Estado colapsado */
+#aside-menu-container.aside-collapsed {
+    width: 60px;
+    min-width: 3em;
+}
+
+#aside-header {
     background-color: var(--bg);
-    height: 10vh;
+    height: auto;
+    min-height: 10vh;
     border-bottom: 1px solid var(--text);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 12px;
 }
+
+/* Botão de toggle */
+#aside-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 4px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+#aside-toggle:hover {
+    background-color: var(--hover-action-bg);
+}
+
+/* Quando colapsado, centraliza os botões */
+#aside-menu-container.aside-collapsed #aside-main {
+    align-items: center;
+    padding-left: 0;
+}
+
+#aside-menu-container.aside-collapsed .menu-buttons {
+    width: 42px;
+    height: 42px;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+}
+
+#aside-menu-container.aside-collapsed .aside-bi {
+    margin-left: 0;
+}
+
+#aside-menu-container.aside-collapsed .nav-group {
+    align-items: center;
+}
+
+/* Mobile: colapsado por padrão */
+@media (max-width: 768px) {
+    #aside-menu-container {
+        width: 60px;
+        min-width: 60px;
+    }
+}
+
 
 #aside-main{
     background-color: var(--aside-bg);
@@ -21,20 +83,20 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: 20px;
-    padding-top: 20px;
-    padding-left: 10px;
+    gap: 0.5em;
+    padding-top: 1em;
+    padding-left: 0.5em;
 }
 
 .menu-buttons{
     width: 90%;
-    height: 42px;
+    height: 3em;
     border: none;
     border-radius: 10px;
     gap: 1.5em;
 
     font-weight: bold;
-    font-size: 15px;
+    font-size: 0.875rem;
 
     cursor: pointer;
     display: flex;
@@ -105,7 +167,7 @@
 
 .aside-bi{
     color: var(--text);
-    font-size: 25px;
+    font-size: 1.2rem;
     font-weight: bold;
     margin-left: 5%;
 }
@@ -115,6 +177,7 @@
     display: flex;
     flex-direction: column;
     align-items: start;
+
 }
 
 .nav-group-title{

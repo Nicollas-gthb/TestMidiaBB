@@ -1,7 +1,8 @@
 #header-menu{
     background-color: var(--header-bg);
     border-bottom: 1px solid var(--text);
-    height: 10vh;
+    height: auto;
+    max-height: 10vh;
 
     display: flex;
     align-items: center;

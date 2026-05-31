@@ -1,151 +1,113 @@
 import { useNavigate } from "react-router-dom"
 
 import "./Aside.css"
+import { useAside } from "../../contexts/AsideContext"
 
 export const Aside = () => {
-
     const navigate = useNavigate()
     const isActive = (path) => location.pathname === path
 
+    // No mobile começa colapsado, no desktop expandido
+    const {collapsed, setCollapsed} = useAside()
+
     return (
-        <aside id="aside-menu-container">
+        <aside id="aside-menu-container" className={collapsed ? "aside-collapsed" : ""}>
             <header id="aside-header">
-                <h1>Menu</h1>
+                <button 
+                    id="aside-toggle"
+                    onClick={() => setCollapsed(!collapsed)}
+                >
+                    <i className={`bi ${collapsed ? "bi-layout-sidebar" : "bi-layout-sidebar-reverse"}`}></i>
+                </button>
+                {!collapsed && <h1>Menu</h1>}
             </header>
 
             <div id="aside-main">
                 
                 <button
-                    className={`menu-buttons processo ${isActive("/home") ? "menu-active" : "menu-inactive"}`}
+                    className={`menu-buttons ${isActive("/home") ? "menu-active" : "menu-inactive"}`}
                     onClick={() => navigate("/home")}
+                    title="Home"
                 >
-                    <i className={`bi aside-bi bi-house`}></i>
-                    Home
+                    <i className="bi aside-bi bi-house"></i>
+                    {!collapsed && <span>Home</span>}
                 </button>
 
                 <div className="nav-group">
-                    <p className="nav-group-title">Midias</p>
+                    {!collapsed && <p className="nav-group-title">Midias</p>}
 
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                        onClick={() => navigate("/midia")}
-                    >
+                    <button className="menu-buttons menu-inactive" onClick={() => navigate("/midia")} title="M. Ativas">
                         <i className="bi aside-bi bi-image"></i>
-                        M. Ativas
+                        {!collapsed && <span>M. Ativas</span>}
                     </button>
 
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                        onClick={() => navigate("/midia")}
-                    >
+                    <button className="menu-buttons menu-inactive" onClick={() => navigate("/midia")} title="M. Agendadas">
                         <i className="bi aside-bi bi-calendar-event"></i>
-                        M. Agendadas
+                        {!collapsed && <span>M. Agendadas</span>}
                     </button>
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                        onClick={() => navigate("/midia")}
-                    >
+
+                    <button className="menu-buttons menu-inactive" onClick={() => navigate("/midia")} title="M. Expiradas">
                         <i className="bi aside-bi bi-clock"></i>
-                        M. Expiradas
-                    </button>
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                        onClick={() => navigate("/midia")}
-                    >
-                        <i className="bi aside-bi bi-list-ul"></i>
-                        Todas as Midias
+                        {!collapsed && <span>M. Expiradas</span>}
                     </button>
 
+                    <button className="menu-buttons menu-inactive" onClick={() => navigate("/midia")} title="Todas as Mídias">
+                        <i className="bi aside-bi bi-list-ul"></i>
+                        {!collapsed && <span>Todas as Midias</span>}
+                    </button>
                 </div>
 
                 <div className="nav-group">
+                    {!collapsed && <p className="nav-group-title">TVs</p>}
 
-                    <p className="nav-group-title">TVs</p>
-
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                        onClick={() => navigate("/tv")}
-                    >
+                    <button className="menu-buttons menu-inactive" onClick={() => navigate("/tv")} title="TVs Ativas">
                         <i className="bi aside-bi bi-tv"></i>
-                        TVs Ativas
+                        {!collapsed && <span>TVs Ativas</span>}
                     </button>
 
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                        onClick={() => navigate("/tv")}
-                    >
+                    <button className="menu-buttons menu-inactive" onClick={() => navigate("/tv")} title="TVs Offline">
                         <i className="bi aside-bi bi-wifi-off"></i>
-                        TVs Offline
+                        {!collapsed && <span>TVs Offline</span>}
                     </button>
 
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                        onClick={() => navigate("/tv")}
-                    >
+                    <button className="menu-buttons menu-inactive" onClick={() => navigate("/tv")} title="Todas as TVs">
                         <i className="bi aside-bi bi-list-ul"></i>
-                        Todas as TVS
+                        {!collapsed && <span>Todas as TVS</span>}
                     </button>
-
                 </div>
 
-
                 <div className="nav-group">
+                    {!collapsed && <p className="nav-group-title">Relatórios</p>}
 
-                    <p className="nav-group-title">Relatórios</p>
-
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                        onClick={() => navigate("/reports")}
-                    >
+                    <button className="menu-buttons menu-inactive" onClick={() => navigate("/reports")} title="Log Atividades">
                         <i className="bi aside-bi bi-card-heading"></i>
-                        Log Atividades
+                        {!collapsed && <span>Log Atividades</span>}
                     </button>
-                    
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                        onClick={() => navigate("/reports")}
-                    >
+
+                    <button className="menu-buttons menu-inactive" onClick={() => navigate("/reports")} title="Relatórios">
                         <i className="bi aside-bi bi-file-earmark-bar-graph"></i>
-                        Relatórios
+                        {!collapsed && <span>Relatórios</span>}
                     </button>
-
                 </div>
-
 
                 <div className="nav-group">
+                    {!collapsed && <p className="nav-group-title">Configurações</p>}
 
-                    <p className="nav-group-title">Configurações</p>
-
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                        onClick={() => navigate("/user/list")}
-                    >
+                    <button className="menu-buttons menu-inactive" onClick={() => navigate("/user/list")} title="Usuários">
                         <i className="bi aside-bi bi-person"></i>
-                        Usuários
-                    </button>
-                    
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                    >
-                        <i className="bi aside-bi bi-shield-lock"></i>
-                        Auths
+                        {!collapsed && <span>Usuários</span>}
                     </button>
 
-                    <button
-                        className={`menu-buttons processo ${isActive("/teste") ? "menu-active" : "menu-inactive"}`}
-                    >
+                    <button className="menu-buttons menu-inactive" title="Auths">
+                        <i className="bi aside-bi bi-shield-lock"></i>
+                        {!collapsed && <span>Auths</span>}
+                    </button>
+
+                    <button className="menu-buttons menu-inactive" title="Configs">
                         <i className="bi aside-bi bi-gear"></i>
-                        Configs
+                        {!collapsed && <span>Configs</span>}
                     </button>
                 </div>
-
-                
-                
-                
-
-            
-
-                
             </div>
         </aside>
     )

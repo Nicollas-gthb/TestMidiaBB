@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable no-unused-vars */
 import { createContext, useState, useEffect } from "react"
 
 export const AuthContext = createContext()
@@ -9,22 +12,7 @@ export function AuthProvider({children}){
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        const savedUser = localStorage.getItem("user");
-        const savedToken = localStorage.getItem("token");
-
-        if (savedToken && savedUser && savedUser !== "undefined") {
-            try {
-                setUser(JSON.parse(savedUser));
-                setToken(savedToken);
-            } catch (e) {
-                // Se o JSON estiver corrompido, limpa tudo de forma segura
-                logout(); 
-            }
-        }
-
-        setLoading(false);
-    }, []);
+    
 
     function login(newToken, userData){
         localStorage.setItem("token", newToken)
@@ -42,6 +30,23 @@ export function AuthProvider({children}){
         setToken(null)
         setUser(null)
     }
+
+    useEffect(() => {
+        const savedUser = localStorage.getItem("user");
+        const savedToken = localStorage.getItem("token");
+
+        if (savedToken && savedUser && savedUser !== "undefined") {
+            try {
+                setUser(JSON.parse(savedUser));
+                setToken(savedToken);
+            } catch (e) {
+                // Se o JSON estiver corrompido, limpa tudo de forma segura
+                logout(); 
+            }
+        }
+
+        setLoading(false);
+    }, []);
 
     return (
         //auth context provider, disponibiliza 

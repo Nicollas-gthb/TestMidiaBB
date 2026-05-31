@@ -2,12 +2,13 @@
     display: flex;
     flex-direction: row;
     align-items: stretch;
+    width: 100%;
 
     z-index: 1;
 }
 
 #midia-main-container{
-    width: 85%;
+    width: calc(115vw - 1em);
     
     display: flex;
     flex-direction: column;
