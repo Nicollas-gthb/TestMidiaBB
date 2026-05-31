@@ -1,14 +1,18 @@
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useState, useContext } from "react"
 
 import "./Register.css"
 import { api } from "../../api/axios"
 import { useToast } from "../../contexts/ToastContext"
-import logo from "../../assets/bb_logo.svg"
+import { ThemeContext } from "../../contexts/ThemeContext"
+import logo_amarela from "../../assets/bb_logo_amarela.svg"
+import logo_azul from "../../assets/bb_logo_azul.svg"
 
 export default function Register() {
 
     const { addToast } = useToast()
+    const { theme } = useContext(ThemeContext)
+    
 
     const [loading, setLoading] = useState(false)
 
@@ -49,21 +53,117 @@ export default function Register() {
 
     return (
         <>
-            <header id="header-inicial">
-                <img id="header-img" src={logo} alt="logo" /> 
-                {/* <h1>LOGO</h1> */}
-            </header>
+            
 
-            <main className="background">
-                <section id="register">
+            <main className="login-page">
+            
+                <div className="bb-decoration bb-left"></div>
+                <div className="bb-decoration bb-right"></div>
 
-                    <div id="register-box-imagem"></div>
+                <section className="login-card">
 
-                    <div id="register-box-formulario">
+                    <img
+                        src={theme === "dark" ? logo_amarela : logo_azul}
+                        alt="Banco do Brasil"
+                        className="login-logo"
+                    />
 
-                        <h1 id="register-titulo">Faça seu cadastro</h1>
+                    <h1 className="login-title">
+                        Novo por aqui?
+                    </h1>
 
-                        <form onSubmit={handleSubmit} method="post" autoComplete="on">
+                    <p className="login-subtitle">
+                        Crie sua conta para acessar seus serviços.
+                    </p>
+
+                    <form onSubmit={handleSubmit}>
+
+                        <div className="input-group">
+                            <label>Nome</label>
+
+                            <input
+                                type="text"
+                                placeholder="Seu nome "
+                                value={nome}
+                                onChange={(e) => setNome(e.target.value)}
+                                maxLength="50"
+                                minLength="2"
+                                required
+                            />
+                        </div>
+
+                        <div className="input-group">
+                            <label>Email</label>
+
+                            <input
+                                type="email"
+                                placeholder="seu@email.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                minLength="5" 
+                                maxLength="50"
+                                required
+                            />
+                        </div>
+
+                        <div className="input-group">
+                            <label>Senha</label>
+
+                            <input
+                                type="password"
+                                placeholder="Sua senha"
+                                value={senha}
+                                onChange={(e) => setSenha(e.target.value)}
+                                minLength="5" 
+                                maxLength="50"
+                                required
+                            />
+                        </div>
+
+                        <div className="input-group">
+                            <label>Confirmar Senha</label>
+
+                            <input
+                                type="password"
+                                placeholder="Confirme sua senha"
+                                value={confirmar}
+                                onChange={(e) => setConfirmar(e.target.value)}
+                                minLength="5"
+                                maxLength="50"
+                                required
+                            />
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="login-button"
+                        >
+                            {loading
+                                ? "Carregando..."
+                                : "Cadastrar"}
+                        </button>
+
+                        <div className="register-area">
+                            Já tem uma conta?
+
+                            <Link to="/login">
+                                Fazer login
+                            </Link>
+                        </div>
+
+                    </form>
+
+                </section>
+
+            </main>
+        </>
+    )
+}
+
+/**
+ * <form onSubmit={handleSubmit} method="post" autoComplete="on">
 
                             <fieldset className="register-fieldset">
                                 <legend className="register-legend">Nome</legend>
@@ -131,9 +231,4 @@ export default function Register() {
                                 disabled={loading} 
                             >{loading ? "Carregando..." : "Cadastrar"}</button>
                         </form>
-                    </div>
-                </section>
-            </main>
-        </>
-    )
-}
+ */

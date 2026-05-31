@@ -56,81 +56,81 @@ export default function Login(){
 
             <main className="login-page">
 
-            <div className="bb-decoration bb-left"></div>
-            <div className="bb-decoration bb-right"></div>
+                <div className="bb-decoration bb-left"></div>
+                <div className="bb-decoration bb-right"></div>
 
-            <section className="login-card">
+                <section className="login-card">
 
-                <img
-                    src={theme === "dark" ? logo_amarela : logo_azul}
-                    alt="Banco do Brasil"
-                    className="login-logo"
-                />
+                    <img
+                        src={theme === "dark" ? logo_amarela : logo_azul}
+                        alt="Banco do Brasil"
+                        className="login-logo"
+                    />
 
-                <h1 className="login-title">
-                    Bem-vindo de volta!
-                </h1>
+                    <h1 className="login-title">
+                        Bem-vindo de volta!
+                    </h1>
 
-                <p className="login-subtitle">
-                    Faça login para acessar sua conta e continuar.
-                </p>
+                    <p className="login-subtitle">
+                        Faça login para acessar sua conta e continuar.
+                    </p>
 
-                <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
 
-                    <div className="input-group">
-                        <label>Email</label>
+                        <div className="input-group">
+                            <label>Email</label>
 
-                        <input
-                            type="email"
-                            placeholder="seu@email.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
+                            <input
+                                type="email"
+                                placeholder="seu@email.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    <div className="input-group">
-                        <label>Senha</label>
+                        <div className="input-group">
+                            <label>Senha</label>
 
-                        <input
-                            type="password"
-                            placeholder="Sua senha"
-                            value={senha}
-                            onChange={(e) => setSenha(e.target.value)}
-                            required
-                        />
-                    </div>
+                            <input
+                                type="password"
+                                placeholder="Sua senha"
+                                value={senha}
+                                onChange={(e) => setSenha(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    <Link
-                        to="/recuperar-senha"
-                        className="forgot-password"
-                    >
-                        Esqueceu sua senha?
-                    </Link>
-
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="login-button"
-                    >
-                        {loading
-                            ? "Carregando..."
-                            : "Entrar"}
-                    </button>
-
-                    <div className="register-area">
-                        Ainda não tem uma conta?
-
-                        <Link to="/register">
-                            Criar conta
+                        <Link
+                            to="/recuperar-senha"
+                            className="forgot-password"
+                        >
+                            Esqueceu sua senha?
                         </Link>
-                    </div>
 
-                </form>
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="login-button"
+                        >
+                            {loading
+                                ? "Carregando..."
+                                : "Entrar"}
+                        </button>
 
-            </section>
+                        <div className="register-area">
+                            Ainda não tem uma conta?
 
-        </main>
+                            <Link to="/register">
+                                Criar conta
+                            </Link>
+                        </div>
+
+                    </form>
+
+                </section>
+
+            </main>
         </>
     )
 }
