@@ -10,6 +10,7 @@ import Tv from "../pages/tvs/Tvs"
 import Register from "../pages/register/Register"
 import Reports from "../pages/reports/Reports"
 import UserList from "../pages/user/UserList"
+import Profile from "../pages/user/Profile"
 
 export default function AppRoutes() {
     const { token } = useContext(AuthContext)
@@ -43,6 +44,8 @@ export default function AppRoutes() {
                 <Route path="/reports" element={ <Reports /> } />
 
                 <Route path="/user/list" element={ <UserList /> } />
+
+                <Route path="/profile" element={ <Profile /> } />
 
                 {/* O * no final redireciona qualquer rota desconhecida para o login.  */}
                 <Route path="*" element={<Navigate to="/login" />} />

@@ -19,7 +19,7 @@ export const Header = () => {
     const navigate = useNavigate()
 
     const handleProfile = () => {
-
+        navigate("/profile")
     }
 
     function handleLogout(){
