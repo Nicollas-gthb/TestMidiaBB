@@ -28,3 +28,69 @@
     justify-content: center;
     gap: 1em;
 }
+
+.header-menu{
+
+    height:10vh;
+    max-height: 10vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 40px;
+
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--text);
+}
+
+.component-header-right{
+    width: 40%;
+    display:flex;
+    align-items:center;
+    gap:0.8em;
+}
+
+.header-divider{
+
+    width:1px;
+    height:32px;
+
+    background:
+        rgba(0,0,0,.4);
+}
+
+.header-action{
+    height: 48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:0.7em;
+
+    padding:0 18px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:transparent;
+
+    color:var(--text);
+
+    font-size:16px;
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:.2s ease;
+}
+
+.header-action i{
+    font-size:22px;
+}
+
+.header-action:hover{
+    background:rgba(0,0,0,.06);
+}

@@ -33,3 +33,13 @@
 .bi-box-arrow-right{
     font-size: 24px;
 }
+
+.logout-btn{
+    display: flex;
+    gap: 1em;
+}
+
+.logout-btn:hover{
+    background:rgb(193, 25, 13);
+    color:#ffffff;
+}

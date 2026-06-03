@@ -18,7 +18,7 @@
     border: none;
     border-radius: 9px;
     
-    gap: 5px;
+    gap: 0.5em;
     cursor: pointer;
 }
 
@@ -27,8 +27,12 @@
     color: var(--text);
 }
 
+#theme-button i{
+    padding: 0 3px;
+}
+
 #theme-text{
-    font-size: 1.1em;
+    font-size: 0.85em;
     font-weight: bold;
     width: 100px;
 }
@@ -39,4 +43,12 @@
 
 .bi-moon-stars-fill{
     font-size: 20px;
+}
+
+.theme-btn{
+
+    border:1px solid
+        rgba(0,0,0,.08);
+
+    padding-right:14px;
 }

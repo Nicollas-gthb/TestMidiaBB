@@ -8,18 +8,24 @@ export const ThemeToggle = () => {
     const {theme, toggleTheme} = useContext(ThemeContext)
 
     return (
-        <div id="theme-container">
-            <button
-                onClick={toggleTheme}
-                id="theme-button"
-            >
-                {theme === "light" ? (
-                    <i className="bi bi-sun-fill"></i>
-                ) : (
-                    <i className="bi bi-moon-stars-fill"></i>
-                )}
-                <p id="theme-text">Modo {theme === "light" ? "Claro" : "Escuro"}</p>
-            </button>
-        </div>
+        
+        <button
+            onClick={toggleTheme}
+            
+            className="header-action theme-btn"
+        >
+            <i
+                className={
+                    theme === "light"
+                        ? "bi bi-sun-fill"
+                        : "bi bi-moon-stars-fill"
+                }
+            />
+
+            <p id="theme-text"> Tema {theme === "light" ? "Claro" : "Escuro"}</p>
+            
+            
+        </button>
+        
     )
 }

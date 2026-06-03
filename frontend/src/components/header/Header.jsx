@@ -28,17 +28,23 @@ export const Header = () => {
     }
 
     return (
-        <header id="header-menu">
+        <header className="header-menu">
             
-            <div id="component-header-left">
+            <nav className="component-header-left">
                 <img id="component-header-img" src={theme === "dark" ? logo_dark : logo_light} alt="logo" /> 
-            </div>
+            </nav>
 
-            <nav id="component-header-right">
+            <nav className="component-header-right">
                 
                 
                 <Profile onClick={handleProfile} user={user ? user?.name || user?.nome : "Não autenticado"} />
+
+                <div className="header-divider"></div>
+
                 <ThemeToggle />
+
+                <div className="header-divider"></div>
+
                 <LogoutButton onClick={handleLogout}/>
             </nav>
         </header>
