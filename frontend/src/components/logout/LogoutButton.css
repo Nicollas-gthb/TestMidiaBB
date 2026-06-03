@@ -16,7 +16,7 @@
     height: 70%;
     border: none;
     border-radius: 9px;
-    gap: 10px;
+    gap: 3px;
     cursor: pointer;
 }
 
@@ -31,5 +31,5 @@
 }
 
 .bi-box-arrow-right{
-    font-size: 30px;
+    font-size: 24px;
 }

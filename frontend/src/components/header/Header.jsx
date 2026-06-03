@@ -6,6 +6,8 @@ import { LogoutButton } from "../logout/LogoutButton"
 import { AuthContext } from "../../contexts/AuthContext"
 import { ThemeToggle } from "../theme/ThemToggle"
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { Profile } from "../profile/Profile";
+
 import logo_dark from "../../assets/bb_logo_branca.svg"
 import logo_light from "../../assets/bb_logo_azul.svg"
 
@@ -15,6 +17,10 @@ export const Header = () => {
     const { theme } = useContext(ThemeContext)
 
     const navigate = useNavigate()
+
+    const handleProfile = () => {
+
+    }
 
     function handleLogout(){
         logout()
@@ -26,16 +32,12 @@ export const Header = () => {
             
             <div id="component-header-left">
                 <img id="component-header-img" src={theme === "dark" ? logo_dark : logo_light} alt="logo" /> 
-                {/* <h1>LOGO</h1> */}
             </div>
 
             <nav id="component-header-right">
-                {user ? (
-                    <small>{user?.name || user?.nome}</small>
-                ) : (
-                    <small>Não autenticado</small>
-                )}
                 
+                
+                <Profile onClick={handleProfile} user={user ? user?.name || user?.nome : "Não autenticado"} />
                 <ThemeToggle />
                 <LogoutButton onClick={handleLogout}/>
             </nav>

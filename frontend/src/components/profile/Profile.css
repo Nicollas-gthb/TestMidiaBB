@@ -1,0 +1,31 @@
+#component-profile-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+#component-profile-btn{
+    background: none;
+    border: none;
+    border-radius: 9px;
+    width: 100%;
+    padding: 0 1em;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+#component-profile-btn:hover{
+    background: var(--aside-bg);
+    color: var(--text);
+}
+
+.bi-person-circle{
+    font-size: 24px;
+    color: var(--text-color);
+}

@@ -18,12 +18,13 @@
     border: none;
     border-radius: 9px;
     
-    gap: 10px;
+    gap: 5px;
     cursor: pointer;
 }
 
 #theme-button:hover{
-    background-color: var(--table-td-background-hover);
+    background: var(--aside-bg);
+    color: var(--text);
 }
 
 #theme-text{
