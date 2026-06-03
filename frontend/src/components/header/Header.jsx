@@ -6,8 +6,8 @@ import { LogoutButton } from "../logout/LogoutButton"
 import { AuthContext } from "../../contexts/AuthContext"
 import { ThemeToggle } from "../theme/ThemToggle"
 import { ThemeContext } from "../../contexts/ThemeContext";
-import logo_dark from "../../assets/bb_logo_dark.svg"
-import logo_light from "../../assets/bb_logo_light.svg"
+import logo_dark from "../../assets/bb_logo_branca.svg"
+import logo_light from "../../assets/bb_logo_azul.svg"
 
 export const Header = () => {
 

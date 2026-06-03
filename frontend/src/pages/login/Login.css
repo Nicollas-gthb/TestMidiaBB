@@ -65,9 +65,12 @@
 
 .input-group label{
     color: var(--text);
-    margin-bottom:6px;
+    margin-bottom: 0.2em;
+    margin-left: 0.5em;
     font-weight:600;
     align-self: flex-start;
+    display: flex;
+    gap: 0.5em;
 }
 
 .input-group input{
@@ -75,7 +78,7 @@
     
 
     border-radius:12px;
-    border:1px solid rgba(255,255,255,0.15);
+    border:2px solid var(--login-btn);
 
     background: rgba(255,255,255,0.05);
     color: var(--text);
@@ -162,8 +165,16 @@
 
 .bb-decoration{
     position:absolute;
-    border:2px solid rgba(255,214,0,.5);
-    transform:rotate(45deg);
+}
+
+.bb-top{
+    
+
+    width:100px;
+    height:100px;
+
+    left:25px;
+    top:25px;
 }
 
 .bb-left{
@@ -171,7 +182,10 @@
     height:350px;
 
     left:-150px;
-    bottom:150px;
+    bottom:90px;
+
+    /* border:2px solid rgba(255,214,0,.5);
+    transform:rotate(45deg); */
 }
 
 .bb-right{
@@ -180,6 +194,22 @@
 
     right:-200px;
     bottom:-50px;
+
+    /* border:2px solid rgba(255,214,0,.5);
+    transform:rotate(45deg); */
+}
+
+.bb-bottom{
+    width:600px;
+    height:600px;
+
+    right:-100px;
+    bottom:-100px;
+}
+
+.bb-bottom img{
+    width: 100%;
+    height: 100%;
 }
 
 

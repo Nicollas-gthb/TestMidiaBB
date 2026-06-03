@@ -7,8 +7,14 @@ import { AuthContext } from "../../contexts/AuthContext"
 import { ThemeContext } from "../../contexts/ThemeContext"
 import "./Login.css"
 import { useToast } from "../../contexts/ToastContext"
+
 import logo_amarela from "../../assets/bb_logo_amarela.svg"
+import icon_amarela from "../../assets/bb_icon_amarela.svg"
+import vector_amarela from "../../assets/bb_vector_amarela.svg"
+
 import logo_azul from "../../assets/bb_logo_azul.svg"
+import icon_azul from "../../assets/bb_icon_azul.svg"
+import vector_azul from "../../assets/bb_vector_azul.svg"
 
 export default function Login(){
 
@@ -56,8 +62,16 @@ export default function Login(){
 
             <main className="login-page">
 
+                <div className="bb-decoration bb-top">
+                    <img src={theme === "dark" ? icon_amarela : icon_azul} alt="" />
+                </div>
+
                 <div className="bb-decoration bb-left"></div>
                 <div className="bb-decoration bb-right"></div>
+
+                <div className="bb-decoration bb-bottom">
+                    <img src={theme === "dark" ? vector_amarela : vector_azul} alt="" />
+                </div>
 
                 <section className="login-card">
 
@@ -78,7 +92,10 @@ export default function Login(){
                     <form onSubmit={handleSubmit}>
 
                         <div className="input-group">
-                            <label>Email</label>
+                            <label>
+                                <i className="bi bi-envelope-at"></i>
+                                Email
+                            </label>
 
                             <input
                                 type="email"
@@ -90,7 +107,10 @@ export default function Login(){
                         </div>
 
                         <div className="input-group">
-                            <label>Senha</label>
+                            <label>
+                                <i className="bi bi-lock"></i>
+                                Senha
+                            </label>
 
                             <input
                                 type="password"

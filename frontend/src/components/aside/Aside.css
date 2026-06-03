@@ -46,6 +46,10 @@
     background-color: var(--hover-action-bg);
 }
 
+#aside-toggle:hover i {
+    color: white;
+}
+
 /* Quando colapsado, centraliza os botões */
 #aside-menu-container.aside-collapsed #aside-main {
     align-items: center;

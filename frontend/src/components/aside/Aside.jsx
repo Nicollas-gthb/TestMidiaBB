@@ -17,7 +17,7 @@ export const Aside = () => {
                     id="aside-toggle"
                     onClick={() => setCollapsed(!collapsed)}
                 >
-                    <i className={`bi ${collapsed ? "bi-layout-sidebar" : "bi-layout-sidebar-reverse"}`}></i>
+                    <i className={`bi aside-bi ${collapsed ? "bi-layout-sidebar" : "bi-layout-sidebar-reverse"}`}></i>
                 </button>
                 {!collapsed && <h1>Menu</h1>}
             </header>
