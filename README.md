@@ -1,377 +1,332 @@
-# TestMidiaBB 📺
+# 📺 TestMidiaBB — Gerenciador de Mídias
 
-Sistema de gerenciamento de mídias para telões corporativos. Desenvolvido como proposta de solução para o desafio de Residência do Porto Digital.
-
-> Em ambientes com múltiplos telões — cada um controlado por um PC — o sistema permite definir e gerenciar a playlist de mídias de cada TV de forma centralizada, através de uma interface web.
+> Protótipo de sistema de gerenciamento e exibição de mídias digitais desenvolvido para o **Banco do Brasil** no contexto da disciplina de **Residência Tecnológica — Porto Digital**.
 
 ---
 
-## Sumário
+## 📌 Sobre o Projeto
 
-- [Stack](#stack)
-- [Arquitetura](#arquitetura)
-- [Pré-requisitos](#pré-requisitos)
-- [Configuração do ambiente](#configuração-do-ambiente)
-- [Rodando o projeto](#rodando-o-projeto)
-- [Comandos úteis](#comandos-úteis)
-- [Primeiro acesso](#primeiro-acesso)
-- [Rotas da aplicação](#rotas-da-aplicação)
-- [Rotas da API](#rotas-da-api)
-- [Estrutura de pastas](#estrutura-de-pastas)
-- [Git e boas práticas](#git-e-boas-práticas)
+O **TestMidiaBB** é uma aplicação web fullstack que permite o gerenciamento centralizado de mídias institucionais (imagens e vídeos) exibidas em televisores distribuídos no ambiente corporativo.
+
+Cada TV cadastrada possui uma URL dedicada (`/tv/{numero}`) que exibe em loop apenas as mídias programadas para aquele dispositivo. O operador pode apontar qualquer navegador para essa URL, pressionar `F11` e espelhar a tela em um telão real — sem necessidade de software adicional.
+
+A aplicação conta com **análise de mídias por Inteligência Artificial**, que sugere automaticamente título, categoria, tempo de exibição e avalia a adequação do conteúdo para o ambiente bancário.
 
 ---
 
-## Stack
+## 🧰 Stack Tecnológica
 
 | Camada | Tecnologia |
 |---|---|
 | Frontend | React 18 + Vite |
-| Backend | FastAPI + SQLAlchemy + Alembic |
-| Banco de dados | PostgreSQL 15 |
-| Servidor web | Nginx Alpine |
-| Infraestrutura | Docker + Docker Compose |
+| Backend | FastAPI (Python) |
+| Banco de Dados | PostgreSQL 15 |
+| ORM / Migrations | SQLAlchemy + Alembic |
+| OCR | Tesseract OCR + pytesseract |
+| IA (principal) | OpenAI GPT-4o-mini |
+| IA (fallback) | Google Gemini 2.5 Flash Lite |
+| IA (fallback) | Anthropic Claude Haiku 4.5 |
+| Proxy Reverso | Nginx |
+| Containerização | Docker + Docker Compose |
 
 ---
 
-## Arquitetura
+## ✅ Pré-requisitos
 
-```
-Browser → Nginx (:80) → /api/*     → FastAPI (:8000)
-                      → /midias/*  → FastAPI (arquivos estáticos)
-                      → /docs      → FastAPI (Swagger)
-                      → /*         → React + Vite (:5173)
-```
+Certifique-se de ter instalado na máquina **antes de qualquer coisa**:
 
-O Nginx atua como ponto de entrada único da aplicação. Todas as requisições passam por ele, que as roteia internamente para o serviço correto. Isso elimina problemas de CORS e impede que os serviços internos fiquem expostos diretamente.
-
----
-
-## Pré-requisitos
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado e em execução
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (inclui Docker Compose) — **versão 24+**
 - [Git](https://git-scm.com/)
-- [Python 3.12+](https://www.python.org/) — apenas para o ambiente local do VSCode (IntelliSense)
-- [Node.js 20+](https://nodejs.org/) — apenas se precisar instalar dependências fora do container
+- [Visual Studio Code](https://code.visualstudio.com/download)
+- Terminal — recomendado: **Git Bash** (Windows), **Terminal** (Linux/macOS)
+
+>⚠️ **Recomendado** instalar Python 3.13 e Node.js 20+ localmente. Para resover possíveis erros de auto-complete na IDE.
+
+> ⚠️ **Não é necessário** PostgreSQL localmente. Tudo roda dentro dos containers Docker.
+
 
 ---
 
-## Configuração do ambiente
+## 🚀 Ordem de Execução — Do Zero ao Funcional
 
-### 1. Clone o repositório
+Siga **exatamente** essa ordem para evitar erros, especialmente com o banco de dados.
+
+### 1. Clonar o repositório
+
+Abra o **Git Bash** ou terminal e execute:
 
 ```bash
-git clone https://github.com/seu-usuario/TestMidiaBB.git
+git clone https://github.com/Nicollas-gthb/TestMidiaBB.git
 cd TestMidiaBB
+code .
 ```
 
-### 2. Crie o arquivo `.env`
+---
 
-Copie o conteúdo do arquivo de exemplo `.env.example` e preencha as variáveis:
+### 2. Criar o arquivo `.env`
 
+Na **raiz do projeto** (mesma pasta onde está o `docker-compose.yml`), crie o arquivo `.env`, e copie e cole o conteudo de `.env.example` nele.
 
-> ⚠️ Os valores das variáveis de ambiente são secretos, contate um responsável do projeto para receber essas variáveis.
+Terminal é opcional:
+```bash
+# Git Bash / Linux / macOS
+cp .env.example .env
+```
 
-Edite o `.env` com os valores corretos:
+```cmd
+:: Windows CMD
+copy .env.example .env
+```
+
+---
+
+### 3. Preencher o `.env`
+
+Abra o `.env` e preencha **todos os campos** antes de continuar.
+
+> 🔒 Os valores das variáveis são confidenciais e devem ser obtidos com um **responsável pelo projeto**.
 
 ```env
-POSTGRES_USER=user
-POSTGRES_PASSWORD=pass
-POSTGRES_DB=nomedobanco
-DB_HOST=host
-DB_PORT=porta
+# ─────────────────────────────────────────
+# BANCO DE DADOS
+# ─────────────────────────────────────────
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=
+DB_HOST=
+DB_PORT=
 
-DATABASE_URL=url
+# ─────────────────────────────────────────
+# BACKEND / SEGURANÇA
+# ─────────────────────────────────────────
+SECRET_KEY=
+ALGORITHM=
+ACCESS_TOKEN_EXPIRE_MINUTES=
 
-SECRET_KEY=sua_chave_secreta_aqui
-ALGORITHM=algoritimo
+# ─────────────────────────────────────────
+# INTELIGÊNCIA ARTIFICIAL
+# Preencha ao menos a chave do GPT para
+# habilitar a análise de mídias por IA.
+# As demais são opcionais (fallback chain).
+# ─────────────────────────────────────────
+OPENAI_API_KEY=
+GEMINI_API_KEY=
+ANTHROPIC_API_KEY=
 ```
 
-> ⚠️ O `DB_HOST` deve ser `db` — nome do serviço no Docker Compose. Não use `localhost`.
+> 💡 A aplicação funciona sem as chaves de IA — a análise automática simplesmente ficará indisponível. Para o fallback chain funcionar completamente, preencha o máximo que estiver ativo.
 
-### 3. Configure o ambiente Python local (para o VSCode)
+---
+## 🖥️ Ambiente de Desenvolvimento Local (Recomendado)
 
-Esse passo é necessário apenas para o VSCode reconhecer os pacotes e não exibir erros visuais. Não interfere no Docker.
-
-**Windows:**
-```bash
-cd backend
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-cd ..
-```
-
-**Linux/Mac:**
-```bash
-cd backend
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cd ..
-```
-
-Ao finalizar desative o `(.venv)` digitando no terminal:
-
-```bash
-deactivate
-```
-
-Caso o `(.venv)` ative sozinho em outro momento desnecessário, é só desativar
+> Esta seção é **opcional** e não é necessária para rodar a aplicação — ela roda inteiramente via Docker.
+> O objetivo aqui é configurar o ambiente local para que o **VS Code** reconheça os pacotes e ofereça **autocomplete, intellisense e sem erros de import** no editor.
 
 ---
 
+### 🐍 Backend — Criar o `.venv` e instalar o `requirements.txt`
 
-## Rodando o projeto
+Execute no **Git Bash ou terminal**, dentro da pasta `backend/`:
 
-### Primeira execução
+```bash
+# 1. Entrar na pasta do backend
+cd backend
+
+# 2. Criar o ambiente virtual
+python -m venv .venv
+
+# 3. Ativar o ambiente virtual
+# Git Bash / Linux / macOS:
+source .venv/Scripts/activate
+
+# Windows CMD:
+.venv\Scripts\activate.bat
+
+# 4. Instalar as dependências
+pip install -r requirements.txt
+
+# 5. Voltar para a raiz do projeto ao terminar
+cd ..
+```
+
+> 💡 Após ativar o `.venv`, o VS Code pode pedir para selecionar o interpretador Python — escolha o que aponta para `.venv/Scripts/python.exe` (Windows) ou `.venv/bin/python` (Linux/macOS).
+
+> ⚠️ Para **desativar** o (.venv) na linha do terminal, basta escrever e rodar `deactivate`
+---
+
+### ⚛️ Frontend — Instalar dependências com `npm install`
+
+Execute no **Git Bash ou terminal**, dentro da pasta `frontend/`:
+
+```bash
+# 1. Entrar na pasta do frontend
+cd frontend
+
+# 2. Instalar as dependências do Node
+npm install
+
+# 3. Voltar para a raiz do projeto ao terminar
+cd ..
+```
+
+> 💡 Isso cria a pasta `node_modules/` localmente, permitindo que o VS Code resolva os imports do React e ofereça autocomplete. Essa pasta já está no `.gitignore` e não é enviada ao repositório.
+
+---
+
+> ⚠️ Lembre-se: mesmo com o ambiente local configurado, a aplicação deve ser executada via `docker compose up`. O `.venv` e o `node_modules` locais servem **apenas para o editor**.
+---
+
+### 4. Subir os containers
+
+Com o `.env` preenchido, ainda na **raiz do projeto**, execute:
 
 ```bash
 docker compose up --build
 ```
 
-O `--build` garante que as imagens sejam construídas do zero. Na primeira execução o Docker irá:
+> Esse comando irá:
+> 1. Construir as imagens do backend e frontend
+> 2. Subir o PostgreSQL e aguardar ele estar saudável
+> 3. Rodar as migrations do Alembic automaticamente (`alembic upgrade head`)
+> 4. Iniciar o FastAPI, o React e o Nginx
 
-1. Baixar as imagens base (`python`, `node`, `postgres`, `nginx`)
-2. Instalar dependências do backend (`requirements.txt`)
-3. Instalar dependências do frontend (`npm install`)
-4. Subir o banco de dados e aguardar o healthcheck
-5. Rodar as migrations do Alembic automaticamente
-6. Popular o banco com o seed inicial (TVs e usuário admin)
-7. Iniciar o Nginx, FastAPI e React
-
-Quando o log exibir:
-```
-fastapi-1  | Application startup complete.
-react-1    | VITE ready in Xms
-```
-
-Acesse **http://localhost** no navegador.
-
-### Execuções seguintes
-
-Para ativar o projeto no navegador
+Na primeira execução, o processo pode levar alguns minutos. Nas próximas, use:
 
 ```bash
 docker compose up
 ```
 
-Para desativar o projeto no navegador, sem excluir no docker desktop
+---
 
-```bash
-docker compose stop
-```
+### 5. Acessar a aplicação
 
-### Parar os containers
-
-```bash
-docker compose down
-```
-
-Depois de usar esse, para construir os containers novamente, vai precisar do
-
- `docker compose up --build`
+| Serviço | URL |
+|---|---|
+| Aplicação (frontend) | http://localhost |
+| API (backend) | http://localhost/api |
+| Visualização de TV | http://localhost/tv/{numero} |
 
 ---
 
-## Comandos úteis
+## 🗄️ Banco de Dados — Comandos Importantes
 
-### Migrations (Alembic)
+Todos os comandos abaixo devem ser executados no **Git Bash ou terminal**, a partir da **raiz do projeto**, com os containers rodando.
 
-Alembic é uma ferramenta python, para controle de versão do banco de dados
-
-Sempre rodar dentro do container do backend:
+### Rodar migrations manualmente
 
 ```bash
-# Gerar nova migration após alterar um model
-docker compose exec fastapi alembic revision --autogenerate -m "descricao da alteracao"
-
-# Aplicar migrations pendentes
 docker compose exec fastapi alembic upgrade head
-
-# Reverter última migration
-docker compose exec fastapi alembic downgrade -1
 ```
 
-### Instalar dependências
-
-**Backend** — adicionar ao `requirements.txt` e rebuildar:
-```bash
-# Adiciona no requirements.txt, depois:
-docker compose up --build fastapi
-```
-
-**Frontend** — instalar dentro do container:
-```bash
-docker compose exec react npm install nome-do-pacote
-```
-
-> ⚠️ No frontend, sempre instale dentro do container. Instalar localmente não reflete no ambiente Docker.
-
-### Acessar o banco de dados
+### Criar uma nova migration após alterar models
 
 ```bash
-docker compose exec db psql -U user -d appdb
+docker compose exec fastapi alembic revision --autogenerate -m "descricao da alteracao"
 ```
 
-Comandos úteis dentro do psql:
-```sql
-\dt          -- lista tabelas
-\q           -- sai do psql
-SELECT * FROM tvs;
-SELECT id, nome, email, perfil FROM usuarios;
-```
-
-### Ver logs
+### Acessar o banco de dados diretamente
 
 ```bash
-# Todos os serviços
+docker compose exec db psql -U <POSTGRES_USER> -d <POSTGRES_DB>
+```
+
+> Substitua `<POSTGRES_USER>` e `<POSTGRES_DB>` pelos valores definidos no seu `.env`.
+
+### Popular o banco com dados iniciais (seed)
+
+```bash
+docker compose exec fastapi python app/seed.py
+```
+
+---
+
+## 🐳 Comandos Docker Úteis
+
+Todos executados na **raiz do projeto** via **Git Bash ou terminal**:
+
+```bash
+# Subir os containers em background (sem travar o terminal)
+docker compose up -d
+
+# Subir e reconstruir as imagens (use após alterar Dockerfile ou requirements)
+docker compose up --build
+
+# Parar os containers sem apagar dados
+docker compose down
+
+# Parar e apagar volumes (CUIDADO: apaga o banco de dados)
+docker compose down -v
+
+# Ver logs em tempo real de todos os containers
 docker compose logs -f
 
-# Serviço específico
+# Ver logs apenas do backend
 docker compose logs -f fastapi
+
+# Ver logs apenas do frontend
 docker compose logs -f react
-docker compose logs -f nginx
+
+# Listar containers em execução
+docker compose ps
+
+# Reiniciar apenas um serviço sem derrubar os outros
+docker compose restart fastapi
 ```
 
-### Entrar dentro de um container
+---
 
-```bash
-docker compose exec fastapi bash
-docker compose exec react sh
+## 🤖 Integração com Inteligência Artificial
+
+A aplicação possui um endpoint de análise de mídias (`POST /api/midias/analyze`) que utiliza um **fallback chain** de provedores de IA:
+
+```
+GPT-4o-mini  →  Gemini 2.5 Flash Lite  →  Claude Haiku 4.5
+    ↓ falha           ↓ falha                  ↓ falha
+                                         Fallback local (OCR)
 ```
 
----
+O sistema tenta os provedores na ordem acima. Se um falhar (cota esgotada, chave inválida, instabilidade), automaticamente tenta o próximo — sem interromper a operação.
 
-## Primeiro acesso
+Para cada mídia analisada, a IA retorna:
 
-O seed popula automaticamente o banco com os dados iniciais:
-
-**TVs pré-cadastradas:**
-
-| Número | Nome |
+| Campo | Descrição |
 |---|---|
-| 1 | tvRec |
-| 2 | tvRef |
-| 3 | tvHall |
+| `titulo` | Título sugerido para a mídia |
+| `categoria` | `marketing`, `informativo`, `institucional` ou `alerta` |
+| `tempo_exibicao` | Tempo sugerido em segundos baseado na densidade de texto |
+| `descricao` | Descrição breve do conteúdo |
+| `conteudo_seguro` | `true` ou `false` |
+| `alerta` | Justificativa caso o conteúdo seja inadequado |
+| `provedor` | Qual provedor de IA respondeu |
 
-**Usuário administrador:**
-
-| Campo | Valor |
-|---|---|
-| Email | admin@email.com |
-| Senha | adminsenha |
-| Perfil | admin |
-
-> O seed verifica se já existem dados antes de inserir — rodar o projeto múltiplas vezes não duplica os registros.
+> ⚠️ **Atualmente apenas o GPT-4o-mini está com integração validada.** Gemini e Claude estão implementados no fallback chain mas ainda em fase de testes.
 
 ---
 
-## Rotas da aplicação
-
-| Rota | Descrição |
-|---|---|
-| `/home` | Página inicial |
-| `/midia` | Gerenciamento de mídias |
-| `/tv` | Gerenciamento de TVs |
-| `/tv/{numero}` | Exibição da playlist da TV em tela cheia |
-
-### Documentação da API (Swagger)
-
-Disponível em **http://localhost/docs**
-
----
-
-## Rotas da API
-
-### Auth
-| Método | Rota | Descrição |
-|---|---|---|
-| POST | `/api/auth/login` | Autenticação, retorna JWT |
-| POST | `/api/auth/login/swagger` | Login via Swagger UI |
-
-### TVs
-| Método | Rota | Descrição | Perfil |
-|---|---|---|---|
-| GET | `/api/tv/` | Lista TVs ativas | Autenticado |
-| POST | `/api/tv/` | Cadastra nova TV | Admin |
-| DELETE | `/api/tv/{id}` | Desativa TV (soft delete) | Admin |
-
-### Mídias
-| Método | Rota | Descrição | Perfil |
-|---|---|---|---|
-| GET | `/api/midias/` | Lista mídias ativas | Autenticado |
-| POST | `/api/midias/upload` | Upload e vincula às TVs | Autenticado |
-| DELETE | `/api/midias/{id}` | Desativa mídia (soft delete) | Autenticado |
-
-### Playlist
-| Método | Rota | Descrição | Perfil |
-|---|---|---|---|
-| GET | `/api/tv/{numero}/playlist` | Retorna playlist ativa da TV | Público |
-
----
-
-## Estrutura de pastas
+## 📁 Estrutura do Projeto
 
 ```
 TestMidiaBB/
-├── docker-compose.yml
-├── .env                    # Não sobe para o git
-├── .env.example            # Modelo das variáveis de ambiente
-├── .gitignore
+├── backend/
+│   ├── app/
+│   │   ├── core/          # Configurações, banco, segurança
+│   │   ├── models/        # Models SQLAlchemy
+│   │   ├── routes/        # Endpoints FastAPI
+│   │   ├── schemas/       # Schemas Pydantic
+│   │   ├── services/      # OCR, IA (GPT, Gemini, Claude), roteador
+│   │   ├── main.py
+│   │   └── seed.py
+│   ├── migrations/
+│   ├── Dockerfile
+│   └── requirements.txt
+├── frontend/
+│   ├── src/
+│   └── Dockerfile
 ├── nginx/
 │   └── nginx.conf
-├── backend/
-│   ├── Dockerfile
-│   ├── requirements.txt
-│   ├── alembic.ini
-│   ├── migrations/
-│   │   ├── env.py
-│   │   └── versions/
-│   └── app/
-│       ├── main.py
-│       ├── seed.py
-│       ├── core/
-│       │   ├── config.py
-│       │   ├── database.py
-│       │   └── security.py
-│       ├── models/
-│       │   ├── __init__.py
-│       │   ├── usuario.py
-│       │   ├── tv.py
-│       │   ├── midia.py
-│       │   └── playlist_item.py
-│       ├── schemas/
-│       │   ├── auth.py
-│       │   ├── tv.py
-│       │   ├── midia.py
-│       │   ├── playlist_item.py
-│       │   └── usuario.py
-│       └── routers/
-│           ├── auth.py
-│           ├── tvs.py
-│           ├── midias.py
-│           └── playlist.py
-└── frontend/
-    ├── Dockerfile
-    ├── vite.config.js
-    └── src/
-        ├── main.jsx
-        ├── App.jsx
-        ├── api/
-        │   └── axios.js
-        ├── contexts/
-        │   ├── AuthContext.jsx
-        │   └── ThemeContext.jsx
-        ├── routes/
-        │   └── AppRoutes.jsx
-        ├── pages/
-        │   ├── home/
-        │   ├── midias/
-        │   └── tvs/
-        └── components/
-            ├── midia/
-            └── shared/
+├── .env.example
+├── .gitignore
+└── docker-compose.yml
 ```
 
 ---
@@ -417,12 +372,15 @@ git push origin feature/nome-da-feature
 
 ---
 
-## Observações importantes
+## ⚠️ Observações Importantes
 
-**Validade de mídias:** Mídias com data de validade expirada são automaticamente excluídas da playlist na próxima consulta — sem necessidade de ação manual.
+- **Nunca suba o `.env` para o repositório.** Ele já está no `.gitignore`, mas fique atento.
+- **Sempre preencha o `.env` antes** de rodar `docker compose up`, caso contrário o banco não inicializa corretamente e o backend não conecta.
+- Em caso de erro de conexão com o banco na primeira execução, rode `docker compose down` e `docker compose up` novamente — pode ser que o backend tenha tentado conectar antes do PostgreSQL estar pronto.
+- Para **Windows**, use sempre o **Git Bash** para os comandos `docker compose exec`. O CMD pode apresentar problemas com alguns caracteres.
 
-**Apresentações em PowerPoint:** O sistema suporta imagens (`jpeg`, `png`) e vídeos (`mp4`). Para exibir apresentações, converta para um desses formatos antes do upload.
+---
 
-**Atualização da playlist:** Ao acessar `/tv/{numero}`, a playlist é carregada no início e recarregada automaticamente a cada volta do loop. Mídias adicionadas ou removidas entram em vigor na próxima volta.
+## 👥 Projeto Acadêmico
 
-**Limite de upload:** O Nginx está configurado para aceitar arquivos de até `100MB`. Para vídeos maiores, ajuste o `client_max_body_size` no `nginx.conf`.
+Desenvolvido como protótipo na disciplina de **Residência Tecnológica** em parceria com o **Porto Digital** e o **Banco do Brasil**.
