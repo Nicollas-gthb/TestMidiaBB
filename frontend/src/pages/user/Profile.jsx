@@ -42,40 +42,45 @@ export default function Profile() {
 
                             <label>ID</label>
                             <fieldset disabled="disabled">
-                                <input type="text" name="" id="" value={user ? user?.id : "Não autenticado"} />
+                                <input 
+                                    type="text" 
+                                    name=""
+                                    id="" 
+                                    value={user ? user?.id : "Não autenticado"} 
+                                />
                             </fieldset>
                             
                             <label>Nome</label>
                             <fieldset disabled="disabled">
                                 <input 
-                                type="text" 
-                                name="" 
-                                id="" 
-                                value={user ? user?.nome : "Não autenticado"}
-                                placeholder="Seu nome"
-                            />
+                                    type="text" 
+                                    name="" 
+                                    id="" 
+                                    value={user ? user?.nome : "Não autenticado"}
+                                    placeholder="Seu nome"
+                                />
                             </fieldset>
 
                             <label>Email</label>
                             <fieldset disabled="disabled">
                                 <input 
-                                type="text" 
-                                name="" 
-                                id="" 
-                                value={user ? user?.email : "Não autenticado"}
-                                placeholder="Seu email"
-                            />
+                                    type="text" 
+                                    name="" 
+                                    id="" 
+                                    value={user ? user?.email : "Não autenticado"}
+                                    placeholder="Seu email"
+                                />
                             </fieldset>
 
                             <label>Perfil</label>
                             <fieldset disabled="disabled">
                                 <input 
-                                type="text" 
-                                name="" 
-                                id="" 
-                                value={user ? user?.perfil : "Não autenticado"}
-                                placeholder="Seu perfil"
-                            />
+                                    type="text" 
+                                    name="" 
+                                    id="" 
+                                    value={user ? user?.perfil : "Não autenticado"}
+                                    placeholder="Seu perfil"
+                                />
                             </fieldset>
 
                         </div>
@@ -92,25 +97,26 @@ export default function Profile() {
                                     <label>Nome</label>
                                     <fieldset disabled="">
                                         <input 
-                                        type="text" 
-                                        value={nome}
-                                        onChange={(e) => setNome(e.target.value)}
-                                        name="" 
-                                        id="" 
-                                        placeholder="Seu nome"
-                                    />
+                                            type="text" 
+                                            value={nome}
+                                            onChange={(e) => setNome(e.target.value)}
+                                            minLength="8"
+                                            name="" 
+                                            id="" 
+                                            placeholder="Seu nome"
+                                        />
                                     </fieldset>
 
                                     <label>Email</label>
                                     <fieldset disabled="">
                                         <input 
-                                        type="text" 
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        name="" 
-                                        id="" 
-                                        placeholder="Novo Email"
-                                    />
+                                            type="text" 
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            name="" 
+                                            id="" 
+                                            placeholder="Novo Email"
+                                        />
                                     </fieldset>
 
                                     <label>Senha</label>
@@ -119,6 +125,7 @@ export default function Profile() {
                                             type={typePass} 
                                             value={confirmarSenha}
                                             onChange={(e) => setConfirmarSenha(e.target.value)}
+                                            minLength="5"
                                             name="" 
                                             id="" 
                                             placeholder="Sua senha"

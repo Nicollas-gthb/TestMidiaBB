@@ -1,4 +1,9 @@
 from pydantic import BaseModel, EmailStr
+from enum import Enum
+
+class PerfilEnum(str, Enum):
+    admin = "admin"
+    operador = "operador"
 
 class UsuarioCreate(BaseModel):
     nome: str
@@ -20,4 +25,4 @@ class UsuarioUpdate(BaseModel):
     nome: str | None = None
     email: EmailStr | None = None
     senha: str | None = None
-    perfil: str | None = None
+    perfil: PerfilEnum | None = None

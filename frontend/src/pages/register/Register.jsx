@@ -104,7 +104,7 @@ export default function Register() {
                                 value={nome}
                                 onChange={(e) => setNome(e.target.value)}
                                 maxLength="50"
-                                minLength="2"
+                                minLength="8"
                                 required
                             />
                         </div>
@@ -120,8 +120,8 @@ export default function Register() {
                                 placeholder="seu@email.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                minLength="5" 
                                 maxLength="50"
+                                minLength="5" 
                                 required
                             />
                         </div>
@@ -137,8 +137,8 @@ export default function Register() {
                                 placeholder="Sua senha"
                                 value={senha}
                                 onChange={(e) => setSenha(e.target.value)}
-                                minLength="5" 
                                 maxLength="50"
+                                minLength="5" 
                                 required
                             />
                         </div>
@@ -154,8 +154,8 @@ export default function Register() {
                                 placeholder="Confirme sua senha"
                                 value={confirmar}
                                 onChange={(e) => setConfirmar(e.target.value)}
-                                minLength="5"
                                 maxLength="50"
+                                minLength="5"
                                 required
                             />
                         </div>

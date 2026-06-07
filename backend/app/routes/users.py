@@ -58,15 +58,32 @@ async def atualizar_usuario(
         raise HTTPException(status_code=401, detail="Sem autorização!")
     
     if request.nome is not None:
+
+        if len(request.nome.strip()) < 8:
+            raise HTTPException(status_code=400, detail="Nome muito curto")
+
         user_buscado.nome = request.nome
 
     if request.email is not None:
+
+        email_duplicado = session.query(Usuario).filter(Usuario.email == request.email, Usuario.id != user_buscado.id).first()
+        if email_duplicado:
+            raise HTTPException(status_code=400, detail="Email ja cadastrado")
+
         user_buscado.email = request.email
 
     if request.senha is not None:
+
+        if len(request.senha.strip()) < 5:
+            raise HTTPException(status_code=400, detail="Senha muito curta")
+
         user_buscado.senha = criptografar(request.senha)
 
     if request.perfil is not None:
+
+        if user_buscado.perfil != "admin":
+            raise HTTPException(status_code=403, detail="Apenas administradores podem alterar perfis.")
+        
         user_buscado.perfil = request.perfil
 
     session.flush()
