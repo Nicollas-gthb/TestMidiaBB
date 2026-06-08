@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useContext, useEffect } from "react"
 import { useParams } from "react-router-dom"
 
@@ -27,6 +28,14 @@ export default function Profile() {
     const [vaiAlterar, setVaiAlterar] = useState(false)
     const [typePass, setTypePass] = useState("password")
 
+
+    const [listaHistorico, setListaHistorico] = useState([])
+    const [pagina, setPagina] = useState(1)
+    const [totalPaginas, setTotalPaginas] = useState(1)
+    const [filtroUsuario, setFiltroUsuario] = useState("")
+    const [filtroAcao, setFiltroAcao] = useState("")
+    const [dataInicio, setDataInicio] = useState("")
+    const [dataFim, setDataFim] = useState("")
 
 
     const handleSubmit = async (e) => {
@@ -78,6 +87,34 @@ export default function Profile() {
         }
     }
 
+    const buscarHistorico = async () => {
+        try{
+
+            const payload = {
+                pagina: pagina,
+                limite: 20,
+                usuario: filtroUsuario || undefined,
+                acao: filtroAcao || undefined,
+                data_inicio: dataInicio || undefined,
+                data_fim: dataFim || undefined
+            }
+
+            const response = await api.get("/historico", payload)
+
+            setListaHistorico(response.data)
+            setTotalPaginas(response.data.total_paginas)
+
+
+        }catch(error){
+            const mensagem = error.response?.data.detail || "Erro ao carregar histórico !"
+            addToast(mensagem, "erro")
+        }
+    }
+
+    useEffect(() => {
+        buscarHistorico()
+    }, [pagina])
+
     useEffect(() => {
         const carregarUser = async () => {
             try{
@@ -110,6 +147,7 @@ export default function Profile() {
                         <div className="profile-cards">
                             
                             <p>Informações Pessoais</p>
+                            <small>Informações gerais da conta</small>
 
                             <label htmlFor="profile-id">ID</label>
                             <fieldset disabled="disabled">
@@ -173,6 +211,7 @@ export default function Profile() {
                                     className="profile-form"
                                 >
                                     <p>Alterar Informações</p>
+                                    <small>Atualize seus dados cadastrais</small>
 
                                     <label htmlFor="form-nome">Nome</label>
                                     <fieldset disabled="">
@@ -300,7 +339,70 @@ export default function Profile() {
 
                     <section className="profile-section">
                         <div id="profile-historico" className="profile-cards">
+                            <p>Histórico de Ações</p>
+                            <small>Veja as ações realizadas por você no sistema</small>
 
+                            <section className="profile-historico-controllers">
+                                <input
+                                    type="text"
+                                    placeholder="Nome do usuário"
+                                    value={filtroUsuario}
+                                    onChange={(e) =>setFiltroUsuario(e.target.value)}
+                                />
+
+                                <select
+                                    value={filtroAcao}
+                                    onChange={(e) => setFiltroAcao(e.target.value)}
+                                >
+                                    <option value="">Todas as ações</option>
+                                    <option value="criado">Criado</option>
+                                    <option value="editado">Editado</option>
+                                    <option value="deletado">Deletado</option>
+                                    <option value="ativado">Ativado</option>
+                                    <option value="desativado">Desativado</option>
+                                </select>
+
+                                <input
+                                    type="date"
+                                    value={dataInicio}
+                                    onChange={(e) => setDataInicio(e.target.value)}
+                                />
+
+                                <input
+                                    type="date"
+                                    value={dataFim}
+                                    onChange={(e) => setDataFim(e.target.value)}
+                                />
+
+                                <button
+                                    onClick={() => {
+                                        setPagina(1)
+                                        buscarHistorico()
+                                    }}
+                                >
+                                    Filtrar
+                                </button>
+                            </section>
+
+                            <div className="profile-historico-table"></div>
+
+                            <section className="profile-historico-controllers">
+                                <button
+                                    disabled={pagina === 1}
+                                    onClick={() => setPagina(pagina - 1)}
+                                >
+                                    Anterior
+                                </button>
+
+                                <span>Página {pagina} de {totalPaginas}</span>
+
+                                <button
+                                    disabled={pagina === totalPaginas}
+                                    onClick={() => setPagina(pagina + 1)}
+                                >
+                                    Próxima
+                                </button>
+                            </section>
                         </div>
                     </section>
 

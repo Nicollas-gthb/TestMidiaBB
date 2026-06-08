@@ -259,7 +259,7 @@ td:nth-child(5){
 }
 
 .historico-icon{
-    width: 0.2em;
+    width: 0.3em;
     height: 2.5em;
     border-radius: 10px;
     display: block;
@@ -267,6 +267,7 @@ td:nth-child(5){
 
 .home-tag-adicionada  { background: #00d732; color: #155724; }
 .home-tag-editada     { background: #00d9ff; color: #0c5460; }
+.home-tag-editado     { background: #00d9ff; color: #0c5460; }
 .home-tag-removida    { background: #ffc400; color: #856404; }
 .home-tag-deletada    { background: #ff0015; color: #721c24; }
 

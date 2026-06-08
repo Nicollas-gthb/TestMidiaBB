@@ -62,6 +62,13 @@
     font-size: 1.2em;
     font-weight: 600;
     color: var(--login-btn);
+    margin-bottom: 0.2em;
+}
+
+.profile-cards small{
+    font-size: 0.8em;
+    color: var(--sub-text);
+    margin-bottom: 1em;
 }
 
 .profile-cards label{
@@ -190,4 +197,32 @@
 
 .eye:hover{
     opacity: 1;
+}
+
+.profile-historico-controllers{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    gap: 1em;
+    margin-bottom: 1em;
+}
+
+.profile-historico-controllers button{
+    background-color: var(--action-bg);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 1em 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    cursor: pointer;
+    width: 10%;
+    height: 2.5em;
+}
+
+.profile-historico-controllers span{
+    font-size: 0.8em;
 }
