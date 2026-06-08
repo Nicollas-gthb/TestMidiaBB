@@ -13,3 +13,10 @@ class HistoricoResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class HistoricoPaginaResponse(BaseModel):
+    pagina: int
+    limite: int
+    total: int
+    total_paginas: int
+    dados: list[HistoricoResponse]
