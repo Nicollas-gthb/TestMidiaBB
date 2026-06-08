@@ -27,11 +27,9 @@ export default function Profile() {
     const [vaiAlterar, setVaiAlterar] = useState(false)
     const [typePass, setTypePass] = useState("password")
 
-    
 
-    
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
 
@@ -43,9 +41,37 @@ export default function Profile() {
                 return
             }
 
+            const payload = {}
+            if (nome.strip?.() !== "" && nome) payload.nome = nome
+            if (email.strip?.() !== "" && email) payload.email = email
+            if (senha.strip?.() !== "" && senha) payload.senha = senha
+            if (perfil.strip?.() !== "" && perfil) payload.perfil = perfil
+
+            // Se o usuário clicou em salvar mas não alterou nenhum campo
+            if (Object.keys(payload).length === 0) {
+                addToast("Nenhuma alteração foi feita.", "aviso")
+                setLoading(false)
+                return
+            }
+
+            await api.patch(`/user/${id}`, payload)
+            addToast("Perfil atualizado com sucesso !", "sucesso")
+            setVaiAlterar(false)
+            setSenha("")
+            setConfirmarSenha("")
+
 
         }catch(error){
-            const mensagem = error.response?.data?.detail || "Erro ao realizar cadastro !"
+            let mensagem = "Erro ao realizar atualização !"
+            const apiDetail = error.response?.data?.detail
+
+            if (apiDetail) {
+                if (Array.isArray(apiDetail)) {
+                    mensagem = apiDetail[0]?.msg || "Erro de validação nos dados."
+                } else if (typeof apiDetail === "string") {
+                    mensagem = apiDetail
+                }
+            }
             addToast(mensagem, "erro")
         }finally{
             setLoading(false)
@@ -59,7 +85,7 @@ export default function Profile() {
                 setEditUser(response.data)
                 addToast("Usuario carregado", "sucesso")
             }catch(error){
-                const mensagem = error.response?.data.detail || "Erro ao carregar playlist !"
+                const mensagem = error.response?.data.detail || "Erro ao carregar usuario !"
                 addToast(mensagem, "erro")
             }
 
@@ -85,45 +111,50 @@ export default function Profile() {
                             
                             <p>Informações Pessoais</p>
 
-                            <label>ID</label>
+                            <label htmlFor="profile-id">ID</label>
                             <fieldset disabled="disabled">
                                 <input 
                                     type="text" 
-                                    name=""
-                                    id="" 
+                                    name="profile-id"
+                                    id="profile-id" 
                                     value={editUser ? editUser?.id : "Não autenticado"} 
+                                    onChange={(e) => setNome(e.target.value)}
+                                    placeholder="ID do usuário"
                                 />
                             </fieldset>
                             
-                            <label>Nome</label>
+                            <label htmlFor="profile-nome">Nome</label>
                             <fieldset disabled="disabled">
                                 <input 
                                     type="text" 
-                                    name="" 
-                                    id="" 
+                                    name="profile-nome" 
+                                    id="profile-nome" 
                                     value={editUser ? editUser?.nome : "Não autenticado"}
+                                    onChange={(e) => setNome(e.target.value)}
                                     placeholder="Seu nome"
                                 />
                             </fieldset>
 
-                            <label>Email</label>
+                            <label htmlFor="profile-email">Email</label>
                             <fieldset disabled="disabled">
                                 <input 
                                     type="text" 
-                                    name="" 
-                                    id="" 
+                                    name="profile-email" 
+                                    id="profile-email" 
                                     value={editUser ? editUser?.email : "Não autenticado"}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Seu email"
                                 />
                             </fieldset>
 
-                            <label>Perfil</label>
+                            <label htmlFor="profile-perfil">Perfil</label>
                             <fieldset disabled="disabled">
                                 <input 
                                     type="text" 
-                                    name="" 
-                                    id="" 
+                                    name="profile-perfil" 
+                                    id="profile-perfil" 
                                     value={editUser ? editUser?.perfil : "Não autenticado"}
+                                    onChange={(e) => setPerfil(e.target.value)}
                                     placeholder="Seu perfil"
                                 />
                             </fieldset>
@@ -136,43 +167,47 @@ export default function Profile() {
                             
                             
                             {vaiAlterar ? (
-                                <form onSubmit={handleSubmit} className="profile-form">
+                                <form 
+                                    id="profile-form"
+                                    onSubmit={handleSubmit} 
+                                    className="profile-form"
+                                >
                                     <p>Alterar Informações</p>
 
-                                    <label>Nome</label>
+                                    <label htmlFor="form-nome">Nome</label>
                                     <fieldset disabled="">
                                         <input 
                                             type="text" 
                                             value={nome}
                                             onChange={(e) => setNome(e.target.value)}
                                             minLength="8"
-                                            name="" 
-                                            id="" 
+                                            name="form-nome" 
+                                            id="form-nome" 
                                             placeholder="Seu nome"
                                         />
                                     </fieldset>
 
-                                    <label>Email</label>
+                                    <label htmlFor="form-email">Email</label>
                                     <fieldset disabled="">
                                         <input 
                                             type="text" 
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
-                                            name="" 
-                                            id="" 
+                                            name="form-email" 
+                                            id="form-email" 
                                             placeholder="Novo Email"
                                         />
                                     </fieldset>
 
-                                    <label>Senha</label>
+                                    <label htmlFor="form-senha">Senha</label>
                                     <fieldset disabled="">
                                         <input 
                                             type={typePass} 
-                                            value={confirmarSenha}
-                                            onChange={(e) => setConfirmarSenha(e.target.value)}
+                                            value={senha}
+                                            onChange={(e) => setSenha(e.target.value)}
                                             minLength="5"
-                                            name="" 
-                                            id="" 
+                                            name="form-senha" 
+                                            id="form-senha" 
                                             placeholder="Sua senha"
 
                                         />
@@ -183,28 +218,33 @@ export default function Profile() {
                                         ></i>
                                     </fieldset>
 
-                                    <label>Confirmar senha</label>
+                                    <label htmlFor="form-confirmar-senha">Confirmar senha</label>
                                     <fieldset disabled="">
                                         <input 
                                             type={typePass} 
-                                            value={senha}
-                                            onChange={(e) => setSenha(e.target.value)}
-                                            name="" 
-                                            id="" 
+                                            value={confirmarSenha}
+                                            onChange={(e) => setConfirmarSenha(e.target.value)}
+                                            name="form-confirmar-senha" 
+                                            id="form-confirmar-senha" 
                                             placeholder="Repita a senha"
                                         />
                                     </fieldset>
 
                                     {user?.perfil === "admin" && (
                                         <>
-                                            <label>Perfil</label>
+                                            <label htmlFor="form-perfil">Perfil</label>
                                             <fieldset disabled="">
-                                                <select value={perfil} onChange={(e) => {
-                                                    setPerfil(e.target.value)
-                                                }} name="" id="">
+                                                <select 
+                                                    value={perfil} 
+                                                    name="form-perfil" 
+                                                    id="form-perfil"
+                                                    onChange={(e) => {
+                                                        setPerfil(e.target.value)
+                                                    }} 
+                                                >
                                                     <option value="">Selecione um perfil</option>
                                                     <option value="admin">Administrador</option>
-                                                    <option value="user">Usuário</option>
+                                                    <option value="operador">Operador</option>
                                                 </select>
                                             </fieldset>
                                         </>
@@ -212,7 +252,17 @@ export default function Profile() {
 
 
                                     <div className="profile-alterar-container">
-                                        <button className="profile-cancel-button" onClick={() => setVaiAlterar(false)}>
+                                        <button 
+                                            className="profile-cancel-button" 
+                                            onClick={() => {
+                                                setNome("")
+                                                setEmail("")
+                                                setSenha("")
+                                                setConfirmarSenha("")
+                                                setPerfil("")
+                                                setVaiAlterar(false)
+                                            }}
+                                        >
                                             Cancelar
                                         </button>
                                         <button 
@@ -230,7 +280,12 @@ export default function Profile() {
                                     <p>Fazer Alterações?</p>
                                     <button
                                         className="profile-submit-button"
-                                        onClick={() => setVaiAlterar(true)}
+                                        onClick={() => {
+                                            setNome(editUser?.nome || "")
+                                            setEmail(editUser?.email || "")
+                                            setPerfil(editUser?.perfil || "")
+                                            setVaiAlterar(true)
+                                        }}
                                     >Clique para alterar</button>
                                 </div>
                             )}
