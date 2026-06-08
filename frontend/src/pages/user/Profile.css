@@ -49,6 +49,15 @@
     padding: 0 1em;
 }
 
+.profile-form{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    height: auto;
+    gap: 0em;
+}
+
 .profile-cards p{
     font-size: 1.2em;
     font-weight: 600;

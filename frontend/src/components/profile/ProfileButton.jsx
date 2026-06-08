@@ -1,13 +1,11 @@
-import "./Profile.css";
+import "./ProfileButton.css";
 
 export const Profile = ({onClick, user}) => {
 
     return (
         
-        <button
-            
+        <button   
             className="header-action profile-btn"
-
             onClick={onClick}
         >
             <i className="bi bi-person-circle"></i>

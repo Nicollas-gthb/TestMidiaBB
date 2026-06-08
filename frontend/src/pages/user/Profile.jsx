@@ -1,13 +1,21 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
+import { useParams } from "react-router-dom"
 
 import { AuthContext } from "../../contexts/AuthContext"
 import { Aside } from "../../components/aside/Aside"
 import { Header } from "../../components/header/Header"
+import { useToast } from "../../contexts/ToastContext"
+import { api } from "../../api/axios"
 import "./Profile.css"
 
 export default function Profile() {
 
+    const { id } = useParams()
+
     const { user } = useContext(AuthContext)
+    const { addToast } = useToast()
+
+    const [editUser, setEditUser] = useState(null)
 
     const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
@@ -19,9 +27,46 @@ export default function Profile() {
     const [vaiAlterar, setVaiAlterar] = useState(false)
     const [typePass, setTypePass] = useState("password")
 
-    const handleSubmit = () => {
+    
 
+    
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setLoading(true)
+
+        try{
+
+            if(senha != confirmarSenha){
+                addToast("As senhas devem ser iguais", "aviso")
+                setLoading(false)
+                return
+            }
+
+
+        }catch(error){
+            const mensagem = error.response?.data?.detail || "Erro ao realizar cadastro !"
+            addToast(mensagem, "erro")
+        }finally{
+            setLoading(false)
+        }
     }
+
+    useEffect(() => {
+        const carregarUser = async () => {
+            try{
+                const response = await api.get(`/user/${id}`)
+                setEditUser(response.data)
+                addToast("Usuario carregado", "sucesso")
+            }catch(error){
+                const mensagem = error.response?.data.detail || "Erro ao carregar playlist !"
+                addToast(mensagem, "erro")
+            }
+
+        }
+        carregarUser()
+
+    }, [addToast, id])
 
     return (
         <div id="profile-container">
@@ -46,7 +91,7 @@ export default function Profile() {
                                     type="text" 
                                     name=""
                                     id="" 
-                                    value={user ? user?.id : "Não autenticado"} 
+                                    value={editUser ? editUser?.id : "Não autenticado"} 
                                 />
                             </fieldset>
                             
@@ -56,7 +101,7 @@ export default function Profile() {
                                     type="text" 
                                     name="" 
                                     id="" 
-                                    value={user ? user?.nome : "Não autenticado"}
+                                    value={editUser ? editUser?.nome : "Não autenticado"}
                                     placeholder="Seu nome"
                                 />
                             </fieldset>
@@ -67,7 +112,7 @@ export default function Profile() {
                                     type="text" 
                                     name="" 
                                     id="" 
-                                    value={user ? user?.email : "Não autenticado"}
+                                    value={editUser ? editUser?.email : "Não autenticado"}
                                     placeholder="Seu email"
                                 />
                             </fieldset>
@@ -78,7 +123,7 @@ export default function Profile() {
                                     type="text" 
                                     name="" 
                                     id="" 
-                                    value={user ? user?.perfil : "Não autenticado"}
+                                    value={editUser ? editUser?.perfil : "Não autenticado"}
                                     placeholder="Seu perfil"
                                 />
                             </fieldset>
@@ -91,7 +136,7 @@ export default function Profile() {
                             
                             
                             {vaiAlterar ? (
-                                <>
+                                <form onSubmit={handleSubmit} className="profile-form">
                                     <p>Alterar Informações</p>
 
                                     <label>Nome</label>
@@ -170,11 +215,15 @@ export default function Profile() {
                                         <button className="profile-cancel-button" onClick={() => setVaiAlterar(false)}>
                                             Cancelar
                                         </button>
-                                        <button className="profile-submit-button" onClick={handleSubmit}>
-                                            Salvar alterações
+                                        <button 
+                                            type="submit" 
+                                            className="profile-submit-button"
+                                            disabled={loading}
+                                        >
+                                            {loading ? "Salvando..." : "Salvar alterações"}
                                         </button>
                                     </div>
-                                </>
+                                </form>
                             ) : (
                                 
                                 <div className="profile-div">

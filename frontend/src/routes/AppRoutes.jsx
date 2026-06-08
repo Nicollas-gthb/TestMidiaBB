@@ -45,7 +45,7 @@ export default function AppRoutes() {
 
                 <Route path="/user/list" element={ <UserList /> } />
 
-                <Route path="/profile" element={ <Profile /> } />
+                <Route path="/profile/:id" element={ <Profile /> } />
 
                 {/* O * no final redireciona qualquer rota desconhecida para o login.  */}
                 <Route path="*" element={<Navigate to="/login" />} />

@@ -6,7 +6,8 @@ import { LogoutButton } from "../logout/LogoutButton"
 import { AuthContext } from "../../contexts/AuthContext"
 import { ThemeToggle } from "../theme/ThemToggle"
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { Profile } from "../profile/Profile";
+import { Profile } from "../profile/ProfileButton";
+import { useToast } from "../../contexts/ToastContext"
 
 import logo_dark from "../../assets/bb_logo_branca.svg"
 import logo_light from "../../assets/bb_logo_azul.svg"
@@ -15,11 +16,18 @@ export const Header = () => {
 
     const { logout, user } = useContext(AuthContext)
     const { theme } = useContext(ThemeContext)
+    const { addToast } = useToast()
 
     const navigate = useNavigate()
 
     const handleProfile = () => {
-        navigate("/profile")
+        try{
+            navigate(`/profile/${user?.id}`)
+        }catch(error){
+            const mensagem = error.response?.data?.detail || "Erro ao acessar perfil !"
+            addToast(mensagem, "erro")
+            navigate("/login")
+        }
     }
 
     function handleLogout(){

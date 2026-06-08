@@ -1,16 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./UserList.css";
 import { useToast } from "../../contexts/ToastContext";
 import { Aside } from "../../components/aside/Aside";
 import { Header } from "../../components/header/Header";
 import { api } from "../../api/axios";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function UserList() {
     
     const { addToast } = useToast()
+    const { user } = useContext(AuthContext)
 
     const [users, setUsers] = useState([])
+    const navigate = useNavigate()
+
+    const handleEdit = (user) => {
+        
+        try{
+            navigate(`/profile/${user.id}`)
+        }catch(error){
+            const mensagem = error.response?.data?.detail || "Erro ao acessar perfil !"
+            addToast(mensagem, "erro")
+            navigate("/login")
+        }
+    }
 
     useEffect(() => {
         const buscarUsers = async () => {
@@ -26,6 +41,8 @@ export default function UserList() {
 
         buscarUsers()
     }, [addToast])
+
+    
 
     return (
         <div id="userlist-container">
@@ -51,7 +68,8 @@ export default function UserList() {
                                     <th>NOME</th>
                                     <th>EMAIL</th>
                                     <th>PERFIL</th>
-                                    <th className="right-table">STATUS</th>
+                                    <th>STATUS</th>
+                                    <th className="right-table">AÇÕES</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,6 +84,19 @@ export default function UserList() {
                                                 {u.ativo ? "Ativo" : "Inativo"}
                                             </div>
                                         </td>
+                                        <td>
+                                            {user.perfil == "admin" ? (
+                                                <button
+                                                    className="second-action-button"
+                                                    onClick={() => handleEdit(u)}
+                                                >
+                                                    <i className="bi bi-pencil-square"></i>
+                                                </button>
+                                            ) : (
+                                                <p> - </p>
+                                            )}
+                                        </td>
+                                        
                                     </tr>
                                 ))}
                             </tbody>

@@ -41,6 +41,7 @@ async def listar_usuarios(session: Session = Depends(get_session)):
     lista = session.query(Usuario).order_by(Usuario.id).all()
     return lista
 
+
 @router.patch("/{user_id}", response_model=UsuarioResponse)
 async def atualizar_usuario(
     user_id: int,
@@ -93,4 +94,14 @@ async def atualizar_usuario(
     session.commit()
     session.refresh(user_buscado)
     
+    return user_buscado
+
+@router.get("/{user_id}", response_model=UsuarioResponse)
+async def buscar_usuario(
+    user_id: int,
+    session: Session = Depends(get_session)
+):
+    
+    user_buscado = session.query(Usuario).filter(Usuario.id == user_id).first()
+
     return user_buscado
