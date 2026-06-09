@@ -205,15 +205,16 @@
     align-items: center;
     width: 100%;
     gap: 1em;
-    margin-bottom: 1em;
+    margin: 2em 0em;
 }
 
 .profile-historico-controllers button{
     background-color: var(--action-bg);
     color: white;
+    font-size: 0.9em;
     border: none;
     border-radius: 10px;
-    padding: 1em 2em;
+    padding: 0.5em 1em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -221,8 +222,15 @@
     cursor: pointer;
     width: 10%;
     height: 2.5em;
+    gap: 0.5em;
 }
 
 .profile-historico-controllers span{
     font-size: 0.8em;
+}
+
+.profile-historico-table{
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }

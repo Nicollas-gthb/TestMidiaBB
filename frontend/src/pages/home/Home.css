@@ -55,13 +55,6 @@ td{
     border-bottom: 1px solid var(--table-border);
 }
 
-/* td:nth-child(2){
-    width: 25%;
-}
-td:nth-child(5){
-    width: 15%;
-} */
-
 .table-container{
     width: 100%;
     display: flex;
@@ -146,7 +139,6 @@ td:nth-child(5){
     align-items: center;
 
     width: 100%;
-
     gap: 20px;
 }
 
@@ -202,16 +194,97 @@ td:nth-child(5){
 }
 
 #card-midia-historico{
-    min-width: 50%;
-    min-height: 370px;
-    height: auto;
-
+    background-color: var(--td-bg);
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    padding: 0 1em;
+}
+
+
+#card-midia-historico p{
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--login-btn);
+    margin-bottom: 0.2em;
+}
+
+#card-midia-historico small{
+    font-size: 0.8em;
+    color: var(--sub-text);
+    margin-bottom: 1em;
+}
+
+#card-midia-historico label{
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-left: 0.5em;
+    color: var(--login-btn);
+}
+
+#card-midia-historico fieldset{
+    border: none;
+    align-self: stretch;
+    padding: 0;
+    margin-bottom: 0.7em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+#card-midia-historico input{
+    border: 2px solid var(--login-btn);
+    border-radius: 7px;
+    background-color: transparent;
+    color: var(--text);
+    outline: none;
+    width: 90%;
+    height: 2.5em;
+    padding: 0 0.5em;
+    display: flex;
+    align-self: start;
+    font-size: 0.9em;
+}
+
+#card-midia-historico input::placeholder{
+    color: var(--sub-text);
+}
+
+#card-midia-historico input:focus{
+    border: 1px solid var(--login-btn);
+    box-shadow: 0 0 0 2px var(--login-btn);
+}
+
+#card-midia-historico select{
+    border: 2px solid var(--login-btn);
+    border-radius: 7px;
+    background-color: transparent;
+    color: var(--text);
+    outline: none;
+    width: 93%;
+    height: 2.5em;
+    padding: 0 0.5em;
+    display: flex;
+    align-self: start;
+    font-size: 0.9em;
+}
+
+#card-midia-historico select:focus{
+    border: 1px solid var(--login-btn);
+    box-shadow: 0 0 0 2px var(--login-btn);
+}
+
+#card-midia-historico select option{
+    background-color: var(--td-bg);
+    color: var(--text);
 }
 
 .home-card-foot{
     padding: 5px;
+    width: 100%;
     border: 3px solid var(--table-bg);
     border-radius: 10px;
     cursor: pointer;
@@ -230,18 +303,21 @@ td:nth-child(5){
     display: flex;
     flex-direction: column;
     align-items: start;
-}
-
-.historico-main-text{
     font-size: 0.9em;
+}
+
+.historico-text .historico-main-text{
+    font-size: 1.2em;
     margin: 0px;
 }
 
-.historico-sub-text{
-    font-size: 0.7em;
+.historico-text .historico-sub-text{
+    font-size: 1em;
     margin: 0px;
-    opacity: 0.7;
+    opacity: 0.5;
 }
+
+
 
 .historico-data{
     font-size: 0.8em;

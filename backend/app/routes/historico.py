@@ -10,16 +10,6 @@ from app.schemas.historico import HistoricoResponse, HistoricoPaginaResponse
 
 router = APIRouter(prefix="/api/historico", tags=["Histórico"])
 
-@router.get("/", response_model=list[HistoricoResponse])
-def listar_historico(
-    session: Session = Depends(get_session)
-):
-    
-    historico = session.query(Historico).order_by(Historico.criado_em.desc()).limit(50).all()
-
-    return historico
-
-
 @router.get("/list", response_model=HistoricoPaginaResponse)
 async def historico_melhorado(
     pagina: int = 1,
@@ -58,6 +48,16 @@ async def historico_melhorado(
         "pagina": pagina,
         "limite": limite,
         "total": total,
-        "total_paginas": ceil(total / limite),
+        "total_paginas": max(1, ceil(total / limite)),
         "dados": registros
     }
+
+@router.get("/", response_model=list[HistoricoResponse])
+def listar_historico(
+    session: Session = Depends(get_session)
+):
+    
+    historico = session.query(Historico).order_by(Historico.criado_em.desc()).limit(50).all()
+
+    return historico
+

@@ -24,12 +24,52 @@ export default function Reports(){
     const axisTextColor = theme === "light" ? "#000000" : "#dfdfdf"
 
     const { addToast } = useToast()
-    const [historico, setHistorico] = useState([])
 
     const [mediaTypes, setMediaTypes] = useState([])
     const [totalMidias, setTotalMidias] = useState(0)
     const [tvStats, setTvStats] = useState([])
     const [mediaStatus, setMediaStatus] = useState([])
+
+    const [listaHistorico, setListaHistorico] = useState([])
+    const [pagina, setPagina] = useState(1)
+    const [totalPaginas, setTotalPaginas] = useState(1)
+    const [filtroUsuario, setFiltroUsuario] = useState("")
+    const [filtroAcao, setFiltroAcao] = useState("")
+    const [dataInicio, setDataInicio] = useState("")
+    const [dataFim, setDataFim] = useState("")
+
+    const buscarHistorico = async () => {
+        try{
+
+            const payload = {
+                pagina: pagina,
+                limite: 20,
+                usuario: filtroUsuario || undefined,
+                acao: filtroAcao || undefined,
+                data_inicio: dataInicio || undefined,
+                data_fim: dataFim || undefined
+            }
+
+            const response = await api.get("/historico/list", {params: payload})
+
+            setListaHistorico(response.data.dados)
+
+            console.log(response.data.dados)
+            console.log(response.data)
+
+            setTotalPaginas(response.data.total_paginas)
+
+
+        }catch(error){
+            const mensagem = error.response?.data.detail || "Erro ao carregar histórico !"
+            addToast(mensagem, "erro")
+        }
+    }
+
+    useEffect(() => {
+        buscarHistorico()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pagina, filtroUsuario, filtroAcao, dataInicio, dataFim])
 
     useEffect(() => {
         api.get("/dashboard/media-types")
@@ -56,19 +96,19 @@ export default function Reports(){
             })
     }, [])
 
-    useEffect(() => {
-        const carregarHistorico = async () => {
-            try{
-                const response = await api.get("/historico/")
-                setHistorico(response.data)
-                addToast("Histórico carregado !", "sucesso")
-            }catch(error){
-                const mensagem = error?.response?.data?.detail || "Erro ao carregar histórico"
-                addToast(mensagem, "erro")
-            }
-        }  
-        carregarHistorico()
-    }, [addToast])
+    // useEffect(() => {
+    //     const carregarHistorico = async () => {
+    //         try{
+    //             const response = await api.get("/historico/")
+    //             setHistorico(response.data)
+    //             addToast("Histórico carregado !", "sucesso")
+    //         }catch(error){
+    //             const mensagem = error?.response?.data?.detail || "Erro ao carregar histórico"
+    //             addToast(mensagem, "erro")
+    //         }
+    //     }  
+    //     carregarHistorico()
+    // }, [addToast])
 
     return (
         <div id="home-container">
@@ -131,7 +171,7 @@ export default function Reports(){
 
                     <div className="reports-cards-container">
 
-                        <section className="reports-cards-graficos">
+                        <section id="media-types" className="reports-cards-graficos">
 
                             <div className="reports-cards">
                                 <div id="donut-container" className="reports-chart-container">
@@ -232,51 +272,102 @@ export default function Reports(){
 
                         </section>
 
-                        <section className="reports-cards-graficos">
+                        <section id="media-historico" className="reports-cards-graficos">
 
                             <div id="card-reports-historico" className="reports-cards">
 
-                                <div className="home-card-head">
-                                    <i className="bi card-bi bi-clock"></i>
-                                    Histórico Recente
-                                </div>
+                                <p>Histórico de Ações</p>
+                                <small>Veja as ações realizadas em todo o sistema</small>
 
-                                <div className="home-card-body">
-                                    {historico.length === 0 ? (
+                                <section className="profile-historico-controllers">
+                                    <input
+                                        type="text"
+                                        placeholder="Nome do usuário"
+                                        value={filtroUsuario}
+                                        onChange={(e) =>setFiltroUsuario(e.target.value)}
+                                    />
+
+                                    <select
+                                        value={filtroAcao}
+                                        onChange={(e) => setFiltroAcao(e.target.value)}
+                                    >
+                                        <option value="">Todas as ações</option>
+                                        <option value="adicionada">Adicionada</option>
+                                        <option value="editada">Editada</option>
+                                        <option value="editado">Editado</option>
+                                        <option value="deletada">Deletada</option>
+                                        <option value="removida">Removida</option>
+                                    </select>
+
+                                    <input
+                                        type="date"
+                                        value={dataInicio}
+                                        onChange={(e) => setDataInicio(e.target.value)}
+                                    />
+
+                                    <input
+                                        type="date"
+                                        value={dataFim}
+                                        onChange={(e) => setDataFim(e.target.value)}
+                                    />
+
+                                    <button
+                                        onClick={() => {
+                                            setPagina(1)
+                                        }}
+                                    >
+                                        <i className="bi bi-funnel"></i>
+                                        Filtrar
+                                    </button>
+                                </section>
+
+                                <div className="profile-historico-table">
+                                    {listaHistorico.length === 0 ? (
                                         <div className="home-card-vazio">
                                             <p>Sem Histórico</p>
                                         </div>
                                     ) : (
-                                        
                                         <table>
+                                            
                                             <tbody>
-                                                {historico.map(h => (
+                                                {listaHistorico.map(h => (
                                                     <tr key={h.id}>
-                                        
                                                         <td id="historico-content">
-                                                            <span className={`historico-icon home-tag-${h.acao.replace(" ", "-")}`}>
-                                                                
-                                                            </span>
-                                                            <span className="historico-text">
+                                                            <span className={`historico-icon home-tag-${h.acao.replace(" ", "-")}`}/>
 
+                                                            <span className="historico-text">
                                                                 <p className="historico-main-text">{`${h.entidade} "${h.entidade_nome}" foi ${h.acao}`}</p>
-                                                                <p className="historico-sub-text">{`${h.usuario_nome}`}</p>
-                            
+
+                                                                <p className="historico-sub-text">{h.usuario_nome}</p>
                                                             </span>
                                                         </td>
-                                                
-                                                        <td >
-                                                            <span className="historico-data">
-                                                                {formatarDataHora(h.criado_em)}
-                                                            </span>
+                                                        <td>
+                                                            <span className="historico-data">{formatarDataHora(h.criado_em)}</span>
                                                         </td>
                                                     </tr>
                                                 ))}
                                             </tbody>
                                         </table>
-                                    
                                     )}
                                 </div>
+
+                                <section className="profile-historico-controllers">
+                                    <button
+                                        disabled={pagina === 1}
+                                        onClick={() => setPagina(pagina - 1)}
+                                    >
+                                        <i className="bi bi-chevron-left"></i>
+                                    </button>
+
+                                    <span>Página {pagina} de {totalPaginas}</span>
+
+                                    <button
+                                        disabled={pagina === totalPaginas}
+                                        onClick={() => setPagina(pagina + 1)}
+                                    >
+                                        <i className="bi bi-chevron-right"></i>
+                                    </button>
+                                </section>
                             </div>
                             
                         </section>

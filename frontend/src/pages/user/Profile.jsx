@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useContext, useEffect } from "react"
 import { useParams } from "react-router-dom"
 
@@ -7,6 +6,7 @@ import { Aside } from "../../components/aside/Aside"
 import { Header } from "../../components/header/Header"
 import { useToast } from "../../contexts/ToastContext"
 import { api } from "../../api/axios"
+import { formatarDataHora } from "../../utils/formatters"
 import "./Profile.css"
 
 export default function Profile() {
@@ -99,9 +99,13 @@ export default function Profile() {
                 data_fim: dataFim || undefined
             }
 
-            const response = await api.get("/historico", payload)
+            const response = await api.get("/historico/list", {params: payload})
 
-            setListaHistorico(response.data)
+            setListaHistorico(response.data.dados)
+
+            console.log(response.data.dados)
+            console.log(response.data)
+
             setTotalPaginas(response.data.total_paginas)
 
 
@@ -113,7 +117,8 @@ export default function Profile() {
 
     useEffect(() => {
         buscarHistorico()
-    }, [pagina])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pagina, filtroUsuario, filtroAcao, dataInicio, dataFim])
 
     useEffect(() => {
         const carregarUser = async () => {
@@ -355,11 +360,11 @@ export default function Profile() {
                                     onChange={(e) => setFiltroAcao(e.target.value)}
                                 >
                                     <option value="">Todas as ações</option>
-                                    <option value="criado">Criado</option>
+                                    <option value="adicionada">Adicionada</option>
+                                    <option value="editada">Editada</option>
                                     <option value="editado">Editado</option>
-                                    <option value="deletado">Deletado</option>
-                                    <option value="ativado">Ativado</option>
-                                    <option value="desativado">Desativado</option>
+                                    <option value="deletada">Deletada</option>
+                                    <option value="removida">Removida</option>
                                 </select>
 
                                 <input
@@ -377,21 +382,49 @@ export default function Profile() {
                                 <button
                                     onClick={() => {
                                         setPagina(1)
-                                        buscarHistorico()
                                     }}
                                 >
+                                    <i className="bi bi-funnel"></i>
                                     Filtrar
                                 </button>
                             </section>
 
-                            <div className="profile-historico-table"></div>
+                            <div className="profile-historico-table">
+                                {listaHistorico.length === 0 ? (
+                                    <div className="home-card-vazio">
+                                        <p>Sem Histórico</p>
+                                    </div>
+                                ) : (
+                                    <table>
+                                        
+                                        <tbody>
+                                            {listaHistorico.map(h => (
+                                                <tr key={h.id}>
+                                                    <td id="historico-content">
+                                                        <span className={`historico-icon home-tag-${h.acao.replace(" ", "-")}`}/>
+
+                                                        <span className="historico-text">
+                                                            <p className="historico-main-text">{`${h.entidade} "${h.entidade_nome}" foi ${h.acao}`}</p>
+
+                                                            <p className="historico-sub-text">{h.usuario_nome}</p>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span className="historico-data">{formatarDataHora(h.criado_em)}</span>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                )}
+                            </div>
 
                             <section className="profile-historico-controllers">
                                 <button
                                     disabled={pagina === 1}
                                     onClick={() => setPagina(pagina - 1)}
                                 >
-                                    Anterior
+                                    <i className="bi bi-chevron-left"></i>
                                 </button>
 
                                 <span>Página {pagina} de {totalPaginas}</span>
@@ -400,7 +433,7 @@ export default function Profile() {
                                     disabled={pagina === totalPaginas}
                                     onClick={() => setPagina(pagina + 1)}
                                 >
-                                    Próxima
+                                    <i className="bi bi-chevron-right"></i>
                                 </button>
                             </section>
                         </div>
@@ -411,3 +444,9 @@ export default function Profile() {
         </div>
     )
 }
+
+{/**
+    <div id="profile-historico" className="profile-cards">
+                            
+                        </div>
+                         */}
