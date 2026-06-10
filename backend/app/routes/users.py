@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app.core.database import get_session
-from app.core.security import criptografar, get_usuario_atual
+from app.core.security import criptografar, get_usuario_atual, verificar_senha
 from app.models.user import Usuario
-from app.schemas.user import UsuarioCreate, UsuarioResponse, UsuarioUpdate
+from app.schemas.user import UsuarioCreate, UsuarioResponse, UsuarioUpdate, DeleteUserRequest
 from app.services.historico_service import salvar_registro
 
 router = APIRouter(prefix="/api/user", tags=["user"])
@@ -102,3 +102,31 @@ async def buscar_usuario(
     user_buscado = session.query(Usuario).filter(Usuario.id == user_id).first()
 
     return user_buscado
+
+@router.delete("/{user_id}/hard")
+async def hard_delete_user(
+    user_id: int, 
+    request: DeleteUserRequest,
+    session: Session = Depends(get_session),
+    usuario_logado = Depends(get_usuario_atual)
+):
+    
+    
+    user_delete = session.query(Usuario).filter(Usuario.id == user_id).first()
+
+    if not user_delete:
+        raise HTTPException(status_code=404, detail="Usuario não encontrado")
+    
+    if usuario_logado.perfil != "admin" and usuario_logado.id != user_delete.id:
+        raise HTTPException(status_code=403, detail="Sem permissão para esta ação")
+    
+    if not verificar_senha(request.senha, usuario_logado.senha):
+        raise HTTPException(status_code=403, detail="Sem permissão para esta ação")
+    
+    salvar_registro(session, "usuario", user_delete.id, user_delete.nome, "deletado", usuario_logado)
+    session.flush()
+
+    session.delete(user_delete)
+    session.commit()
+
+    return {"message": "Usuário deletado permanentemente"}

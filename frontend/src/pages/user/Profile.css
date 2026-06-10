@@ -46,7 +46,7 @@
     width: 50%;
     height: auto;
     border-radius: 10px;
-    padding: 0 1em;
+    padding: 1em 1em;
 }
 
 .profile-form{
@@ -233,4 +233,20 @@
     display: flex;
     justify-content: center;
     width: 100%;
+}
+
+#profile-delete-title{
+    color: var(--close-btn)
+}
+
+#profile-delete-button{
+    background-color: transparent;
+    color: var(--close-btn);
+    border: 2px solid var(--close-btn);
+}
+
+#profile-delete-button:hover{
+    background-color: var(--close-btn);
+    color: white;
+    
 }

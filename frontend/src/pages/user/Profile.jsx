@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 
 import { AuthContext } from "../../contexts/AuthContext"
 import { Aside } from "../../components/aside/Aside"
@@ -13,8 +13,10 @@ export default function Profile() {
 
     const { id } = useParams()
 
-    const { user } = useContext(AuthContext)
+    const { user, logout } = useContext(AuthContext)
     const { addToast } = useToast()
+
+    const navigate = useNavigate()
 
     const [editUser, setEditUser] = useState(null)
 
@@ -27,6 +29,8 @@ export default function Profile() {
     const [loading, setLoading] = useState(false)
     const [vaiAlterar, setVaiAlterar] = useState(false)
     const [typePass, setTypePass] = useState("password")
+    const [vaiExcluir, setVaiExcluir] = useState(false)
+    const [senhaDelete, setSenhaDelete] = useState("")
 
 
     const [listaHistorico, setListaHistorico] = useState([])
@@ -37,6 +41,7 @@ export default function Profile() {
     const [filtroAcao, setFiltroAcao] = useState("")
     const [dataInicio, setDataInicio] = useState("")
     const [dataFim, setDataFim] = useState("")
+
 
 
     const handleSubmit = async (e) => {
@@ -110,6 +115,28 @@ export default function Profile() {
         }catch(error){
             const mensagem = error.response?.data.detail || "Erro ao carregar histórico !"
             addToast(mensagem, "erro")
+        }
+    }
+
+    const handleDeleteProfile = async () =>{
+        try{
+            setLoading(true)
+
+            await api.delete(`/user/${id}/hard`, {data: {senha: senhaDelete}})
+
+            if(id == user?.id){
+                logout()
+                navigate("/login")
+            }else{
+                navigate("/home")
+            }
+
+            addToast("Conta deletada", "sucesso")
+        }catch(error){
+            const mensagem = error.response?.data.detail || "Erro ao deletar usuário !"
+            addToast(mensagem, "erro")
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -199,6 +226,52 @@ export default function Profile() {
                                     placeholder="Seu perfil"
                                 />
                             </fieldset>
+
+                            <br />
+
+                            <p id="profile-delete-title">Deletar Conta</p>
+                            <small>Remover o perfil do sistema</small>
+
+                            {vaiExcluir ? (
+                                <>
+                                    <p>Tem Certeza?</p>
+                                    <small>Confirme sua senha para avançar</small>
+                                    <input
+                                        id="confirmar-delete" 
+                                        type="password" 
+                                        placeholder="Senha da conta logada"
+                                        value={senhaDelete}
+                                        onChange={(e) => setSenhaDelete(e.target.value)}
+                                    />
+
+                                    <div className="profile-alterar-container">
+                                        <button 
+                                            className="profile-cancel-button" 
+                                            onClick={() => setVaiExcluir(false)}
+                                        >
+                                            Cancelar
+                                        </button>
+                                        <button 
+                                            type="button" 
+                                            id="profile-delete-button"
+                                            className="profile-submit-button"
+                                            disabled={loading}
+                                            onClick={handleDeleteProfile}
+                                        >
+                                            {loading ? "Carregando..." : "Avançar com Deletar"}
+                                        </button>
+                                    </div>
+                                </>
+                            ) : (
+                                <button
+                                    type="button"
+                                    id="profile-delete-button"
+                                    className="profile-submit-button"
+                                    onClick={() => setVaiExcluir(true)}
+                                >Deletar</button>
+                            )}
+
+
 
                         </div>
 

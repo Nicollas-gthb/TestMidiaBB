@@ -26,3 +26,6 @@ class UsuarioUpdate(BaseModel):
     email: EmailStr | None = None
     senha: str | None = None
     perfil: PerfilEnum | None = None
+
+class DeleteUserRequest(BaseModel):
+    senha: str
