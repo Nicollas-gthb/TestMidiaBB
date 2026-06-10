@@ -21,6 +21,7 @@ export default function Register() {
     
 
     const [loading, setLoading] = useState(false)
+    const [typePass, setTypePass] = useState("password")
 
     const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
@@ -98,15 +99,19 @@ export default function Register() {
                                 Nome
                             </label>
 
-                            <input
-                                type="text"
-                                placeholder="Seu nome "
-                                value={nome}
-                                onChange={(e) => setNome(e.target.value)}
-                                maxLength="50"
-                                minLength="8"
-                                required
-                            />
+                            <fieldset>
+
+                                <input
+                                    type="text"
+                                    placeholder="Seu nome "
+                                    value={nome}
+                                    onChange={(e) => setNome(e.target.value)}
+                                    maxLength="50"
+                                    minLength="8"
+                                    required
+                                />
+                            </fieldset>
+
                         </div>
 
                         <div className="input-group">
@@ -115,49 +120,70 @@ export default function Register() {
                                 Email
                             </label>
 
-                            <input
-                                type="email"
-                                placeholder="seu@email.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                maxLength="50"
-                                minLength="5" 
-                                required
-                            />
+                            <fieldset>
+                                <input
+                                    type="email"
+                                    placeholder="seu@email.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    maxLength="50"
+                                    minLength="5" 
+                                    required
+                                />
+                            </fieldset>
+
                         </div>
 
                         <div className="input-group">
                             <label>
                                 <i className="bi bi-lock"></i>
                                 Senha
+                                <i 
+                                    className={typePass == "text" ? "bi eye bi-eye" : "bi eye bi-eye-slash"}
+                                    onClick={() => setTypePass(typePass === "password" ? "text" : "password")}
+                                ></i>
                             </label>
 
-                            <input
-                                type="password"
-                                placeholder="Sua senha"
-                                value={senha}
-                                onChange={(e) => setSenha(e.target.value)}
-                                maxLength="50"
-                                minLength="5" 
-                                required
-                            />
+                            <fieldset>
+                                <input
+                                    type={typePass}
+                                    placeholder="Sua senha"
+                                    value={senha}
+                                    onChange={(e) => setSenha(e.target.value)}
+                                    maxLength="50"
+                                    minLength="5" 
+                                    required
+                                />
+
+                                
+                            </fieldset>
+
                         </div>
 
                         <div className="input-group">
                             <label>
                                 <i className="bi bi-lock"></i>
                                 Confirmar Senha
+                                <i 
+                                    className={typePass == "text" ? "bi eye bi-eye" : "bi eye bi-eye-slash"}
+                                    onClick={() => setTypePass(typePass === "password" ? "text" : "password")}
+                                ></i>
                             </label>
 
-                            <input
-                                type="password"
-                                placeholder="Confirme sua senha"
-                                value={confirmar}
-                                onChange={(e) => setConfirmar(e.target.value)}
-                                maxLength="50"
-                                minLength="5"
-                                required
-                            />
+                            <fieldset>
+                                <input
+                                    type={typePass}
+                                    placeholder="Confirme sua senha"
+                                    value={confirmar}
+                                    onChange={(e) => setConfirmar(e.target.value)}
+                                    maxLength="50"
+                                    minLength="5"
+                                    required
+                                />
+
+                                
+                            </fieldset>
+
                         </div>
 
 

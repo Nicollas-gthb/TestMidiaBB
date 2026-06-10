@@ -236,13 +236,21 @@ export default function Profile() {
                                 <>
                                     <p>Tem Certeza?</p>
                                     <small>Confirme sua senha para avançar</small>
-                                    <input
-                                        id="confirmar-delete" 
-                                        type="password" 
-                                        placeholder="Senha da conta logada"
-                                        value={senhaDelete}
-                                        onChange={(e) => setSenhaDelete(e.target.value)}
-                                    />
+
+                                    <fieldset>
+                                        <input
+                                            id="confirmar-delete" 
+                                            type={typePass} 
+                                            placeholder="Senha da conta logada"
+                                            value={senhaDelete}
+                                            onChange={(e) => setSenhaDelete(e.target.value)}
+                                        />
+
+                                        <i 
+                                            className={typePass == "text" ? "bi eye bi-eye" : "bi eye bi-eye-slash"}
+                                            onClick={() => setTypePass(typePass === "password" ? "text" : "password")}
+                                        ></i>
+                                    </fieldset>
 
                                     <div className="profile-alterar-container">
                                         <button 
@@ -343,6 +351,11 @@ export default function Profile() {
                                             id="form-confirmar-senha" 
                                             placeholder="Repita a senha"
                                         />
+
+                                        <i 
+                                            className={typePass == "text" ? "bi eye bi-eye" : "bi eye bi-eye-slash"}
+                                            onClick={() => setTypePass(typePass === "password" ? "text" : "password")}
+                                        ></i>
                                     </fieldset>
 
                                     {user?.perfil === "admin" && (

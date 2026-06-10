@@ -1,20 +1,7 @@
-.register-fieldset{
-    border-radius: 10px;
-    border: 1px solid var(--text);
-    color: var(--text);
-    width: 30vw;
-    margin: 20px 0px;
-    padding: 10px;
-}
-
-.register-legend{
-    padding: 0px 7px 0px 7px;
-    margin-right: auto;
-}
 
 .register-input{
     border: none;
-    font-size: 17px;
+    font-size: 15px;
     width: 100%;
     margin: auto;
     background-color: var(--td-bg);

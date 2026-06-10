@@ -25,6 +25,8 @@ export default function Login(){
     // que encontrar, e procura no value o { login }
     const { login } = useContext(AuthContext)
 
+    const [typePass, setTypePass] = useState("password")
+
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
     const [loading, setLoading] = useState(false)
@@ -97,28 +99,42 @@ export default function Login(){
                                 Email
                             </label>
 
-                            <input
-                                type="email"
-                                placeholder="seu@email.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
+                            <fieldset>
+
+                                <input
+                                    type="email"
+                                    placeholder="seu@email.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </fieldset>
+
                         </div>
 
                         <div className="input-group">
                             <label>
                                 <i className="bi bi-lock"></i>
                                 Senha
+                                <i 
+                                    className={typePass == "text" ? "bi eye bi-eye" : "bi eye bi-eye-slash"}
+                                    onClick={() => setTypePass(typePass === "password" ? "text" : "password")}
+                                ></i>
                             </label>
 
-                            <input
-                                type="password"
-                                placeholder="Sua senha"
-                                value={senha}
-                                onChange={(e) => setSenha(e.target.value)}
-                                required
-                            />
+                            <fieldset>
+
+                                <input
+                                    type={typePass}
+                                    placeholder="Sua senha"
+                                    value={senha}
+                                    onChange={(e) => setSenha(e.target.value)}
+                                    required
+                                />
+
+                                
+                            </fieldset>
+
                         </div>
 
                         <Link

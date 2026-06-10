@@ -54,13 +54,23 @@
 .login-subtitle{
     color: var(--sub-text);
     font-size:1rem;
-    margin-bottom:20px;
+    margin-bottom:5px;
 }
 
 .input-group{
     display:flex;
     flex-direction:column;
     margin-bottom:14px;
+}
+
+.input-group fieldset{
+    border: none;
+    align-self: stretch;
+    padding: 0;
+    margin-bottom: 0.7em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
 }
 
 .input-group label{
@@ -75,7 +85,7 @@
 
 .input-group input{
     height:45px;
-    
+    width: 100%;
 
     border-radius:12px;
     border:2px solid var(--login-btn);
@@ -144,22 +154,15 @@
 }
 
 .register-area{
-
-    margin-top:30px;
-
+    margin-top:7px;
     text-align:center;
-
     color: var(--sub-text);
 }
 
 .register-area a{
-
     color:var(--login-btn);
-
     margin-left:8px;
-
     text-decoration:none;
-
     font-weight:600;
 }
 
