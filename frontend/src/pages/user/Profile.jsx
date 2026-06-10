@@ -32,6 +32,7 @@ export default function Profile() {
     const [listaHistorico, setListaHistorico] = useState([])
     const [pagina, setPagina] = useState(1)
     const [totalPaginas, setTotalPaginas] = useState(1)
+    // eslint-disable-next-line no-unused-vars
     const [filtroUsuario, setFiltroUsuario] = useState("")
     const [filtroAcao, setFiltroAcao] = useState("")
     const [dataInicio, setDataInicio] = useState("")
@@ -93,7 +94,7 @@ export default function Profile() {
             const payload = {
                 pagina: pagina,
                 limite: 20,
-                usuario: filtroUsuario || undefined,
+                usuario_id: id || undefined,
                 acao: filtroAcao || undefined,
                 data_inicio: dataInicio || undefined,
                 data_fim: dataFim || undefined
@@ -102,12 +103,9 @@ export default function Profile() {
             const response = await api.get("/historico/list", {params: payload})
 
             setListaHistorico(response.data.dados)
-
-            console.log(response.data.dados)
-            console.log(response.data)
-
             setTotalPaginas(response.data.total_paginas)
 
+            console.log(editUser?.id)
 
         }catch(error){
             const mensagem = error.response?.data.detail || "Erro ao carregar histórico !"
@@ -348,12 +346,13 @@ export default function Profile() {
                             <small>Veja as ações realizadas por você no sistema</small>
 
                             <section className="profile-historico-controllers">
-                                <input
+                                {/* <input
                                     type="text"
                                     placeholder="Nome do usuário"
                                     value={filtroUsuario}
                                     onChange={(e) =>setFiltroUsuario(e.target.value)}
-                                />
+                                    disabled=""
+                                /> */}
 
                                 <select
                                     value={filtroAcao}
@@ -444,9 +443,3 @@ export default function Profile() {
         </div>
     )
 }
-
-{/**
-    <div id="profile-historico" className="profile-cards">
-                            
-                        </div>
-                         */}

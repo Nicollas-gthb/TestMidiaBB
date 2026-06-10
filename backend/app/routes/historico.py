@@ -14,6 +14,7 @@ router = APIRouter(prefix="/api/historico", tags=["Histórico"])
 async def historico_melhorado(
     pagina: int = 1,
     limite: int = 20,
+    usuario_id: int | None = None,
     usuario: str | None = None,
     acao: str | None = None,
     data_inicio: date | None = None,
@@ -22,6 +23,9 @@ async def historico_melhorado(
 ):
 
     query = session.query(Historico)
+
+    if usuario_id is not None:
+        query = query.filter(Historico.usuario_id == usuario_id)
 
     if usuario:
         query = query.filter(
