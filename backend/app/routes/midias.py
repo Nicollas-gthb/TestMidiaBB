@@ -90,9 +90,12 @@ async def upload_midia(
         # Salva arquivo
         extensao = arquivo.filename.split(".")[-1]
         nome_arquivo = f"{uuid.uuid4()}.{extensao}"
+
         caminho = os.path.join(UPLOAD_DIR, nome_arquivo)
         with open(caminho, "wb") as buffer:
             shutil.copyfileobj(arquivo.file, buffer)
+
+        url_publica = f"/midias/{nome_arquivo}"
 
 
     inicio = datetime.fromisoformat(inicio_exibicao).replace(tzinfo=timezone.utc) if inicio_exibicao else None
@@ -102,7 +105,7 @@ async def upload_midia(
     midia = Midia(
         nome=nome,
         tipo=tipo,
-        arquivo=caminho,
+        arquivo=url_publica,
         url_externa=url_salva,
         duracao_segundos=duracao_segundos,
         inicio_exibicao=inicio,

@@ -40,9 +40,6 @@ export default function Home() {
 
             setListaHistorico(response.data.dados)
 
-            console.log(response.data.dados)
-            console.log(response.data)
-
             setTotalPaginas(response.data.total_paginas)
 
 
